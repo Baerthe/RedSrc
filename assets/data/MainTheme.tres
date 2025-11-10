@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cih5xv4c26sce"]
+
+[ext_resource type="FontFile" uid="uid://dwdk3r1h7ap2h" path="res://res/FONTS/MINI 7 Bold.ttf" id="1_4as0w"]
+
+[resource]
+default_font = ExtResource("1_4as0w")

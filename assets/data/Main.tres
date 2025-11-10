@@ -1,0 +1,10 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dae0ujns4cmco"]
+
+[ext_resource type="FontFile" uid="uid://dwdk3r1h7ap2h" path="res://res/FONTS/MINI 7 Bold.ttf" id="1_c8bph"]
+
+[resource]
+line_spacing = 4.0
+font = ExtResource("1_c8bph")
+font_size = 8
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)

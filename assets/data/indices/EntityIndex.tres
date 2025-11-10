@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="EntityIndex" load_steps=3 format=3 uid="uid://coa623sevelal"]
+
+[ext_resource type="Script" uid="uid://dk6hdk7126rp1" path="res://scripts/entities/indices/EntityIndex.cs" id="1_3khal"]
+[ext_resource type="PackedScene" uid="uid://cx7hip6qyc8cj" path="res://assets/scenes/templates/MobEntity.tscn" id="1_wb8tu"]
+
+[resource]
+script = ExtResource("1_3khal")
+MobTemplate = ExtResource("1_wb8tu")
+metadata/_custom_type_script = "uid://dk6hdk7126rp1"

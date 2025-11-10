@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="HeroIndex" load_steps=2 format=3 uid="uid://1ddfje3y85jr"]
+
+[ext_resource type="Script" uid="uid://danqqxuynk8wa" path="res://scripts/entities/indices/HeroIndex.cs" id="1_7dica"]
+
+[resource]
+script = ExtResource("1_7dica")
+AllHeroes = null
+metadata/_custom_type_script = "uid://danqqxuynk8wa"

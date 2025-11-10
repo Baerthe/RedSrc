@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cx7hip6qyc8cj"]
+
+[ext_resource type="Script" uid="uid://croqldtdyjv2d" path="res://scripts/entities/mob/MobEntity.cs" id="1_6vbdj"]
+
+[node name="MobEntity" type="RigidBody2D" groups=["mobs"]]
+script = ExtResource("1_6vbdj")
+metadata/_custom_type_script = "uid://croqldtdyjv2d"

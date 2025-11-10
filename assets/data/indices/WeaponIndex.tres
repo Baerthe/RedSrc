@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="WeaponIndex" load_steps=2 format=3 uid="uid://tqdcjl18cwta"]
+
+[ext_resource type="Script" uid="uid://bb45d6102l7d0" path="res://scripts/entities/indices/WeaponIndex.cs" id="1_fdlb7"]
+
+[resource]
+script = ExtResource("1_fdlb7")
+AllWeapons = null
+metadata/_custom_type_script = "uid://bb45d6102l7d0"

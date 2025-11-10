@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="XPIndex" load_steps=2 format=3 uid="uid://jj6n77vm5lmp"]
+
+[ext_resource type="Script" uid="uid://cplqcdgsihewc" path="res://scripts/entities/indices/XPIndex.cs" id="1_vhhev"]
+
+[resource]
+script = ExtResource("1_vhhev")
+AllXP = null
+metadata/_custom_type_script = "uid://cplqcdgsihewc"

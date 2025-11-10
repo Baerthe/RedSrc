@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ItemIndex" load_steps=2 format=3 uid="uid://csrc5ea0tfne0"]
+
+[ext_resource type="Script" uid="uid://cvvpwaar44caj" path="res://scripts/entities/indices/ItemIndex.cs" id="1_t1bko"]
+
+[resource]
+script = ExtResource("1_t1bko")
+AllItems = null
+metadata/_custom_type_script = "uid://cvvpwaar44caj"

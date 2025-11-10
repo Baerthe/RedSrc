@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://b3d1xt2ppjq2j"]
+
+[ext_resource type="Script" uid="uid://baiy6uggvxry0" path="res://scripts/entities/weapon/WeaponEntity.cs" id="1_1vu6c"]
+
+[node name="WeaponEntity" type="Node2D"]
+script = ExtResource("1_1vu6c")
+metadata/_custom_type_script = "uid://baiy6uggvxry0"

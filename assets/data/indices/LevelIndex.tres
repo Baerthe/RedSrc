@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="LevelIndex" load_steps=2 format=3 uid="uid://d151xchrphtdt"]
+
+[ext_resource type="Script" uid="uid://5kxr260ur4wl" path="res://scripts/entities/indices/LevelIndex.cs" id="1_4itc1"]
+
+[resource]
+script = ExtResource("1_4itc1")
+AllLevels = null
+metadata/_custom_type_script = "uid://5kxr260ur4wl"

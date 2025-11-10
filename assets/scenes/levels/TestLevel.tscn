@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5jwo7jmoqxw6"]
+
+[ext_resource type="Script" uid="uid://bu8nq0bf5ocjw" path="res://scripts/entities/level/LevelEntity.cs" id="1_gry4j"]
+[ext_resource type="Resource" uid="uid://gl2gy3jfettw" path="res://assets/data/indexes/mobs/BasicTable.tres" id="2_ybcpn"]
+
+[node name="TestLevel" type="Node2D"]
+script = ExtResource("1_gry4j")
+Location = 255
+SpawnTable = ExtResource("2_ybcpn")
+metadata/_custom_type_script = "uid://bu8nq0bf5ocjw"

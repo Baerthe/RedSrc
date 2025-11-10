@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://byyn5n746hjy"]
+
+[ext_resource type="Script" uid="uid://b67lhfe61nlng" path="res://scripts/entities/item/ItemEntity.cs" id="1_ow0wc"]
+
+[node name="ItemEntity" type="Node2D"]
+script = ExtResource("1_ow0wc")
+metadata/_custom_type_script = "uid://b67lhfe61nlng"
