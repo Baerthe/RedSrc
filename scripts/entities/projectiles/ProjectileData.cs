@@ -1,6 +1,6 @@
-namespace Entities;
+namespace Data;
 
-using Entities.Interfaces;
+using Interfaces;
 using Godot;
 /// <summary>
 /// Data container for projectile properties

@@ -1,8 +1,8 @@
-namespace Entities;
+namespace Data;
 
 using Godot;
 using System;
-using Entities.Interfaces;
+using Interfaces;
 /// <summary>
 /// The Entity class for Items, stores components and runtime data
 /// </summary>

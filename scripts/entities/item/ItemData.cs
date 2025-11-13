@@ -1,7 +1,7 @@
-namespace Entities;
+namespace Data;
 
 using Godot;
-using Entities.Interfaces;
+using Interfaces;
 /// <summary>
 /// ItemData is a Resource that defines the properties and attributes of an item entity in the game.
 /// </summary>

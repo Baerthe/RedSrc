@@ -2,7 +2,7 @@ namespace Game;
 
 using Godot;
 using Core;
-using Core.Interface;
+using Interface;
 using Game.Interface;
 using System.Collections;
 using Entities;

@@ -3,7 +3,7 @@ using Godot;
 using Core;
 using Entities;
 using System;
-using Core.Interface;
+using Interface;
 
 [GlobalClass]
 public partial class GameManager : Node2D

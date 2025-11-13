@@ -1,4 +1,4 @@
-namespace Entities;
+namespace Data;
 
 using Godot;
 /// <summary>

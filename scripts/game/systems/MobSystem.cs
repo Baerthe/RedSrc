@@ -4,7 +4,7 @@ using Godot;
 using Core;
 using Entities;
 using Game.Interface;
-using Core.Interface;
+using Interface;
 using System.Collections.Generic;
 using System;
 

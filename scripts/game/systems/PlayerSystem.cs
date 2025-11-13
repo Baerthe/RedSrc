@@ -4,7 +4,7 @@ using Godot;
 using Core;
 using Entities;
 using Game.Interface;
-using Core.Interface;
+using Interface;
 using System.Collections.Generic;
 /// <summary>
 /// The player is the main character that the user controls. This class handles movement, health, and collisions with mobs.

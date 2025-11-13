@@ -4,7 +4,7 @@ using Godot;
 using Core;
 using System;
 using System.Collections.Generic;
-using Core.Interface;
+using Interface;
 using Game.Interface;
 /// <summary>
 /// ClockSystem manages the game's timing mechanisms, including pulse, slow pulse, mob spawn, chest spawn, game, and starting timers. It integrates with the EventService to provide timed events that other game systems can subscribe to.

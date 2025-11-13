@@ -1,7 +1,7 @@
-namespace Entities;
+namespace Data;
 
 using Godot;
-using Entities.Interfaces;
+using Interfaces;
 /// <summary>
 /// Data container for mobs
 /// </summary>

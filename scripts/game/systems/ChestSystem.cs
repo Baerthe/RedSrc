@@ -4,7 +4,7 @@ using Godot;
 using Core;
 using Entities;
 using Game.Interface;
-using Core.Interface;
+using Interface;
 /// <summary>
 /// ChestSystem is responsible for managing chest spawning and interactions within the game. It implements the IGameSystem interface and utilizes a Path2D and PathFollow2D to determine chest spawn locations relative to the player.
 /// </summary>

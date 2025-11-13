@@ -4,7 +4,7 @@ using Godot;
 using Core;
 using System.Collections.Generic;
 using Game.Interface;
-using Core.Interface;
+using Interface;
 using Entities;
 /// <summary>
 /// A system for handling tiling of scene map elements.

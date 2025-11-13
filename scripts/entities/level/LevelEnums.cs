@@ -1,4 +1,4 @@
-namespace Entities;
+namespace Data;
 /// <summary>
 /// LevelEnums contains enumerations related to level types and tiers in the game.
 /// </summary>

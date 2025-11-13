@@ -1,7 +1,7 @@
-namespace Entities;
+namespace Data;
 
 using Godot;
-using Entities.Interfaces;
+using Interfaces;
 /// <summary>
 /// LevelData is a Resource that encapsulates the core attributes of a game level, including its type, tier, and the mob spawn table associated with it.
 /// </summary>

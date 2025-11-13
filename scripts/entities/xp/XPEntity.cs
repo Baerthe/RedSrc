@@ -1,7 +1,7 @@
-namespace Entities;
+namespace Data;
 
 using Godot;
-using Entities.Interfaces;
+using Interfaces;
 public sealed partial class XPEntity : Area2D, IEntity
 {
     [ExportGroup("XP Entity Nodes")]

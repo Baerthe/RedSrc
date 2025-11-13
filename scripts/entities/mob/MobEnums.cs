@@ -1,4 +1,4 @@
-namespace Entities;
+namespace Data;
 /// <summary>
 /// The Enums used for Mobs
 /// </summary>

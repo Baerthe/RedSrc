@@ -1,8 +1,8 @@
-namespace Entities;
+namespace Data;
 
 using Godot;
 using System;
-using Entities.Interfaces;
+using Interfaces;
 /// <summary>
 /// LevelEntity is a Node2D that represents a level in the game. It contains various properties that define the level's characteristics, including its name, description, data, tilemap layers, player spawn point, and various systems for managing chests, mobs, and players.
 /// </summary>
