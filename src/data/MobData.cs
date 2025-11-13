@@ -1,7 +1,7 @@
 namespace Data;
 
 using Godot;
-using Interfaces;
+using Interface;
 /// <summary>
 /// Data container for mobs
 /// </summary>

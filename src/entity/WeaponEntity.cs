@@ -1,7 +1,9 @@
-namespace Data;
+namespace Entity;
+
+using Data;
 using Godot;
 using System;
-using Interfaces;
+using Interface;
 /// <summary>
 /// WeaponEntity is a Node2D that represents a weapon in the game. It contains various properties that define the weapon's characteristics, including its name, description, lore, data, icon, and sounds. It ensures that all necessary properties are set and adds itself to the "weapons" group for easy management within the game.
 /// </summary>

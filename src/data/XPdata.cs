@@ -1,6 +1,6 @@
 namespace Data;
 
-using Interfaces;
+using Interface;
 using Godot;
 public sealed partial class XPdata : Resource, IData
 {

@@ -1,7 +1,7 @@
 namespace Data;
 
 using Godot;
-using Interfaces;
+using Interface;
 /// <summary>
 /// ChestData is a Resource that defines the properties and attributes of a chest entity in the game.
 /// </summary>

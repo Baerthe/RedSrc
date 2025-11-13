@@ -1,7 +1,7 @@
 namespace Data;
 
 using Godot;
-using Interfaces;
+using Interface;
 /// <summary>
 /// The Data class for Heroes, stores static data
 /// </summary>

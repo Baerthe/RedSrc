@@ -1,7 +1,7 @@
 namespace Data;
 
 using Godot;
-using Interfaces;
+using Interface;
 /// <summary>
 /// WeaponData is a Resource that defines the properties and attributes of a weapon entity in the game.
 /// </summary>

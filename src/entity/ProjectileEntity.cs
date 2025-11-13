@@ -1,8 +1,9 @@
-namespace Data;
+namespace Entity;
 
+using Data;
 using Godot;
 using System;
-using Interfaces;
+using Interface;
 /// <summary>
 /// A representation of Projectile entities within the game.
 /// </summary>

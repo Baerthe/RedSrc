@@ -1,6 +1,6 @@
 namespace Data;
 
-using Interfaces;
+using Interface;
 using Godot;
 /// <summary>
 /// Data container for projectile properties

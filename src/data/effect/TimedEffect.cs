@@ -1,6 +1,6 @@
 namespace Data;
 
-using Interfaces;
+using Interface;
 using Godot;
 /// <summary>
 /// TimedEffect is a Resource that represents an effect with a specific duration applied to an entity.

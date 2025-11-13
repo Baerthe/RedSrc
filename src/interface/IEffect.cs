@@ -1,6 +1,6 @@
 namespace Interface;
 
-using Interfaces;
+using Interface;
 using Godot;
 
 public interface IEffect
