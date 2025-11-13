@@ -1,15 +1,14 @@
-namespace Game;
+namespace Utility;
 
+using Entity;
+using Event;
 using Godot;
-using Core;
-using System.Collections.Generic;
-using Game.Interface;
 using Interface;
-using Entities;
+using System.Collections.Generic;
 /// <summary>
 /// A system for handling tiling of scene map elements.
 /// </summary>
-public sealed partial class MapSystem : Node2D, IGameSystem
+public sealed partial class MapUtility : Node2D, IUtility
 {
 	public bool IsInitialized { get; private set; } = false;
 	private LevelEntity _levelRef;
@@ -35,7 +34,7 @@ public sealed partial class MapSystem : Node2D, IGameSystem
 		SouthEast,
 		OutOfBounds
 	}
-	public MapSystem(IEventService eventService)
+	public MapUtility(IEventService eventService)
 	{
 		GD.Print("MapSystem: Initializing...");
 		_eventService = eventService;

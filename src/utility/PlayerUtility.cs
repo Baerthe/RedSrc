@@ -1,15 +1,15 @@
-namespace Game;
+namespace Utility;
 
+using Data;
+using Entity;
+using Event;
 using Godot;
-using Core;
-using Entities;
-using Game.Interface;
 using Interface;
 using System.Collections.Generic;
 /// <summary>
 /// The player is the main character that the user controls. This class handles movement, health, and collisions with mobs.
 /// </summary>
-public sealed partial class PlayerSystem : Node2D, IGameSystem
+public sealed partial class PlayerUtility : Node2D, IUtility
 {
     public bool IsInitialized { get; private set; } = false;
     private HeroEntity _playerRef;
@@ -21,7 +21,7 @@ public sealed partial class PlayerSystem : Node2D, IGameSystem
     private readonly IAudioService _audioService;
     private readonly IEventService _eventService;
     private readonly IHeroService _heroService;
-    public PlayerSystem(PackedScene heroTemplate, IAudioService audioService, IEventService eventService, IHeroService heroService)
+    public PlayerUtility(PackedScene heroTemplate, IAudioService audioService, IEventService eventService, IHeroService heroService)
     {
         GD.Print("PlayerSystem: Initializing...");
         _audioService = audioService;

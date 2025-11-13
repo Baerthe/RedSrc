@@ -1,14 +1,13 @@
-namespace Game;
+namespace Utility;
 
+using Entity;
+using Event;
 using Godot;
-using Core;
-using Entities;
-using Game.Interface;
 using Interface;
 /// <summary>
-/// ChestSystem is responsible for managing chest spawning and interactions within the game. It implements the IGameSystem interface and utilizes a Path2D and PathFollow2D to determine chest spawn locations relative to the player.
+/// ChestSystem is responsible for managing chest spawning and interactions within the game. It implements the IUtility interface and utilizes a Path2D and PathFollow2D to determine chest spawn locations relative to the player.
 /// </summary>
-public sealed partial class ChestSystem : Node2D, IGameSystem
+public sealed partial class ChestUtility : Node2D, IUtility
 {
     public bool IsInitialized { get; private set; } = false;
     private LevelEntity _levelRef;
@@ -20,7 +19,7 @@ public sealed partial class ChestSystem : Node2D, IGameSystem
     // Dependency Services
     private readonly IAudioService _audioService;
     private readonly IEventService _eventService;
-    public ChestSystem(PackedScene chestTemplate, IAudioService audioService, IEventService eventService)
+    public ChestUtility(PackedScene chestTemplate, IAudioService audioService, IEventService eventService)
     {
         GD.Print("ChestSystem: Initializing...");
         _chestTemplate = chestTemplate;

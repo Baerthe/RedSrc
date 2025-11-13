@@ -1,4 +1,4 @@
-namespace Menu.Interface;
+namespace Interface;
 
 public interface IMenu
 {

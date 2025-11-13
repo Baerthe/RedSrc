@@ -1,22 +1,22 @@
-namespace Game;
+namespace Utility;
 
+using Data;
+using Entity;
+using Event;
 using Godot;
-using Core;
 using Interface;
-using Game.Interface;
+using System;
 using System.Collections;
-using Entities;
-
 /// <summary>
 /// System that handles experience point (XP) events and processing.
 /// </summary>
-public sealed partial class XPSystem : Node2D, IGameSystem
+public sealed partial class XPUtility : Node2D, IUtility
 {
 	public bool IsInitialized { get; private set; }
 	private Queue _xpQueue = new Queue();
 	private IAudioService _audioService;
 	private IEventService _eventService;
-	public XPSystem(IAudioService audioService, IEventService eventService)
+	public XPUtility(IAudioService audioService, IEventService eventService)
 	{
 		GD.Print("XPSystem: Initializing...");
 		_audioService = audioService;

@@ -1,15 +1,15 @@
-namespace Game;
+namespace Utility;
 
+using Entity;
+using Event;
 using Godot;
-using Core;
+using Interface;
 using System;
 using System.Collections.Generic;
-using Interface;
-using Game.Interface;
 /// <summary>
 /// ClockSystem manages the game's timing mechanisms, including pulse, slow pulse, mob spawn, chest spawn, game, and starting timers. It integrates with the EventService to provide timed events that other game systems can subscribe to.
 /// </summary>
-public partial class ClockSystem : Node2D, IGameSystem
+public partial class ClockUtility : Node2D, IUtility
 {
     public bool IsInitialized { get; private set; } = false;
     private Timer _pulseTimer;
@@ -28,7 +28,7 @@ public partial class ClockSystem : Node2D, IGameSystem
     private const float StartingInterval = 3f;       // OneShot (~3 seconds)
     // Dependency Services
     private readonly IEventService _eventService;
-    public ClockSystem(IEventService eventService)
+    public ClockUtility(IEventService eventService)
     {
         _eventService = eventService;
     }

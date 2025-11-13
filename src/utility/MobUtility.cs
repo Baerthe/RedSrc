@@ -1,22 +1,21 @@
-namespace Game;
+namespace Utility;
 
+using Data;
+using Entity;
+using Event;
 using Godot;
-using Core;
-using Entities;
-using Game.Interface;
 using Interface;
-using System.Collections.Generic;
 using System;
-
+using System.Collections.Generic;
 /// <summary>
 /// MobSystem manages the spawning, pooling, and AI behavior of mobs within the game.
 /// It utilizes a weighted random selection mechanism to spawn mobs based on their rarity and level, and implements various AI movement patterns.
 /// </summary>
-public sealed partial class MobSystem : Node2D, IGameSystem
+public sealed partial class MobUtility : Node2D, IUtility
 {
     public bool IsInitialized { get; private set; } = false;
     private List<(MobData mob, float weight)> _mobTable;
-    private Dictionary<MobMovement, System.Action<MobEntity>> _aiHandlers;
+    private Dictionary<MobMovement, Action<MobEntity>> _aiHandlers;
     private List<MobEntity> _pooledMobs = new();
     private List<MobEntity> _activeMobs = new();
     private Queue<MobEntity> _spawnQueue = new();
@@ -33,7 +32,7 @@ public sealed partial class MobSystem : Node2D, IGameSystem
     // Dependency Services
     private readonly IAudioService _audioService;
     private readonly IEventService _eventService;
-    public MobSystem(PackedScene mobTemplate, IAudioService audioService, IEventService eventService)
+    public MobUtility(PackedScene mobTemplate, IAudioService audioService, IEventService eventService)
     {
         GD.Print("MobSystem: Initializing...");
         _audioService = audioService;

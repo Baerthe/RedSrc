@@ -1,6 +1,6 @@
-namespace Game.Interface;
+namespace Interface;
 
-public interface IGameSystem
+public interface IUtility
 {
     bool IsInitialized { get; }
     public void OnInit();

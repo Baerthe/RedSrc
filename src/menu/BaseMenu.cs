@@ -1,9 +1,8 @@
 namespace Menu;
 
 using Godot;
-using Core;
+using Data;
 using Interface;
-using Menu.Interface;
 /// <summary>
 /// The base menu class provides common functionality for all menu types.
 /// </summary>

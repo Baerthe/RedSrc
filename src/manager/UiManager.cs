@@ -1,4 +1,4 @@
-namespace Game;
+namespace Manager;
 
 using Godot;
 /// <summary>

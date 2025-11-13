@@ -1,19 +1,22 @@
-namespace Game;
-using Godot;
-using Core;
-using Entities;
-using System;
-using Interface;
+namespace Manager;
 
+using Data;
+using Entity;
+using Event;
+using Godot;
+using Interface;
+using Service;
+using System;
+using Utility;
 [GlobalClass]
 public partial class GameManager : Node2D
 {
-    public ClockSystem CurrentClockSystem { get; private set; }
-    public ChestSystem CurrentChestSystem { get; private set; }
-    public MapSystem CurrentMapSystem { get; private set; }
-    public MobSystem CurrentMobSystem { get; private set; }
-    public PlayerSystem CurrentPlayerSystem { get; private set; }
-    public XPSystem CurrentXPSystem { get; private set; }
+    public ClockUtility CurrentClockUtility { get; private set; }
+    public ChestUtility CurrentChestUtility { get; private set; }
+    public MapUtility CurrentMapUtility { get; private set; }
+    public MobUtility CurrentMobUtility { get; private set; }
+    public PlayerUtility CurrentPlayerUtility { get; private set; }
+    public XPUtility CurrentXPUtility { get; private set; }
     public LevelData CurrentLevelData { get; private set; }
     public Camera2D Camera { get; private set; }
     public EntityIndex Templates { get; private set; }
@@ -78,20 +81,20 @@ public partial class GameManager : Node2D
         _levelInstance.AddToGroup("level");
         LoadingProgress = 70;
         // Initialize and add core systems
-        CurrentClockSystem = new(_eventService);
-        CurrentChestSystem = new(chestLoad, _audioService, _eventService);
-        CurrentMapSystem = new(_eventService);
-        CurrentMobSystem = new(mobLoad, _audioService, _eventService);
-        CurrentPlayerSystem = new(heroLoad, _audioService, _eventService, _heroService);
-        CurrentXPSystem = new(_audioService, _eventService);
+        CurrentClockUtility = new(_eventService);
+        CurrentChestUtility = new(chestLoad, _audioService, _eventService);
+        CurrentMapUtility = new(_eventService);
+        CurrentMobUtility = new(mobLoad, _audioService, _eventService);
+        CurrentPlayerUtility = new(heroLoad, _audioService, _eventService, _heroService);
+        CurrentXPUtility = new(_audioService, _eventService);
         LoadingProgress = 90;
         // Add systems to level entity
-        _levelInstance.AddChild(CurrentClockSystem);
-        _levelInstance.AddChild(CurrentChestSystem);
-        _levelInstance.AddChild(CurrentMapSystem);
-        _levelInstance.AddChild(CurrentMobSystem);
-        _levelInstance.AddChild(CurrentPlayerSystem);
-        _levelInstance.AddChild(CurrentXPSystem);
+        _levelInstance.AddChild(CurrentClockUtility);
+        _levelInstance.AddChild(CurrentChestUtility);
+        _levelInstance.AddChild(CurrentMapUtility);
+        _levelInstance.AddChild(CurrentMobUtility);
+        _levelInstance.AddChild(CurrentPlayerUtility);
+        _levelInstance.AddChild(CurrentXPUtility);
         LoadingProgress = 100;
         // Initialize systems
         _eventService.Publish<Init>();
@@ -107,12 +110,12 @@ public partial class GameManager : Node2D
         if (!IsPlaying)
         {
             GetTree().Paused = true;
-            CurrentClockSystem.PauseTimers();
+            CurrentClockUtility.PauseTimers();
         }
         else
         {
             GetTree().Paused = false;
-            CurrentClockSystem.ResumeTimers();
+            CurrentClockUtility.ResumeTimers();
         }
     }
     /// <summary>
@@ -125,16 +128,16 @@ public partial class GameManager : Node2D
             GD.PrintErr("No level loaded in GameManager to unload");
             return;
         }
-        CurrentClockSystem.QueueFree();
-        CurrentClockSystem = null;
-        CurrentChestSystem.QueueFree();
-        CurrentChestSystem = null;
-        CurrentMapSystem.QueueFree();
-        CurrentMapSystem = null;
-        CurrentMobSystem.QueueFree();
-        CurrentMobSystem = null;
-        CurrentPlayerSystem.QueueFree();
-        CurrentPlayerSystem = null;
+        CurrentClockUtility.QueueFree();
+        CurrentClockUtility = null;
+        CurrentChestUtility.QueueFree();
+        CurrentChestUtility = null;
+        CurrentMapUtility.QueueFree();
+        CurrentMapUtility = null;
+        CurrentMobUtility.QueueFree();
+        CurrentMobUtility = null;
+        CurrentPlayerUtility.QueueFree();
+        CurrentPlayerUtility = null;
         _levelInstance.QueueFree();
         CurrentLevelData = null;
         IsLevelLoaded = false;
@@ -145,13 +148,13 @@ public partial class GameManager : Node2D
     {
         if (!IsLevelLoaded) return;
         if (!IsPlaying) return;
-        CurrentMapSystem.Update();
-        CurrentMobSystem.Update();
+        CurrentMapUtility.Update();
+        CurrentMobUtility.Update();
     }
     private void OnSlowPulseTimeout(IEvent eventData)
     {
         if (!IsLevelLoaded) return;
         if (!IsPlaying) return;
-        CurrentXPSystem.Update();
+        CurrentXPUtility.Update();
     }
 }
