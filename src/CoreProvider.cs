@@ -1,5 +1,6 @@
 using Godot;
 using Interface;
+using Service;
 /// <summary>
 /// Where the magic happens; builds our dependency injection containers for Core Services Injection. CoreProvider is a global static class that allows any other class to access core services via a simple container.
 /// In usage, call CoreProvider.[ServiceName]Service() to get the singleton instance of the service; it can be helpful to register the service instance to a local readonly variable for easier access.

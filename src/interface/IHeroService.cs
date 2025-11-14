@@ -1,7 +1,6 @@
 namespace Interface;
 
-using Entities;
-using Godot;
+using Data;
 /// <summary>
 /// Interface for the HeroService; this Service handles hero data and management.
 /// </summary>

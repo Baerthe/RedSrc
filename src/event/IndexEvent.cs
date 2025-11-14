@@ -1,6 +1,6 @@
 namespace Event;
 
-using Entities;
+using Data;
 using Interface;
 /// <summary>
 /// Event class containing all game indices for easy access to pass to game systems.

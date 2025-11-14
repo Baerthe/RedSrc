@@ -1,7 +1,7 @@
 namespace Service;
 
+using Data;
 using Interface;
-using Entities;
 using Godot;
 /// <summary>
 /// Service that manages level loading and unloading.

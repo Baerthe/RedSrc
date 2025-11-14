@@ -1,10 +1,12 @@
-using Godot;
-using Core;
-using Game;
-using Menu;
-using Entities;
+using Data;
+using Entity;
+using Event;
 using Interface;
+using Manager;
+using Godot;
+using Service;
 using System;
+using Utility;
 using System.Collections.Generic;
 /// <summary>
 /// The main class that handles orchestration and dependency management of the game.
@@ -15,7 +17,7 @@ public partial class Main : Node2D
 	[ExportSubgroup("Core")]
 	[Export] public Camera2D MainCamera { get; private set; }
 	[Export] public GameManager GameManager { get; private set; }
-	[Export] public MenuManager MenuManager { get; private set; }
+//	[Export] public MenuManager MenuManager { get; private set; }
 	[Export] public UiManager UiManager { get; private set; }
 	[ExportGroup("Indices")]
 	[Export] public EntityIndex EntityTemplates { get; private set; }
@@ -58,7 +60,7 @@ public partial class Main : Node2D
 	{
 		if (UiManager == null) throw new InvalidOperationException("ERROR 201: HUD node not set in Main. Game cannot load.");
 		if (MainCamera == null) throw new InvalidOperationException("ERROR 202: Camera node not set in Main. Game cannot load.");
-		if (MenuManager == null) throw new InvalidOperationException("ERROR 203: Menu node not set in Main. Game cannot load.");
+		//if (MenuManager == null) throw new InvalidOperationException("ERROR 203: Menu node not set in Main. Game cannot load.");
 		if (GameManager == null) throw new InvalidOperationException("ERROR 204: Game node not set in Main. Game cannot load.");
 		GD.Print("We got all of our nodes! Checking Indices...");
 		if (EntityTemplates == null) throw new InvalidOperationException("ERROR 205: EntityIndex not set in Main. Game cannot load.");
@@ -78,7 +80,7 @@ public partial class Main : Node2D
 	}
 	private void CallMenuState()
 	{
-		MenuManager.Show();
+		//MenuManager.Show();
 		UiManager.Hide();
 		if (CurrentState == State.GameOver || _isGameStarted)
 		{
@@ -96,7 +98,7 @@ public partial class Main : Node2D
 	}
 	private void CallPlayingState()
 	{
-		MenuManager.Hide();
+		//MenuManager.Hide();
 		UiManager.Show();
 		if (!_isGameStarted)
 		{

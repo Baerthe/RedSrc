@@ -1,8 +1,8 @@
 namespace Service;
 
-using Interface;
-using Entities;
+using Data;
 using Godot;
+using Interface;
 /// <summary>
 /// Service that manages hero loading and unloading.
 /// </summary>

@@ -1,6 +1,7 @@
 namespace Interface;
 
-using Entities;
+using Data;
+using Entity;
 using Godot;
 /// <summary>
 /// Interface for the LevelService; this Service handles level transitions and loading.

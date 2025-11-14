@@ -1,6 +1,6 @@
 namespace Event;
 
-using Entities;
+using Data;
 using Interface;
 /// <summary>
 /// Event class that delivers a rarity of XP picked up each pulse.
