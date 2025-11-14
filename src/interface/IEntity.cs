@@ -1,6 +1,5 @@
 namespace Interface;
 
-using Entities;
 /// <summary>
 /// Interface for entity resources
 /// </summary>
