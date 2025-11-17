@@ -5,7 +5,6 @@ using Entity;
 using Event;
 using Godot;
 using Interface;
-using Service;
 using System;
 using Utility;
 [GlobalClass]
@@ -119,7 +118,7 @@ public partial class GameManager : Node2D
         }
     }
     /// <summary>
-    /// Unloads the current level by freeing all core systems and resetting the level loaded state.
+    /// Unloads the current level by freeing all utilities and resetting the level loaded state.
     /// </summary>
     public void UnloadLevel()
     {

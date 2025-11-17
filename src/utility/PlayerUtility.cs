@@ -72,6 +72,15 @@ public sealed partial class PlayerUtility : Node2D, IUtility
     {
         if (!IsInitialized) return;
         if (_playerRef == null) return;
+        // Are we trying to interact with something?
+        if (Input.IsActionJustPressed("interact"))
+        {
+            var interactable = GetInteractableInRange(_playerRef);
+            if (interactable != null && interactable.IsInteractable)
+            {
+                interactable.OnInteract();
+            }
+        }
         var velocity = Vector2.Zero;
         //What direction is the player going?
         if (Input.IsActionPressed("move_up"))
@@ -164,6 +173,39 @@ public sealed partial class PlayerUtility : Node2D, IUtility
         _playerRef.Hide();
         _items.Clear();
         _weapons.Clear();
+    }
+    /// <summary>
+    /// Gets an interactable entity within range of the player based on their current direction.
+    /// </summary>
+    private IInteractable GetInteractableInRange(HeroEntity player)
+    {
+        IInteractable entity = null;
+        var ray = new RayCast2D();
+        ray.GlobalPosition = player.GlobalPosition;
+        ray.TargetPosition = player.CurrentDirection switch
+        {
+            PlayerDirection.Up => new Vector2(0, -8),
+            PlayerDirection.Down => new Vector2(0, 8),
+            PlayerDirection.Left => new Vector2(-8, 0),
+            PlayerDirection.Right => new Vector2(8, 0),
+            PlayerDirection.Diagonal => new Vector2(8, -8),
+            _ => Vector2.Zero,
+        };
+        ray.Enabled = true;
+        ray.CollisionMask = 2; // Interactable layer ?? TODO: make sure.
+        player.AddChild(ray);
+        ray.ForceRaycastUpdate();
+        if (ray.IsColliding())
+        {
+            var collider = ray.GetCollider();
+            if (collider is IInteractable interactable)
+            {
+                entity = interactable;
+            }
+        }
+        player.RemoveChild(ray);
+        ray.QueueFree();
+        return entity;
     }
     private void LoadPlayer(HeroData hero)
     {
