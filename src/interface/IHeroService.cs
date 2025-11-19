@@ -4,7 +4,7 @@ using Data;
 /// <summary>
 /// Interface for the HeroService; this Service handles hero data and management.
 /// </summary>
-public interface IHeroService
+public interface IHeroService : IService
 {
     HeroData CurrentHero { get; }
     void LoadHero(HeroData heroData);

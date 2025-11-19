@@ -40,7 +40,6 @@ public sealed partial class PlayerUtility : Node2D, IUtility
         if (_playerRef == null) return;
         if (_playerRef.CurrentHealth <= 0)
         {
-            GD.Print("Player has died.");
             Defeat();
             return;
         }
@@ -107,17 +106,15 @@ public sealed partial class PlayerUtility : Node2D, IUtility
             _playerRef.CurrentDirection = PlayerDirection.Diagonal;
         if (velocity.Length() > 0)
         {
-            velocity = velocity.Normalized() * (_playerRef.Data as HeroData).Stats.Speed;
+            velocity = velocity.Normalized() * _playerRef.Data.Stats.Speed;
             _playerRef.Sprite.Play();
         }
         else
             _playerRef.Sprite.Stop();
-        // Move the player.
         Position += velocity * (float)delta;
         _playerRef.Sprite.FlipV = false; // Make sure we never flip vertically
         _playerRef.Sprite.FlipH = velocity.X < 0;
         _playerRef.MoveAndSlide();
-        //ExecuteWeaponAttacks();
     }
     public override void _ExitTree()
     {
@@ -135,7 +132,7 @@ public sealed partial class PlayerUtility : Node2D, IUtility
             return;
         }
         GD.Print("PlayerSystem initialized.");
-        LoadPlayer(CoreProvider.HeroService().CurrentHero);
+        LoadPlayer(ServiceProvider.HeroService().CurrentHero);
         _levelRef = GetTree().GetFirstNodeInGroup("level") as LevelEntity;
         _playerRef.Show();
 

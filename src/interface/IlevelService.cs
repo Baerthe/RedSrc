@@ -6,7 +6,7 @@ using Godot;
 /// <summary>
 /// Interface for the LevelService; this Service handles level transitions and loading.
 /// </summary>
-public interface ILevelService
+public interface ILevelService : IService
 {
     LevelData CurrentLevel { get; }
     void LoadLevel(LevelData levelData);

@@ -35,8 +35,8 @@ public partial class Main : Node2D
 	{
 		NullCheck();
 		GD.PrintRich("[color=#000][bgcolor=#00ff00]Main node ready. Initializing game...[/bgcolor][/color]");
-		_eventService = CoreProvider.EventService();
-		_levelService = CoreProvider.LevelService();
+		_eventService = ServiceProvider.EventService();
+		_levelService = ServiceProvider.LevelService();
 		_stateActions = new Dictionary<State, Action>
 		{
 			{ State.Menu, CallMenuState },

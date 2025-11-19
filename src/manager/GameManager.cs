@@ -31,15 +31,17 @@ public partial class GameManager : Node2D
     // Godot Methods
     public override void _Ready()
     {
-        _audioService = CoreProvider.AudioService();
-        _eventService = CoreProvider.EventService();
-        _heroService = CoreProvider.HeroService();
-        _prefService = CoreProvider.PrefService();
-        _levelService = CoreProvider.LevelService();
+        GD.PrintRich("[color=#00ff88]GameManager: Initializing services...[/color]");
+        _audioService = ServiceProvider.AudioService();
+        _eventService = ServiceProvider.EventService();
+        _heroService = ServiceProvider.HeroService();
+        _prefService = ServiceProvider.PrefService();
+        _levelService = ServiceProvider.LevelService();
         _eventService.Subscribe<IndexEvent>(OnIndexEvent);
         _eventService.Subscribe<PulseTimeout>(OnPulseTimeout);
         _eventService.Subscribe<SlowPulseTimeout>(OnSlowPulseTimeout);
         Camera = GetParent().GetNode<Camera2D>("MainCamera");
+        GD.PrintRich("[color=#00ff88]GameManager: Services initialized.[/color]");
     }
     public override void _ExitTree()
     {

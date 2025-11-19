@@ -12,8 +12,8 @@ public abstract partial class BaseMenu : Control, IMenu
     private IEventService _eventService;
     public override void _EnterTree()
     {
-        _audioService = CoreProvider.AudioService();
-        _eventService = CoreProvider.EventService();
+        _audioService = ServiceProvider.AudioService();
+        _eventService = ServiceProvider.EventService();
         base._EnterTree();
     }
 }

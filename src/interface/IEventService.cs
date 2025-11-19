@@ -4,7 +4,7 @@ using System;
 /// <summary>
 /// Interface for the EventService which manages event publishing and subscribing within the game.
 /// </summary>
-public interface IEventService
+public interface IEventService : IService
 {
     /// <summary>
     /// Subscribes to an event of type IEvent. The handler can accept an IEvent parameter to pass data if desired.

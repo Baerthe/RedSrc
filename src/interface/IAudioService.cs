@@ -1,5 +1,5 @@
 namespace Interface;
-public interface IAudioService
+public interface IAudioService : IService
 {
     void PlaySound(string soundName);
     void StopSound(string soundName);
