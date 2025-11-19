@@ -29,6 +29,5 @@ public interface IEventService : IService
     /// </summary>
     /// <typeparam name="IEvent"></typeparam>
     /// <param name="eventData"></param>
-    void Publish<T>(IEvent eventData);
-    void Publish<T>();
+    void Publish<T>(IEvent eventData = null);
 }

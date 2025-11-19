@@ -1,8 +1,25 @@
 namespace Event;
 
 using Interface;
-/// Non-data events for Game Systems.
+/// Game Events
 public sealed class Init : IEvent;
+public sealed class LoadingProgress : IEvent
+{
+    public byte Progress
+    {
+        get => _progress;
+        set {
+            if (value < 0)
+                _progress = 0;
+            else if (value > 100)
+                _progress = 100;
+            else
+                _progress = value;
+        }
+    }
+    private byte _progress;
+    public LoadingProgress(byte progress) => Progress = progress;
+}
 // Player Events
 public sealed class PlayerSpawn : IEvent;
 public sealed class PlayerDefeat : IEvent;
