@@ -27,10 +27,6 @@ public sealed class EventService : IEventService
     }
     public void Subscribe<T>(Action<IEvent> handler)
     {
-        Subscribe<T>(handler);
-    }
-    public void Subscribe<T>(Action handler)
-    {
         var type = typeof(T);
         if (!_subs.ContainsKey(type))
         {
@@ -40,11 +36,11 @@ public sealed class EventService : IEventService
         GD.PrintRich($"[color=#0044FF]EventService: Subscribing handler to event type {type.Name}.[/color]");
         _subs[type].Add(handler);
     }
-    public void Unsubscribe<T>(Action<IEvent> eventHandler)
+    public void Subscribe<T>(Action handler)
     {
-        Unsubscribe<T>(eventHandler);
+        Subscribe<T>((IEvent _) => handler());
     }
-    public void Unsubscribe<T>(Action eventHandler)
+    public void Unsubscribe<T>(Action<IEvent> eventHandler)
     {
         var type = typeof(T);
         if (_subs.ContainsKey(type))
@@ -64,7 +60,11 @@ public sealed class EventService : IEventService
             }
         }
     }
-    public void Publish<T>(IEvent eventData = null)
+    public void Unsubscribe<T>(Action eventHandler)
+    {
+        Unsubscribe<T>((IEvent _) => eventHandler());
+    }
+    public void Publish<T>(IEvent eventData)
     {
         var type = typeof(T);
         if (!_subs.ContainsKey(type))
@@ -84,5 +84,9 @@ public sealed class EventService : IEventService
                 ((Action<IEvent>)handler)(eventData);
             }
         }
+    }
+    public void Publish<T>()
+    {
+        Publish<T>(null);
     }
 }
