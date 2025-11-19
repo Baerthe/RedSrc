@@ -1,27 +1,27 @@
 [gd_scene load_steps=10 format=3 uid="uid://ddn3j7obdlhp4"]
 
-[ext_resource type="Script" uid="uid://mevgk8q6vius" path="res://scripts/Main.cs" id="1_r150o"]
-[ext_resource type="Resource" uid="uid://1ddfje3y85jr" path="res://assets/data/indices/HeroIndex.tres" id="2_cb1w8"]
-[ext_resource type="Resource" uid="uid://coa623sevelal" path="res://assets/data/indices/EntityIndex.tres" id="2_jv468"]
-[ext_resource type="Script" uid="uid://cs8m506hclj1o" path="res://scripts/game/GameManager.cs" id="3_3qypx"]
-[ext_resource type="Script" uid="uid://d38a6u1usprrc" path="res://scripts/menu/MainMenu.cs" id="3_eruk6"]
-[ext_resource type="Resource" uid="uid://csrc5ea0tfne0" path="res://assets/data/indices/ItemIndex.tres" id="4_ittna"]
-[ext_resource type="Script" uid="uid://dfq5qdql8603i" path="res://scripts/game/UiManager.cs" id="4_jv468"]
-[ext_resource type="Resource" uid="uid://d151xchrphtdt" path="res://assets/data/indices/LevelIndex.tres" id="5_cfala"]
-[ext_resource type="Resource" uid="uid://tqdcjl18cwta" path="res://assets/data/indices/WeaponIndex.tres" id="6_0tkjb"]
+[ext_resource type="Script" uid="uid://mevgk8q6vius" path="res://src/Main.cs" id="1_r150o"]
+[ext_resource type="Resource" uid="uid://1ddfje3y85jr" path="res://data/indices/HeroIndex.tres" id="2_cb1w8"]
+[ext_resource type="Resource" uid="uid://coa623sevelal" path="res://data/indices/EntityIndex.tres" id="2_jv468"]
+[ext_resource type="Script" uid="uid://cs8m506hclj1o" path="res://src/manager/GameManager.cs" id="3_3qypx"]
+[ext_resource type="Script" uid="uid://d38a6u1usprrc" path="res://src/menu/MainMenu.cs" id="3_eruk6"]
+[ext_resource type="Resource" uid="uid://csrc5ea0tfne0" path="res://data/indices/ItemIndex.tres" id="4_ittna"]
+[ext_resource type="Script" uid="uid://dfq5qdql8603i" path="res://src/manager/UiManager.cs" id="4_jv468"]
+[ext_resource type="Resource" uid="uid://d151xchrphtdt" path="res://data/indices/LevelIndex.tres" id="5_cfala"]
+[ext_resource type="Resource" uid="uid://tqdcjl18cwta" path="res://data/indices/WeaponIndex.tres" id="6_0tkjb"]
 
 [node name="Main" type="Node2D" node_paths=PackedStringArray("MainCamera", "GameManager", "MenuManager", "UiManager")]
 texture_filter = 1
 script = ExtResource("1_r150o")
-MainCamera = NodePath("Camera2D")
-GameManager = NodePath("GameManager")
-MenuManager = NodePath("MenuManager")
-UiManager = NodePath("UiManager")
 EntityTemplates = ExtResource("2_jv468")
 Heroes = ExtResource("2_cb1w8")
 Items = ExtResource("4_ittna")
 Levels = ExtResource("5_cfala")
 Weapons = ExtResource("6_0tkjb")
+MainCamera = NodePath("Camera2D")
+GameManager = NodePath("GameManager")
+MenuManager = NodePath("MenuManager")
+UiManager = NodePath("UiManager")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 top_level = true

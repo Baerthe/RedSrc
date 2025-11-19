@@ -75,7 +75,7 @@ public sealed partial class PlayerUtility : Node2D, IUtility
         // Are we trying to interact with something?
         if (Input.IsActionJustPressed("interact"))
         {
-            var interactable = GetInteractableInRange(_playerRef);
+            var interactable = GetInteractableInRange();
             if (interactable != null && interactable.IsInteractable)
             {
                 interactable.OnInteract();
@@ -177,12 +177,12 @@ public sealed partial class PlayerUtility : Node2D, IUtility
     /// <summary>
     /// Gets an interactable entity within range of the player based on their current direction.
     /// </summary>
-    private IInteractable GetInteractableInRange(HeroEntity player)
+    private IInteractable GetInteractableInRange()
     {
         IInteractable entity = null;
         var ray = new RayCast2D();
-        ray.GlobalPosition = player.GlobalPosition;
-        ray.TargetPosition = player.CurrentDirection switch
+        ray.GlobalPosition = _playerRef.GlobalPosition;
+        ray.TargetPosition = _playerRef.CurrentDirection switch
         {
             PlayerDirection.Up => new Vector2(0, -8),
             PlayerDirection.Down => new Vector2(0, 8),
@@ -193,7 +193,7 @@ public sealed partial class PlayerUtility : Node2D, IUtility
         };
         ray.Enabled = true;
         ray.CollisionMask = 2; // Interactable layer ?? TODO: make sure.
-        player.AddChild(ray);
+        _playerRef.AddChild(ray);
         ray.ForceRaycastUpdate();
         if (ray.IsColliding())
         {
@@ -203,7 +203,7 @@ public sealed partial class PlayerUtility : Node2D, IUtility
                 entity = interactable;
             }
         }
-        player.RemoveChild(ray);
+        _playerRef.RemoveChild(ray);
         ray.QueueFree();
         return entity;
     }

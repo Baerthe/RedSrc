@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://c6oguljhtw3jj"
-path="res://.godot/imported/JDSherbert - Ambiences Music Pack - Swamp of Digeridoos.ogg-83419e5424a4cbe29eff2a1e958069fd.oggvorbisstr"
+path="res://.godot/imported/JDSherbert - Ambiences Music Pack - Swamp of Digeridoos.ogg-d6f914c0b1a36353d41d98a341f467d0.oggvorbisstr"
 
 [deps]
 
-source_file="res://assets/audio/music/JDSherbert - Ambiences Music Pack - Swamp of Digeridoos.ogg"
-dest_files=["res://.godot/imported/JDSherbert - Ambiences Music Pack - Swamp of Digeridoos.ogg-83419e5424a4cbe29eff2a1e958069fd.oggvorbisstr"]
+source_file="res://asset/audio/music/JDSherbert - Ambiences Music Pack - Swamp of Digeridoos.ogg"
+dest_files=["res://.godot/imported/JDSherbert - Ambiences Music Pack - Swamp of Digeridoos.ogg-d6f914c0b1a36353d41d98a341f467d0.oggvorbisstr"]
 
 [params]
 

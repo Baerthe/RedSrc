@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://clwy3crh6457i"
-path="res://.godot/imported/Kenney Blocks.ttf-f89fa5351b8e9fe920d137ed988fca33.fontdata"
+path="res://.godot/imported/Kenney Blocks.ttf-83220f83099774a3f5f826bf1edea72c.fontdata"
 
 [deps]
 
-source_file="res://assets/fonts/Kenney Blocks.ttf"
-dest_files=["res://.godot/imported/Kenney Blocks.ttf-f89fa5351b8e9fe920d137ed988fca33.fontdata"]
+source_file="res://asset/font/Kenney Blocks.ttf"
+dest_files=["res://.godot/imported/Kenney Blocks.ttf-83220f83099774a3f5f826bf1edea72c.fontdata"]
 
 [params]
 

@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://dmkonbbago4eq"
-path="res://.godot/imported/clothBelt2.ogg-64469c434507f235c6cf2183f0763ae5.oggvorbisstr"
+path="res://.godot/imported/clothBelt2.ogg-0968ec538b30d63dcea1072ed248e81a.oggvorbisstr"
 
 [deps]
 
-source_file="res://assets/audio/sfx/clothBelt2.ogg"
-dest_files=["res://.godot/imported/clothBelt2.ogg-64469c434507f235c6cf2183f0763ae5.oggvorbisstr"]
+source_file="res://asset/audio/sfx/clothBelt2.ogg"
+dest_files=["res://.godot/imported/clothBelt2.ogg-0968ec538b30d63dcea1072ed248e81a.oggvorbisstr"]
 
 [params]
 

@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://low1q7gogwx2"
-path="res://.godot/imported/bookFlip2.ogg-69fec1c8cf9712fa43a8148f550a0dd8.oggvorbisstr"
+path="res://.godot/imported/bookFlip2.ogg-8db69eaf3465729d154fa6c6f968aa3f.oggvorbisstr"
 
 [deps]
 
-source_file="res://assets/audio/sfx/bookFlip2.ogg"
-dest_files=["res://.godot/imported/bookFlip2.ogg-69fec1c8cf9712fa43a8148f550a0dd8.oggvorbisstr"]
+source_file="res://asset/audio/sfx/bookFlip2.ogg"
+dest_files=["res://.godot/imported/bookFlip2.ogg-8db69eaf3465729d154fa6c6f968aa3f.oggvorbisstr"]
 
 [params]
 

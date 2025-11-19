@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://du0c63twilk23"
-path="res://.godot/imported/bookPlace1.ogg-a26e96592091405381cb6ec1163ad1fd.oggvorbisstr"
+path="res://.godot/imported/bookPlace1.ogg-b9a6ee0531313b83770c29ae3e8b0d75.oggvorbisstr"
 
 [deps]
 
-source_file="res://assets/audio/sfx/bookPlace1.ogg"
-dest_files=["res://.godot/imported/bookPlace1.ogg-a26e96592091405381cb6ec1163ad1fd.oggvorbisstr"]
+source_file="res://asset/audio/sfx/bookPlace1.ogg"
+dest_files=["res://.godot/imported/bookPlace1.ogg-b9a6ee0531313b83770c29ae3e8b0d75.oggvorbisstr"]
 
 [params]
 

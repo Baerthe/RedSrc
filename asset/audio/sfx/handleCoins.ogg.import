@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://uhncdnpjq7go"
-path="res://.godot/imported/handleCoins.ogg-ca51fbe9038d23baa2b3bc131c3bcc36.oggvorbisstr"
+path="res://.godot/imported/handleCoins.ogg-4389468aa46dce5c3fdd17e65dd32532.oggvorbisstr"
 
 [deps]
 
-source_file="res://assets/audio/sfx/handleCoins.ogg"
-dest_files=["res://.godot/imported/handleCoins.ogg-ca51fbe9038d23baa2b3bc131c3bcc36.oggvorbisstr"]
+source_file="res://asset/audio/sfx/handleCoins.ogg"
+dest_files=["res://.godot/imported/handleCoins.ogg-4389468aa46dce5c3fdd17e65dd32532.oggvorbisstr"]
 
 [params]
 

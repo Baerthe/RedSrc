@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://buxtjdk7agtko"
-path="res://.godot/imported/metalLatch.ogg-6526d87be815dbdc30040650ff4a4edd.oggvorbisstr"
+path="res://.godot/imported/metalLatch.ogg-5e43e56fee67b1eea1e7d2b1aeb01a45.oggvorbisstr"
 
 [deps]
 
-source_file="res://assets/audio/sfx/metalLatch.ogg"
-dest_files=["res://.godot/imported/metalLatch.ogg-6526d87be815dbdc30040650ff4a4edd.oggvorbisstr"]
+source_file="res://asset/audio/sfx/metalLatch.ogg"
+dest_files=["res://.godot/imported/metalLatch.ogg-5e43e56fee67b1eea1e7d2b1aeb01a45.oggvorbisstr"]
 
 [params]
 

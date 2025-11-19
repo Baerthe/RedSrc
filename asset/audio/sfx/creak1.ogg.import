@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://b7gyoag6xds2l"
-path="res://.godot/imported/creak1.ogg-74d87f99f85c10946d4df814743050fa.oggvorbisstr"
+path="res://.godot/imported/creak1.ogg-a6ca25baacc77cd75f04beb673e6bca7.oggvorbisstr"
 
 [deps]
 
-source_file="res://assets/audio/sfx/creak1.ogg"
-dest_files=["res://.godot/imported/creak1.ogg-74d87f99f85c10946d4df814743050fa.oggvorbisstr"]
+source_file="res://asset/audio/sfx/creak1.ogg"
+dest_files=["res://.godot/imported/creak1.ogg-a6ca25baacc77cd75f04beb673e6bca7.oggvorbisstr"]
 
 [params]
 

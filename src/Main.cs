@@ -1,12 +1,9 @@
 using Data;
-using Entity;
 using Event;
 using Interface;
 using Manager;
 using Godot;
-using Service;
 using System;
-using Utility;
 using System.Collections.Generic;
 /// <summary>
 /// The main class that handles orchestration and dependency management of the game.
@@ -17,7 +14,7 @@ public partial class Main : Node2D
 	[ExportSubgroup("Core")]
 	[Export] public Camera2D MainCamera { get; private set; }
 	[Export] public GameManager GameManager { get; private set; }
-//	[Export] public MenuManager MenuManager { get; private set; }
+	//	[Export] public MenuManager MenuManager { get; private set; }
 	[Export] public UiManager UiManager { get; private set; }
 	[ExportGroup("Indices")]
 	[Export] public EntityIndex EntityTemplates { get; private set; }
@@ -110,3 +107,7 @@ public partial class Main : Node2D
 		//
 	}
 }
+public enum State : byte
+	{
+		Menu, LevelSelect, Paused, Playing, GameOver
+	}
