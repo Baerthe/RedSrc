@@ -31,7 +31,7 @@ public sealed partial class PlayerUtility : Node2D, IUtility
     }
     public override void _Ready()
     {
-        _eventService.Subscribe<Init>(OnInit);
+        _eventService.Subscribe<InitEvent>(OnInit);
         GD.Print("PlayerSystem Ready.");
     }
     public override void _Process(double delta)
@@ -118,7 +118,7 @@ public sealed partial class PlayerUtility : Node2D, IUtility
     }
     public override void _ExitTree()
     {
-        _eventService.Unsubscribe<Init>(OnInit);
+        _eventService.Unsubscribe<InitEvent>(OnInit);
         _playerRef.QueueFree();
         _items.Clear();
         _weapons.Clear();
@@ -128,7 +128,7 @@ public sealed partial class PlayerUtility : Node2D, IUtility
     {
         if (IsInitialized)
         {
-            GD.PrintErr("PlayerSystem is already initialized. Init should only be called once per level load.");
+            GD.PrintErr("PlayerSystem is already initialized. InitEvent should only be called once per level load.");
             return;
         }
         GD.Print("PlayerSystem initialized.");

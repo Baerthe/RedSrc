@@ -11,6 +11,7 @@ using System.Collections.Generic;
 public partial class Main : Node2D
 {
 	[ExportGroup("Main Nodes")]
+	[Export] public bool IsDebugMode { get; private set; } = false;
 	[ExportSubgroup("Core")]
 	[Export] public Camera2D MainCamera { get; private set; }
 	[Export] public GameManager GameManager { get; private set; }
@@ -48,6 +49,13 @@ public partial class Main : Node2D
 		_eventService.Subscribe<StateEvent>(OnStateRequest);
 		GD.PrintRich("[color=#000][bgcolor=#00ff00]Game Initialized.[/bgcolor][/color]");
 		_eventService.Publish<IndexEvent>(new IndexEvent(Heroes, EntityTemplates, Items, Levels, Weapons));
+		if (IsDebugMode)
+		{
+			GD.PrintRich("[color=#000][bgcolor=#ff0000]Debug Mode Enabled.[/bgcolor][/color]");
+			_levelService.LoadLevel(Levels.DebugLevel);
+			_eventService.Publish<DebugModeEvent>();
+			_eventService.Publish<StateEvent>(new StateEvent(State.Playing));
+		}
 	}
 	/// <summary>
 	/// Validates that all critical nodes are assigned in the editor. If any are missing, it logs an error and throws an exception to prevent the game from running in an invalid state.

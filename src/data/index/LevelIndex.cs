@@ -8,5 +8,6 @@ using Godot;
 public sealed partial class LevelIndex : Resource
 {
     [ExportCategory("Level Data")]
+    [Export] public LevelData DebugLevel { get; private set; }
     [Export] public LevelData[] AllLevels { get; private set; }
 }

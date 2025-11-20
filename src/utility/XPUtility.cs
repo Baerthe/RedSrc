@@ -24,13 +24,13 @@ public sealed partial class XPUtility : Node2D, IUtility
 	}
 	public override void _Ready()
 	{
-		_eventService.Subscribe<Init>(OnInit);
+		_eventService.Subscribe<InitEvent>(OnInit);
 		_eventService.Subscribe<XPEvent>(OnXPEvent);
 		GD.Print("XPSystem Ready.");
 	}
 	public override void _ExitTree()
 	{
-		_eventService.Unsubscribe<Init>(OnInit);
+		_eventService.Unsubscribe<InitEvent>(OnInit);
 		_eventService.Unsubscribe<XPEvent>(OnXPEvent);
 	}
 	public void OnInit()

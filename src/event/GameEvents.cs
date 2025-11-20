@@ -2,13 +2,14 @@ namespace Event;
 
 using Interface;
 /// Game Events
-public sealed class Init : IEvent;
+public sealed class InitEvent : IEvent;
 public sealed class LoadingProgress : IEvent
 {
     public byte Progress
     {
         get => _progress;
-        set {
+        set
+        {
             if (value < 0)
                 _progress = 0;
             else if (value > 100)
@@ -20,6 +21,7 @@ public sealed class LoadingProgress : IEvent
     private byte _progress;
     public LoadingProgress(byte progress) => Progress = progress;
 }
+public sealed class DebugModeEvent : IEvent;
 // Player Events
 public sealed class PlayerSpawn : IEvent;
 public sealed class PlayerDefeat : IEvent;

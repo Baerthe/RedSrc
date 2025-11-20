@@ -27,6 +27,8 @@ public partial class GameManager : Node2D
     private IHeroService _heroService;
     private IPrefService _prefService;
     private ILevelService _levelService;
+    // Debug
+    private bool _isDebugMode = false;
     // Godot Methods
     public override void _Ready()
     {
@@ -39,6 +41,7 @@ public partial class GameManager : Node2D
         _eventService.Subscribe<IndexEvent>(OnIndexEvent);
         _eventService.Subscribe<PulseTimeout>(OnPulseTimeout);
         _eventService.Subscribe<SlowPulseTimeout>(OnSlowPulseTimeout);
+        _eventService.Subscribe<DebugModeEvent>(OnDebugModeEvent);
         Camera = GetParent().GetNode<Camera2D>("MainCamera");
         GD.PrintRich("[color=#00ff88]GameManager: Services initialized.[/color]");
     }
@@ -47,6 +50,7 @@ public partial class GameManager : Node2D
         _eventService.Unsubscribe<IndexEvent>(OnIndexEvent);
         _eventService.Unsubscribe<PulseTimeout>(OnPulseTimeout);
         _eventService.Unsubscribe<SlowPulseTimeout>(OnSlowPulseTimeout);
+        _eventService.Unsubscribe<DebugModeEvent>(OnDebugModeEvent);
     }
     public override void _Process(double delta)
     {
@@ -97,7 +101,7 @@ public partial class GameManager : Node2D
         _levelInstance.AddChild(CurrentXPUtility);
         _eventService.Publish<LoadingProgress>(new LoadingProgress(100));
         // Initialize systems
-        _eventService.Publish<Init>();
+        _eventService.Publish<InitEvent>();
         IsLevelLoaded = true;
         GD.PrintRich("[color=#00ff88]GameManager: Level loaded and systems initialized.[/color]");
     }
@@ -157,4 +161,5 @@ public partial class GameManager : Node2D
         if (!IsPlaying) return;
         CurrentXPUtility.Update();
     }
+    private void OnDebugModeEvent(IEvent eventData) => _isDebugMode = true;
 }

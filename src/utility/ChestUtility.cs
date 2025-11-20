@@ -28,13 +28,13 @@ public sealed partial class ChestUtility : Node2D, IUtility
     }
     public override void _Ready()
     {
-        _eventService.Subscribe<Init>(OnInit);
+        _eventService.Subscribe<InitEvent>(OnInit);
         _eventService.Subscribe<ChestSpawnTimeout>(OnChestSpawnTimeout);
         GD.Print("ChestSystem Ready.");
     }
     public override void _ExitTree()
     {
-        _eventService.Unsubscribe<Init>(OnInit);
+        _eventService.Unsubscribe<InitEvent>(OnInit);
         _eventService.Unsubscribe<ChestSpawnTimeout>(OnChestSpawnTimeout);
     }
     public void OnInit()

@@ -12,6 +12,7 @@
 [node name="Main" type="Node2D" node_paths=PackedStringArray("MainCamera", "GameManager", "UiManager")]
 texture_filter = 1
 script = ExtResource("1_r150o")
+IsDebugMode = true
 MainCamera = NodePath("Camera2D")
 GameManager = NodePath("GameManager")
 UiManager = NodePath("UiManager")

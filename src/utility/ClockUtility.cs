@@ -34,7 +34,7 @@ public partial class ClockUtility : Node2D, IUtility
 	public override void _Ready()
 	{
 		GD.Print("ClockSystem Present.");
-		_eventService.Subscribe<Init>(OnInit);
+		_eventService.Subscribe<InitEvent>(OnInit);
 		_eventService.Subscribe<PulseTimeout>(OnPulseTimeout);
 		_eventService.Subscribe<SlowPulseTimeout>(OnSlowPulseTimeout);
 		_eventService.Subscribe<MobSpawnTimeout>(OnMobSpawnTimeout);
@@ -50,7 +50,7 @@ public partial class ClockUtility : Node2D, IUtility
 	}
 	public override void _ExitTree()
 	{
-		_eventService.Unsubscribe<Init>(OnInit);
+		_eventService.Unsubscribe<InitEvent>(OnInit);
 		_eventService.Unsubscribe<PulseTimeout>(OnPulseTimeout);
 		_eventService.Unsubscribe<SlowPulseTimeout>(OnSlowPulseTimeout);
 		_eventService.Unsubscribe<MobSpawnTimeout>(OnMobSpawnTimeout);

@@ -41,14 +41,14 @@ public sealed partial class MobUtility : Node2D, IUtility
     }
     public override void _Ready()
     {
-        _eventService.Subscribe<Init>(OnInit);
+        _eventService.Subscribe<InitEvent>(OnInit);
         _eventService.Subscribe<MobSpawnTimeout>(OnMobTimeout);
         _eventService.Subscribe<GameTimeout>(OnGameTimeout);
         GD.Print("MobSystem Ready.");
     }
     public override void _ExitTree()
     {
-        _eventService.Unsubscribe<Init>(OnInit);
+        _eventService.Unsubscribe<InitEvent>(OnInit);
         _eventService.Unsubscribe<MobSpawnTimeout>(OnMobTimeout);
         _eventService.Unsubscribe<GameTimeout>(OnGameTimeout);
     }

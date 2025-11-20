@@ -41,12 +41,12 @@ public sealed partial class MapUtility : Node2D, IUtility
 	}
 	public override void _Ready()
 	{
-		_eventService.Subscribe<Init>(OnInit);
+		_eventService.Subscribe<InitEvent>(OnInit);
 		GD.Print("MapSystem Ready.");
 	}
 	public override void _ExitTree()
     {
-        _eventService.Unsubscribe<Init>(OnInit);
+        _eventService.Unsubscribe<InitEvent>(OnInit);
     }
     public void OnInit()
 	{
