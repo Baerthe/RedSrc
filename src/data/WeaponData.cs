@@ -10,7 +10,7 @@ public partial class WeaponData : Resource, IData
 {
     [ExportCategory("Stats")]
     [ExportGroup("Info")]
-    [Export] public Info Info { get; private set; } = new Info();
+    [Export] public InfoData Info { get; private set; } = new InfoData();
     [Export] public Metadata MetaData { get; private set; } = new Metadata();
     [ExportGroup("Attributes")]
     [Export] public uint MaxLevel { get; set; } = 1;
@@ -19,8 +19,5 @@ public partial class WeaponData : Resource, IData
     [Export] public float AttackSpeed { get; set; }
     [Export] public float Range { get; set; }
     [ExportGroup("Assets")]
-    [Export] public Texture2D Icon { get; private set; }
-    [Export] public Texture2D AttackSprite { get; private set; }
-    [Export] public AudioStream SwingSound { get; private set; }
-    [Export] public AudioStream HitSound { get; private set; }
+    [Export] public AssetData Assets { get; private set; } = new AssetData();
 }

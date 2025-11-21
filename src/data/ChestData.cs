@@ -10,9 +10,9 @@ public partial class ChestData : Resource, IData
 {
     [ExportCategory("Stats")]
     [ExportGroup("Info")]
-    [Export] public Info Info { get; private set; } = new Info();
+    [Export] public InfoData Info { get; private set; } = new InfoData();
     [Export] public Metadata MetaData { get; private set; } = new Metadata();
     [Export] public ChestType Type { get; private set; } = ChestType.Item;
     [ExportGroup("Assets")]
-    [Export] public SpriteFrames Sprite { get; set; }
+    [Export] public AssetData Assets { get; private set; } = new AssetData();
 }

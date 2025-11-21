@@ -5,8 +5,8 @@ using Godot;
 public sealed partial class XPdata : Resource, IData
 {
     [ExportCategory("XP Data")]
-    [Export] public Info Info { get; private set; }
+    [Export] public InfoData Info { get; private set; } = new InfoData();
+    [Export] public Metadata MetaData { get; private set; } = new Metadata();
     [Export] public RarityType XPAmount { get; private set; }
-    [Export] public Texture2D XPTexture { get; private set; }
-    [Export] public Shape2D XPCollisionShape { get; private set; }
+    [Export] public AssetData Assets { get; private set; } = new AssetData();
 }

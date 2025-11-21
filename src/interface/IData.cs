@@ -6,5 +6,7 @@ using Data;
 /// </summary>
 public interface IData
 {
-    public Info Info { get; }
+    public InfoData Info { get; }
+    public Metadata MetaData { get; }
+    public AssetData Assets { get; }
 }

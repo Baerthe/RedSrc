@@ -4,7 +4,7 @@ using Godot;
 /// <summary>
 /// Info is a Resource that holds common information attributes shared across various entities in the game.
 /// </summary>
-public partial class Info : Resource
+public partial class InfoData : Resource
 {
     [Export] public string Name { get; private set; } = "";
     [Export] public string Description { get; private set; } = "";

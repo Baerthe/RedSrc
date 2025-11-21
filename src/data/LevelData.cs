@@ -10,7 +10,7 @@ public partial class LevelData : Resource, IData
 {
     [ExportCategory("Stats")]
     [ExportGroup("Info")]
-    [Export] public Info Info { get; private set; } = new Info();
+    [Export] public InfoData Info { get; private set; } = new InfoData();
     [Export] public Metadata MetaData { get; private set; } = new Metadata();
     [Export] public LevelType Type { get; set; }
     [Export] public LevelTier Tier { get; set; }
