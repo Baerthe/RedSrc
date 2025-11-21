@@ -1,6 +1,7 @@
 namespace Data;
 
 using Godot;
+[GlobalClass]
 public sealed partial class AssetData : Resource
 {
     [Export] public SpriteFrames Sprite { get; private set; }

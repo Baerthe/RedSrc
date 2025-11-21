@@ -1,6 +1,7 @@
 namespace Data;
 
 using Godot;
+
 public sealed partial class StatsData : Resource
 {
     [Export] public uint MaxHealth { get; private set; } = 100;

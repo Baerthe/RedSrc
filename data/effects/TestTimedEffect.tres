@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="TimedEffect" load_steps=2 format=3 uid="uid://dbestmr6pl2jy"]
+[gd_resource type="Resource" script_class="TimedEffect" load_steps=2 format=3 uid="uid://c81ypbmqdrxwb"]
 
-[ext_resource type="Script" uid="uid://2ufqf4tuhj6g" path="res://scripts/entities/effects/TimedEffect.cs" id="1_ovybe"]
+[ext_resource type="Script" uid="uid://2ufqf4tuhj6g" path="res://src/data/effect/TimedEffect.cs" id="1_0670l"]
 
 [resource]
-script = ExtResource("1_ovybe")
+script = ExtResource("1_0670l")
 metadata/_custom_type_script = "uid://2ufqf4tuhj6g"
