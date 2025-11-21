@@ -19,4 +19,5 @@ public partial class LevelData : Resource, IData
     [ExportCategory("Scenes")]
     [Export] public MobTable MobTable { get; private set; }
     [Export] public PackedScene Map { get; private set; }
+    [Export] public AssetData Assets { get; private set; } = new AssetData();
 }

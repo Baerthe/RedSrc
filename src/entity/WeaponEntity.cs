@@ -12,7 +12,7 @@ public partial class WeaponEntity : Node2D, IEntity
 {
     [ExportCategory("Components")]
     [ExportGroup("Components")]
-    [Export] public Sprite2D AttackSprite { get; private set; }
+    [Export] public AnimatedSprite2D AttackSprite { get; private set; }
     public WeaponData Data { get; private set; }
     public uint CurrentLevel
     {
@@ -43,7 +43,7 @@ public partial class WeaponEntity : Node2D, IEntity
             return;
         }
         Data = (WeaponData)data ?? throw new ArgumentNullException(nameof(data));
-        AttackSprite.Texture = Data.AttackSprite;
+        AttackSprite.SpriteFrames = Data.Assets.Sprite;
     }
     public void NullCheck()
     {

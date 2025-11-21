@@ -37,10 +37,10 @@ public partial class MobEntity : RigidBody2D, IEntity
         }
         Data = (MobData)data ?? throw new ArgumentNullException(nameof(data));
         CurrentHealth = Data.Stats.MaxHealth;
-        Sprite.SpriteFrames = Data.Sprite;
-        Sprite.Modulate = Data.TintColor;
+        Sprite.SpriteFrames = Data.Assets.Sprite;
+        Sprite.Modulate = Data.Assets.TintColor;
         CollisionShape2D shape = new CollisionShape2D();
-        shape.Shape = Data.CollisionShape;
+        shape.Shape = Data.Assets.CollisionShape;
         Hitbox.AddChild(shape);
     }
     public void NullCheck()

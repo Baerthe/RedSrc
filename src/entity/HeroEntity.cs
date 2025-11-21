@@ -32,10 +32,10 @@ public partial class HeroEntity : CharacterBody2D, IEntity
 		}
 		Data = (HeroData)data ?? throw new ArgumentNullException(nameof(data));
 		CurrentHealth = Data.Stats.MaxHealth;
-		Sprite.SpriteFrames = Data.Sprite;
-		Sprite.Modulate = Data.TintColor;
+		Sprite.SpriteFrames = Data.Assets.Sprite;
+		Sprite.Modulate = Data.Assets.TintColor;
 		CollisionShape2D shape = new CollisionShape2D();
-		shape.Shape = Data.CollisionShape;
+		shape.Shape = Data.Assets.CollisionShape;
 		Hitbox.AddChild(shape);
 	}
 	public void NullCheck()

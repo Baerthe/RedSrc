@@ -27,7 +27,7 @@ public partial class ProjectileEntity : Node2D, IEntity
             return;
         }
         Data = (ProjectileData)data ?? throw new ArgumentNullException(nameof(data));
-        Sprite.SpriteFrames = Data.Sprite;
+        Sprite.SpriteFrames = Data.Assets.Sprite;
         HitBox = Area.GetNode<CollisionShape2D>("CollisionShape2D");
     }
     public void NullCheck()

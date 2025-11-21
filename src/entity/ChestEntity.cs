@@ -34,7 +34,7 @@ public partial class ChestEntity : Node2D, IEntity
             return;
         }
         Data = (ChestData)data ?? throw new ArgumentNullException(nameof(data));
-        Sprite.SpriteFrames = Data.Sprite;
+        Sprite.SpriteFrames = Data.Assets.Sprite;
     }
     public void NullCheck()
     {
