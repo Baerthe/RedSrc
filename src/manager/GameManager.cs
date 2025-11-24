@@ -5,6 +5,7 @@ using Entity;
 using Event;
 using Godot;
 using Interface;
+using Service;
 using System;
 using Utility;
 [GlobalClass]
@@ -19,6 +20,7 @@ public partial class GameManager : Node2D
     public LevelData CurrentLevelData { get; private set; }
     public Camera2D Camera { get; private set; }
     public EntityIndex Templates { get; private set; }
+    public LevelIndex Levels { get; private set; }
     public bool IsPlaying { get; private set; } = false;
     public bool IsLevelLoaded { get; private set; } = false;
     private LevelEntity _levelInstance;
@@ -147,7 +149,12 @@ public partial class GameManager : Node2D
         IsLevelLoaded = false;
     }
     // Event Handlers
-    private void OnIndexEvent(IEvent eventData) => Templates = ((IndexEvent)eventData).Templates;
+    private void OnIndexEvent(IEvent eventData)
+    {
+        Templates = ((IndexEvent)eventData).Templates;
+        Levels = ((IndexEvent)eventData).Levels;
+        GD.PrintRich("[color=#00ff88]GameManager: Indices set.[/color]");
+    }
     private void OnPulseTimeout(IEvent eventData)
     {
         if (!IsLevelLoaded) return;
@@ -161,5 +168,11 @@ public partial class GameManager : Node2D
         if (!IsPlaying) return;
         CurrentXPUtility.Update();
     }
-    private void OnDebugModeEvent(IEvent eventData) => _isDebugMode = true;
+    private void OnDebugModeEvent()
+    {
+        _isDebugMode = true;
+        ServiceProvider.LevelService().LoadLevel(Levels.DebugLevel);
+        GD.PrintRich("[color=#000][bgcolor=#ff0000]Debug Level Loading.[/bgcolor][/color]");
+        LoadLevel();
+    }
 }

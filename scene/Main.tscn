@@ -13,7 +13,7 @@
 texture_filter = 1
 script = ExtResource("1_r150o")
 IsDebugMode = true
-MainCamera = NodePath("Camera2D")
+MainCamera = NodePath("MainCamera")
 GameManager = NodePath("GameManager")
 UiManager = NodePath("UiManager")
 EntityTemplates = ExtResource("2_jv468")
@@ -22,7 +22,7 @@ Items = ExtResource("4_ittna")
 Levels = ExtResource("5_cfala")
 Weapons = ExtResource("6_0tkjb")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="MainCamera" type="Camera2D" parent="."]
 top_level = true
 texture_filter = 1
 position = Vector2(960, 540)

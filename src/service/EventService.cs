@@ -15,7 +15,8 @@ using System.Collections.Generic;
 /// </remarks>
 public sealed class EventService : IEventService
 {
-    private Dictionary<Type, List<Delegate>> _subs = new();
+    private Dictionary<Type, List<Action>> _subs = new();
+    private Dictionary<Type, List<Action<IEvent>>> _subsWithData = new();
     public EventService()
     {
         GD.PrintRich("[color=#00ff88]EventService initialized.[/color]");
@@ -23,24 +24,52 @@ public sealed class EventService : IEventService
     public void UnsubscribeAll()
     {
         _subs.Clear();
+        _subsWithData.Clear();
         GD.PrintRich("[color=#ff8800]EventService: All subscriptions cleared. They will be recreated on next call.[/color]");
     }
     public void Subscribe<T>(Action<IEvent> handler)
     {
         var type = typeof(T);
+        if (!_subsWithData.ContainsKey(type))
+        {
+            GD.PrintRich($"[color=#0088ff]EventService: Creating subscription list for event type {type.Name}.[/color]");
+            _subsWithData[type] = new List<Action<IEvent>>();
+        }
+        GD.PrintRich($"[color=#0044FF]EventService: Subscribing handler to event type {type.Name}.[/color]");
+        _subsWithData[type].Add(handler);
+    }
+    public void Subscribe<T>(Action handler)
+    {
+        var type = typeof(T);
         if (!_subs.ContainsKey(type))
         {
             GD.PrintRich($"[color=#0088ff]EventService: Creating subscription list for event type {type.Name}.[/color]");
-            _subs[type] = new List<Delegate>();
+            _subs[type] = new List<Action>();
         }
         GD.PrintRich($"[color=#0044FF]EventService: Subscribing handler to event type {type.Name}.[/color]");
         _subs[type].Add(handler);
     }
-    public void Subscribe<T>(Action handler)
-    {
-        Subscribe<T>((IEvent _) => handler());
-    }
     public void Unsubscribe<T>(Action<IEvent> eventHandler)
+    {
+        var type = typeof(T);
+        if (_subsWithData.ContainsKey(type))
+        {
+            bool removed = _subsWithData[type].Remove(eventHandler);
+            if (removed)
+            {
+                GD.PrintRich($"[color=#FF4444]EventService: Unsubscribed handler from event type {type.Name}.[/color]");
+            }
+            else
+            {
+                GD.PrintErr($"EventService: Attempted to unsubscribe handler from event type {type.Name} but handler was not found. Never subbed or already unsubscribed?");
+            }
+            if (_subsWithData[type].Count == 0)
+            {
+                _subsWithData.Remove(type);
+            }
+        }
+    }
+    public void Unsubscribe<T>(Action eventHandler)
     {
         var type = typeof(T);
         if (_subs.ContainsKey(type))
@@ -60,11 +89,24 @@ public sealed class EventService : IEventService
             }
         }
     }
-    public void Unsubscribe<T>(Action eventHandler)
-    {
-        Unsubscribe<T>((IEvent _) => eventHandler());
-    }
     public void Publish<T>(IEvent eventData)
+    {
+        var type = typeof(T);
+        if (!_subsWithData.ContainsKey(type))
+        {
+            GD.PrintErr($"EventService: Publish with data called for event type {type.Name} but no subscriptions exist. Did you forget to subscribe?");
+            return;
+        }
+        else
+        {
+            foreach (var handler in _subsWithData[type])
+            {
+                GD.PrintRich($"[color=#00ff88]EventService: Publishing event of type {type.Name}.[/color]");
+                ((Action<IEvent>)handler)(eventData);
+            }
+        }
+    }
+    public void Publish<T>()
     {
         var type = typeof(T);
         if (!_subs.ContainsKey(type))
@@ -76,18 +118,9 @@ public sealed class EventService : IEventService
         {
             foreach (var handler in _subs[type])
             {
-                if (eventData == null)
-                {
-                    ((Action)handler)();
-                    continue;
-                }
                 GD.PrintRich($"[color=#00ff88]EventService: Publishing event of type {type.Name}.[/color]");
-                ((Action<IEvent>)handler)(eventData);
+                ((Action)handler)();
             }
         }
-    }
-    public void Publish<T>()
-    {
-        Publish<T>(null);
     }
 }
