@@ -10,24 +10,24 @@ using Interface;
 [GlobalClass]
 public partial class LevelEntity : Node2D, IEntity
 {
-    public IMap Map { get; private set; }
-    public IData Data { get; set; }
-    public override void _Ready()
-    {
-        NullCheck();
-        AddToGroup("levels");
-    }
-    public void Inject(IData data)
-    {
-        if (Data != null)
-        {
-            GD.PrintErr($"LevelEntity {Name} already initialized with data!");
-            return;
-        }
-        Data = data ?? throw new ArgumentNullException(nameof(data));
-        var mapScene = ResourceLoader.Load<PackedScene>((Data as LevelData)?.Map.ResourcePath) ?? throw new InvalidOperationException("LevelData does not contain a valid Map scene!");
-        Map = mapScene.Instantiate<IMap>();
-        AddChild(Map as Node2D);
-    }
-    public void NullCheck() { } // No components to check currently
+	public IMap Map { get; private set; }
+	public IData Data { get; set; }
+	public override void _Ready()
+	{
+		NullCheck();
+		AddToGroup("levels");
+	}
+	public void Inject(IData data)
+	{
+		if (Data != null)
+		{
+			GD.PrintErr($"LevelEntity {Name} already initialized with data!");
+			return;
+		}
+		Data = data ?? throw new ArgumentNullException(nameof(data));
+		var mapScene = ResourceLoader.Load<PackedScene>((Data as LevelData)?.Map.ResourcePath) ?? throw new InvalidOperationException("LevelData does not contain a valid Map scene!");
+		Map = mapScene.Instantiate<IMap>();
+		AddChild(Map as Node2D);
+	}
+	public void NullCheck() { } // No components to check currently
 }

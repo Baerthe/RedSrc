@@ -11,5 +11,5 @@ public partial class LevelMap : Node2D
     [Export] public TileMapLayer ForegroundLayer { get; private set; }
     [Export] public TileMapLayer BackgroundLayer { get; private set; }
     [ExportGroup("Markers")]
-    [Export] public Node2D PlayerSpawn { get; private set; }
+    [Export] public Marker2D PlayerSpawn { get; private set; }
 }

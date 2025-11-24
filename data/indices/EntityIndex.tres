@@ -1,9 +1,17 @@
-[gd_resource type="Resource" script_class="EntityIndex" load_steps=3 format=3 uid="uid://coa623sevelal"]
+[gd_resource type="Resource" script_class="EntityIndex" load_steps=7 format=3 uid="uid://coa623sevelal"]
 
 [ext_resource type="Script" uid="uid://dk6hdk7126rp1" path="res://src/data/index/EntityIndex.cs" id="1_3khal"]
+[ext_resource type="PackedScene" uid="uid://qpyp6a646628" path="res://scene/templates/ChestEntity.tscn" id="1_entax"]
 [ext_resource type="PackedScene" uid="uid://cx7hip6qyc8cj" path="res://scene/templates/MobEntity.tscn" id="1_wb8tu"]
+[ext_resource type="PackedScene" uid="uid://d4ct5ujfby7eh" path="res://scene/templates/HeroEntity.tscn" id="2_51u6t"]
+[ext_resource type="PackedScene" uid="uid://byyn5n746hjy" path="res://scene/templates/ItemEntity.tscn" id="3_i678j"]
+[ext_resource type="PackedScene" uid="uid://c1p8q4lgu0qc6" path="res://scene/templates/LevelEntity.tscn" id="4_0iott"]
 
 [resource]
 script = ExtResource("1_3khal")
+ChestTemplate = ExtResource("1_entax")
+HeroTemplate = ExtResource("2_51u6t")
+ItemTemplate = ExtResource("3_i678j")
+LevelTemplate = ExtResource("4_0iott")
 MobTemplate = ExtResource("1_wb8tu")
 metadata/_custom_type_script = "uid://dk6hdk7126rp1"

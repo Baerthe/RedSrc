@@ -81,6 +81,7 @@ public sealed class EventService : IEventService
                     ((Action)handler)();
                     continue;
                 }
+                GD.PrintRich($"[color=#00ff88]EventService: Publishing event of type {type.Name}.[/color]");
                 ((Action<IEvent>)handler)(eventData);
             }
         }

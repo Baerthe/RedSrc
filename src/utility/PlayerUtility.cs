@@ -144,7 +144,7 @@ public sealed partial class PlayerUtility : Node2D, IUtility
     /// <param name="item"></param>
     public void AddItem(ItemEntity item)
     {
-        if (item == _items.Find(i => i.Data.Info.Name == item.Data.Info.Name))
+        if (item == _items.Find(i => i.Data.Info.Named == item.Data.Info.Named))
         {
             item.QueueFree();
             item = _items[_items.IndexOf(item)];
@@ -158,7 +158,7 @@ public sealed partial class PlayerUtility : Node2D, IUtility
     }
     public void AddWeapon(WeaponEntity weapon)
     {
-        if (weapon == _weapons.Find(w => w.Data.Info.Name == weapon.Data.Info.Name))
+        if (weapon == _weapons.Find(w => w.Data.Info.Named == weapon.Data.Info.Named))
             return;
         _weapons.Add(weapon);
     }
@@ -221,6 +221,6 @@ public sealed partial class PlayerUtility : Node2D, IUtility
         _playerRef.CurrentHealth = hero.Stats.MaxHealth;
         _playerRef.Hide();
         AddChild(_playerRef);
-        GD.Print($"PlayerSystem: Loaded player '{hero.Info.Name}'.");
+        GD.Print($"PlayerSystem: Loaded player '{hero.Info.Named}'.");
     }
 }

@@ -31,7 +31,8 @@ public sealed class LevelService : ILevelService
             return;
         }
         CurrentLevel = levelData;
-        LevelName = levelData.Info.Name;
+        LevelName = levelData.Info.Named;
+        GD.PrintRich($"[color=#00ff88]LevelService: Loaded level '{LevelName}'.[/color]");
     }
     public void UnloadLevel()
     {

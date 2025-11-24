@@ -1,15 +1,25 @@
-[gd_resource type="Resource" script_class="LevelData" load_steps=6 format=3 uid="uid://bu8jl2p2ja1v"]
+[gd_resource type="Resource" script_class="LevelData" load_steps=10 format=3 uid="uid://ctw03yo5y2v1g"]
 
-[ext_resource type="Script" uid="uid://plq5xp8bngqg" path="res://scripts/entities/common/Info.cs" id="1_bblhs"]
-[ext_resource type="Script" uid="uid://b5ikx3e3oes1n" path="res://scripts/entities/common/Metadata.cs" id="2_6trvj"]
-[ext_resource type="Script" uid="uid://drxemw86vwaga" path="res://scripts/entities/level/LevelData.cs" id="3_r8fli"]
+[ext_resource type="Shader" uid="uid://dn34fl3er8kew" path="res://data/shaders/mobs/BasicMobMovement.gdshader" id="1_t05k6"]
+[ext_resource type="Script" uid="uid://4ark4f4sx322" path="res://src/data/common/AssetData.cs" id="2_74kys"]
+[ext_resource type="Script" uid="uid://cynr22fsdb7x6" path="res://src/data/common/InfoData.cs" id="3_df0a0"]
+[ext_resource type="Script" uid="uid://b5ikx3e3oes1n" path="res://src/data/common/Metadata.cs" id="4_41u3u"]
+[ext_resource type="PackedScene" uid="uid://b5jwo7jmoqxw6" path="res://scene/levels/TestLevel.tscn" id="4_74kys"]
+[ext_resource type="Script" uid="uid://drxemw86vwaga" path="res://src/data/LevelData.cs" id="5_mdcti"]
 
-[sub_resource type="Resource" id="Resource_lcwu3"]
-script = ExtResource("1_bblhs")
+[sub_resource type="Resource" id="Resource_74kys"]
+script = ExtResource("2_74kys")
 
-[sub_resource type="Resource" id="Resource_qemkr"]
-script = ExtResource("2_6trvj")
+[sub_resource type="Resource" id="Resource_df0a0"]
+script = ExtResource("3_df0a0")
+Name = "Debug"
+
+[sub_resource type="Resource" id="Resource_41u3u"]
+script = ExtResource("4_41u3u")
 
 [resource]
-script = ExtResource("3_r8fli")
+script = ExtResource("5_mdcti")
+Type = 4
+MaxLevel = 999
+Map = ExtResource("4_74kys")
 metadata/_custom_type_script = "uid://drxemw86vwaga"

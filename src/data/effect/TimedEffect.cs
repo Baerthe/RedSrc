@@ -8,10 +8,10 @@ using Godot;
 [GlobalClass]
 public sealed partial class TimedEffect : Effect, IEffect
 {
-    [ExportGroup("Properties")]
-    [Export] public uint Duration { get; private set; }
-    public void Apply(IEntity entity)
-    {
-        
-    }
+	[ExportGroup("Properties")]
+	[Export] public uint Duration { get; private set; }
+	public void Apply(IEntity entity)
+	{
+		
+	}
 }

@@ -99,7 +99,7 @@ public sealed partial class MobUtility : Node2D, IUtility
             mob.Show();
             _activeMobs.Add(mob);
             _spawnQueue.Dequeue();
-            GD.Print($"MobSystem: Spawned mob '{mob.Data.Info.Name}' at path {pathIndex}.");
+            GD.Print($"MobSystem: Spawned mob '{mob.Data.Info.Named}' at path {pathIndex}.");
         }
     }
     private void EmptyDeathQueue()
@@ -115,7 +115,7 @@ public sealed partial class MobUtility : Node2D, IUtility
             mob.CurrentHealth = mob.Data.Stats.MaxHealth;
             _pooledMobs.Add(mob);
             _eventService.Publish<XPEvent>(new XPEvent(mob.Data.MetaData.Rarity));
-            GD.Print($"MobSystem: Mob '{mob.Data.Info.Name}' has died and returned to pool.");
+            GD.Print($"MobSystem: Mob '{mob.Data.Info.Named}' has died and returned to pool.");
         }
     }
     // Event Handlers

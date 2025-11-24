@@ -1,8 +1,10 @@
-[gd_resource type="Resource" script_class="LevelIndex" load_steps=2 format=3 uid="uid://d151xchrphtdt"]
+[gd_resource type="Resource" script_class="LevelIndex" load_steps=3 format=3 uid="uid://d151xchrphtdt"]
 
-[ext_resource type="Script" uid="uid://5kxr260ur4wl" path="res://scripts/entities/indices/LevelIndex.cs" id="1_4itc1"]
+[ext_resource type="Script" uid="uid://5kxr260ur4wl" path="res://src/data/index/LevelIndex.cs" id="1_4itc1"]
+[ext_resource type="Resource" uid="uid://ctw03yo5y2v1g" path="res://data/levels/TestLevel.tres" id="1_6duxh"]
 
 [resource]
 script = ExtResource("1_4itc1")
-AllLevels = null
+DebugLevel = ExtResource("1_6duxh")
+AllLevels = Array[Object]([])
 metadata/_custom_type_script = "uid://5kxr260ur4wl"

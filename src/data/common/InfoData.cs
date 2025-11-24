@@ -7,7 +7,7 @@ using Godot;
 [GlobalClass]
 public sealed partial class InfoData : Resource
 {
-    [Export] public string Name { get; private set; } = "";
+    [Export] public string Named { get; private set; } = "";
     [Export] public string Description { get; private set; } = "";
     [Export] public string Lore { get; private set; } = "";
 }

@@ -1,23 +1,24 @@
-[gd_resource type="Resource" load_steps=7 format=3 uid="uid://cmwjmdh4rq0c2"]
+[gd_resource type="Resource" script_class="MobData" load_steps=9 format=3 uid="uid://cmwjmdh4rq0c2"]
 
 [ext_resource type="Script" uid="uid://bcqb5i68rkuur" path="res://src/data/MobData.cs" id="1_5s3qe"]
 [ext_resource type="Shader" uid="uid://dn34fl3er8kew" path="res://data/shaders/mobs/BasicMobMovement.gdshader" id="1_82tku"]
-[ext_resource type="AudioStream" uid="uid://ckyfcxu20opb8" path="res://asset/audio/sfx/cloth3.ogg" id="2_5uyl3"]
-[ext_resource type="AudioStream" uid="uid://bqpwqsjdj1d38" path="res://asset/audio/sfx/handleCoins2.ogg" id="3_73j2a"]
+[ext_resource type="Script" uid="uid://4ark4f4sx322" path="res://src/data/common/AssetData.cs" id="2_fueyg"]
+[ext_resource type="Script" uid="uid://cynr22fsdb7x6" path="res://src/data/common/InfoData.cs" id="3_ljqk2"]
+[ext_resource type="Script" uid="uid://b5ikx3e3oes1n" path="res://src/data/common/Metadata.cs" id="4_gk0k2"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_5uyl3"]
-radius = 18.0
+[sub_resource type="Resource" id="Resource_1gj0u"]
+script = ExtResource("2_fueyg")
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_73j2a"]
+[sub_resource type="Resource" id="Resource_5p2to"]
+script = ExtResource("3_ljqk2")
+
+[sub_resource type="Resource" id="Resource_rx8ci"]
+script = ExtResource("4_gk0k2")
 
 [resource]
 resource_name = "BasicMobData"
 script = ExtResource("1_5s3qe")
+Effects = null
 Ability = 12
 AbilityStrength = 4
-Sprite = SubResource("SpriteFrames_73j2a")
-HitSound = ExtResource("3_73j2a")
-DeathSound = ExtResource("2_5uyl3")
-CollisionShape = SubResource("CircleShape2D_5uyl3")
-AnimationShader = ExtResource("1_82tku")
 metadata/_custom_type_script = "uid://bcqb5i68rkuur"
