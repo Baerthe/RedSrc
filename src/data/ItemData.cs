@@ -10,9 +10,9 @@ public partial class ItemData : Resource, IData
 {
     [ExportCategory("Stats")]
     [ExportGroup("Info")]
-    [Export] public InfoData Info { get; private set; } = new InfoData();
-    [Export] public Metadata MetaData { get; private set; } = new Metadata();
+    [Export] public InfoData Info { get; private set; }
+    [Export] public Metadata MetaData { get; private set; }
     [Export] public int MaxStackSize { get; set; } = 64;
     [ExportGroup("Assets")]
-    [Export] public AssetData Assets { get; private set; } = new AssetData();
+    [Export] public AssetData Assets { get; private set; } 
 }

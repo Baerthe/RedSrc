@@ -10,8 +10,8 @@ public partial class HeroData : Resource, IData
 {
 	[ExportCategory("Stats")]
 	[ExportGroup("Info")]
-	[Export] public InfoData Info { get; private set; } = new InfoData();
-	[Export] public Metadata MetaData { get; private set; } = new Metadata();
+	[Export] public InfoData Info { get; private set; }
+	[Export] public Metadata MetaData { get; private set; }
 	[ExportGroup("Attributes")]
 	[Export] public StatsData Stats { get; private set; }
 	[ExportGroup("Modifiers")]
@@ -20,5 +20,5 @@ public partial class HeroData : Resource, IData
 	[Export] public uint AbilityStrength { get; private set; }
 	[Export] public HeroMovement Movement { get; private set; } = HeroMovement.Walk;
 	[ExportGroup("Assets")]
-	[Export] public AssetData Assets { get; private set;  }= new AssetData();
+	[Export] public AssetData Assets { get; private set; }
 }

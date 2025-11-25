@@ -10,11 +10,11 @@ public partial class ProjectileData : Resource, IData
 {
     [ExportCategory("Stats")]
     [ExportGroup("Info")]
-    [Export] public InfoData Info { get; private set; } = new InfoData();
-    [Export] public Metadata MetaData { get; private set; } = new Metadata();
+    [Export] public InfoData Info { get; private set; }
+    [Export] public Metadata MetaData { get; private set; }
     [ExportGroup("Attributes")]
     [Export] public float Lifetime { get; private set; } = 2f;
     [Export] public Effect[] Effects { get; private set; }
     [ExportGroup("Assets")]
-    [Export] public AssetData Assets { get; private set; } = new AssetData();
+    [Export] public AssetData Assets { get; private set; } 
 }
