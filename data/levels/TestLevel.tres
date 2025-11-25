@@ -9,17 +9,26 @@
 
 [sub_resource type="Resource" id="Resource_74kys"]
 script = ExtResource("2_74kys")
+metadata/_custom_type_script = "uid://4ark4f4sx322"
+
+[sub_resource type="Resource" id="Resource_ib0yg"]
+script = ExtResource("3_df0a0")
+Named = "Test Level"
+Description = "Debug001 Room"
+Lore = "The central testing chamber of debug testing of tests."
+metadata/_custom_type_script = "uid://cynr22fsdb7x6"
 
 [sub_resource type="Resource" id="Resource_df0a0"]
-script = ExtResource("3_df0a0")
-Name = "Debug"
-
-[sub_resource type="Resource" id="Resource_41u3u"]
 script = ExtResource("4_41u3u")
+Unlocked = true
+metadata/_custom_type_script = "uid://b5ikx3e3oes1n"
 
 [resource]
 script = ExtResource("5_mdcti")
+Info = SubResource("Resource_ib0yg")
+MetaData = SubResource("Resource_df0a0")
 Type = 4
 MaxLevel = 999
 Map = ExtResource("4_74kys")
+Assets = SubResource("Resource_74kys")
 metadata/_custom_type_script = "uid://drxemw86vwaga"

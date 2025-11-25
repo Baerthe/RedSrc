@@ -11,7 +11,7 @@ public sealed class AudioService : IAudioService
         _audioPlayer.VolumeDb = LinearToDb(_volume);
         _audioPlayer.Autoplay = false;
         _audioPlayer.Bus = "Master"; // Ensure this bus exists in your project settings
-        GD.Print("AudioService created");
+        GD.PrintRich("[color=#00ff88]AudioService initialized.[/color]");
     }
     public void PlaySound(string soundName)
     {

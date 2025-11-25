@@ -34,16 +34,37 @@ public partial class Main : Node2D
 	// Engine Callbacks
 	public override void _Ready()
 	{
-
-	}
-    public override void _Process(double delta)
-    {
-		if (!_isGameStarted)
+		NullCheck();
+		GD.PrintRich("[color=#000][bgcolor=#00ff00]Main node ready. Initializing game...[/bgcolor][/color]");
+		_eventService = ServiceProvider.EventService();
+		_levelService = ServiceProvider.LevelService();
+		_stateActions = new Dictionary<State, Action>
 		{
-			OnGameReady();
-			_isGameStarted = true;
+			{ State.Menu, CallMenuState },
+			{ State.LevelSelect, CallLevelSelectState },
+			{ State.Paused, CallPausedState },
+			{ State.Playing, CallPlayingState },
+			{ State.GameOver, CallGameOverState }
+		};
+		_eventService.Subscribe<StateEvent>(OnStateRequest);
+		GameManager.Initialize();
+		// Start Game
+		GD.PrintRich("[color=#000][bgcolor=#00ff00]Game Initialized.[/bgcolor][/color]");
+		_eventService.Publish<IndexEvent>(new IndexEvent(Heroes, EntityTemplates, Items, Levels, Weapons));
+		if (IsDebugMode)
+		{
+			_eventService.Publish<DebugModeEvent>();
+			_eventService.Publish<StateEvent>(new StateEvent(State.Playing));
+			GD.PrintRich("[color=#000][bgcolor=#ff0000]Debug Mode Enabled.[/bgcolor][/color]");
 		}
-    }
+		else
+		{
+			_eventService.Publish<StateEvent>(new StateEvent(State.Menu));
+		}
+	}
+	public override void _Process(double delta)
+	{
+	}
 	/// <summary>
 	/// Validates that all critical nodes are assigned in the editor. If any are missing, it logs an error and throws an exception to prevent the game from running in an invalid state.
 	/// </summary>
@@ -100,34 +121,6 @@ public partial class Main : Node2D
 	private void CallGameOverState()
 	{
 		//
-	}
-	private void OnGameReady()
-	{
-		NullCheck();
-		GD.PrintRich("[color=#000][bgcolor=#00ff00]Main node ready. Initializing game...[/bgcolor][/color]");
-		_eventService = ServiceProvider.EventService();
-		_levelService = ServiceProvider.LevelService();
-		_stateActions = new Dictionary<State, Action>
-		{
-			{ State.Menu, CallMenuState },
-			{ State.LevelSelect, CallLevelSelectState },
-			{ State.Paused, CallPausedState },
-			{ State.Playing, CallPlayingState },
-			{ State.GameOver, CallGameOverState }
-		};
-		_eventService.Subscribe<StateEvent>(OnStateRequest);
-		GD.PrintRich("[color=#000][bgcolor=#00ff00]Game Initialized.[/bgcolor][/color]");
-		_eventService.Publish<IndexEvent>(new IndexEvent(Heroes, EntityTemplates, Items, Levels, Weapons));
-		if (IsDebugMode)
-		{
-			_eventService.Publish<DebugModeEvent>();
-			_eventService.Publish<StateEvent>(new StateEvent(State.Playing));
-			GD.PrintRich("[color=#000][bgcolor=#ff0000]Debug Mode Enabled.[/bgcolor][/color]");
-		}
-		else
-		{
-			_eventService.Publish<StateEvent>(new StateEvent(State.Menu));
-		}
 	}
 }
 public enum State : byte

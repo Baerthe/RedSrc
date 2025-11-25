@@ -32,7 +32,7 @@ public partial class GameManager : Node2D
     // Debug
     private bool _isDebugMode = false;
     // Godot Methods
-    public override void _Ready()
+    public void Initialize()
     {
         GD.PrintRich("[color=#00ff88]GameManager: Initializing services...[/color]");
         _audioService = ServiceProvider.AudioService();
