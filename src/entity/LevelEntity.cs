@@ -10,7 +10,7 @@ using Interface;
 [GlobalClass]
 public partial class LevelEntity : Node2D, IEntity
 {
-	public IMap Map { get; private set; }
+	public LevelMap Map { get; private set; }
 	public IData Data { get; set; }
 	public override void _Ready()
 	{
@@ -26,8 +26,8 @@ public partial class LevelEntity : Node2D, IEntity
 		}
 		Data = data ?? throw new ArgumentNullException(nameof(data));
 		var mapScene = ResourceLoader.Load<PackedScene>((Data as LevelData)?.Map.ResourcePath) ?? throw new InvalidOperationException("LevelData does not contain a valid Map scene!");
-		Map = mapScene.Instantiate<IMap>();
-		AddChild(Map as Node2D);
+		Map = mapScene.Instantiate<LevelMap>();
+		AddChild(Map);
 	}
 	public void NullCheck() { } // No components to check currently
 }

@@ -18,7 +18,7 @@ public sealed partial class XPUtility : Node2D, IUtility
 	private IEventService _eventService;
 	public XPUtility(IAudioService audioService, IEventService eventService)
 	{
-		GD.Print("XPSystem: Initializing...");
+		GD.Print("XPUtility: Initializing...");
 		_audioService = audioService;
 		_eventService = eventService;
 	}
@@ -26,7 +26,7 @@ public sealed partial class XPUtility : Node2D, IUtility
 	{
 		_eventService.Subscribe<InitEvent>(OnInit);
 		_eventService.Subscribe<XPEvent>(OnXPEvent);
-		GD.Print("XPSystem Ready.");
+		GD.Print("XPUtility Ready.");
 	}
 	public override void _ExitTree()
 	{

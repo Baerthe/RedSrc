@@ -33,7 +33,7 @@ public partial class ClockUtility : Node2D, IUtility
 	}
 	public override void _Ready()
 	{
-		GD.Print("ClockSystem Present.");
+		GD.Print("ClockUtility: Initializing...");
 		_eventService.Subscribe<InitEvent>(OnInit);
 		_eventService.Subscribe<PulseTimeout>(OnPulseTimeout);
 		_eventService.Subscribe<SlowPulseTimeout>(OnSlowPulseTimeout);

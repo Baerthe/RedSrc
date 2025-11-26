@@ -23,7 +23,7 @@ public sealed partial class PlayerUtility : Node2D, IUtility
     private readonly IHeroService _heroService;
     public PlayerUtility(PackedScene heroTemplate, IAudioService audioService, IEventService eventService, IHeroService heroService)
     {
-        GD.Print("PlayerSystem: Initializing...");
+        GD.Print("PlayerUtility: Initializing...");
         _audioService = audioService;
         _eventService = eventService;
         _heroService = heroService;
@@ -32,7 +32,7 @@ public sealed partial class PlayerUtility : Node2D, IUtility
     public override void _Ready()
     {
         _eventService.Subscribe<InitEvent>(OnInit);
-        GD.Print("PlayerSystem Ready.");
+        GD.Print("PlayerUtility Ready.");
     }
     public override void _Process(double delta)
     {
@@ -128,10 +128,10 @@ public sealed partial class PlayerUtility : Node2D, IUtility
     {
         if (IsInitialized)
         {
-            GD.PrintErr("PlayerSystem is already initialized. InitEvent should only be called once per level load.");
+            GD.PrintErr("PlayerUtility is already initialized. InitEvent should only be called once per level load.");
             return;
         }
-        GD.Print("PlayerSystem initialized.");
+        GD.Print("PlayerUtility initialized.");
         LoadPlayer(ServiceProvider.HeroService().CurrentHero);
         _levelRef = GetTree().GetFirstNodeInGroup("level") as LevelEntity;
         _playerRef.Show();
@@ -164,7 +164,7 @@ public sealed partial class PlayerUtility : Node2D, IUtility
     }
     private void Defeat()
     {
-        GD.Print("PlayerSystem: Defeat sequence triggered.");
+        GD.Print("PlayerUtility: Defeat sequence triggered.");
         _eventService.Publish<PlayerDefeat>();
         IsInitialized = false;
         _playerRef.Hide();
@@ -208,7 +208,7 @@ public sealed partial class PlayerUtility : Node2D, IUtility
     {
         if (hero == null)
         {
-            GD.PrintErr("PlayerSystem: LoadPlayer called with null hero data.");
+            GD.PrintErr("PlayerUtility: LoadPlayer called with null hero data.");
             return;
         }
         if (_playerRef != null)
@@ -221,6 +221,6 @@ public sealed partial class PlayerUtility : Node2D, IUtility
         _playerRef.CurrentHealth = hero.Stats.MaxHealth;
         _playerRef.Hide();
         AddChild(_playerRef);
-        GD.Print($"PlayerSystem: Loaded player '{hero.Info.Named}'.");
+        GD.Print($"PlayerUtility: Loaded player '{hero.Info.Named}'.");
     }
 }

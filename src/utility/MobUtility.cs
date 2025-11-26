@@ -8,7 +8,7 @@ using Interface;
 using System;
 using System.Collections.Generic;
 /// <summary>
-/// MobSystem manages the spawning, pooling, and AI behavior of mobs within the game.
+/// MobUtility manages the spawning, pooling, and AI behavior of mobs within the game.
 /// It utilizes a weighted random selection mechanism to spawn mobs based on their rarity and level, and implements various AI movement patterns.
 /// </summary>
 public sealed partial class MobUtility : Node2D, IUtility
@@ -34,7 +34,7 @@ public sealed partial class MobUtility : Node2D, IUtility
     private readonly IEventService _eventService;
     public MobUtility(PackedScene mobTemplate, IAudioService audioService, IEventService eventService)
     {
-        GD.Print("MobSystem: Initializing...");
+        GD.Print("MobUtility: Initializing...");
         _audioService = audioService;
         _eventService = eventService;
         _mobTemplate = mobTemplate;
@@ -44,7 +44,7 @@ public sealed partial class MobUtility : Node2D, IUtility
         _eventService.Subscribe<InitEvent>(OnInit);
         _eventService.Subscribe<MobSpawnTimeout>(OnMobTimeout);
         _eventService.Subscribe<GameTimeout>(OnGameTimeout);
-        GD.Print("MobSystem Ready.");
+        GD.Print("MobUtility Ready.");
     }
     public override void _ExitTree()
     {
@@ -60,7 +60,7 @@ public sealed partial class MobUtility : Node2D, IUtility
     {
         if (!IsInitialized)
         {
-            GD.PrintErr("MobSystem: Update called but system is not initialized.");
+            GD.PrintErr("MobUtility: Update called but system is not initialized.");
             return;
         }
         // Center mob spawners around player
@@ -99,7 +99,7 @@ public sealed partial class MobUtility : Node2D, IUtility
             mob.Show();
             _activeMobs.Add(mob);
             _spawnQueue.Dequeue();
-            GD.Print($"MobSystem: Spawned mob '{mob.Data.Info.Named}' at path {pathIndex}.");
+            GD.Print($"MobUtility: Spawned mob '{mob.Data.Info.Named}' at path {pathIndex}.");
         }
     }
     private void EmptyDeathQueue()
@@ -115,7 +115,7 @@ public sealed partial class MobUtility : Node2D, IUtility
             mob.CurrentHealth = mob.Data.Stats.MaxHealth;
             _pooledMobs.Add(mob);
             _eventService.Publish<XPEvent>(new XPEvent(mob.Data.MetaData.Rarity));
-            GD.Print($"MobSystem: Mob '{mob.Data.Info.Named}' has died and returned to pool.");
+            GD.Print($"MobUtility: Mob '{mob.Data.Info.Named}' has died and returned to pool.");
         }
     }
     // Event Handlers
@@ -134,7 +134,7 @@ public sealed partial class MobUtility : Node2D, IUtility
     {
         if (_mobTable == null || _mobTable.Count == 0)
         {
-            GD.PrintErr("MobSystem: OnMobTimeout called but mob data lookup is empty.");
+            GD.PrintErr("MobUtility: OnMobTimeout called but mob data lookup is empty.");
             return;
         }
         float floor = (float)Math.Clamp(MathF.Floor(_gameElapsedTime / 60f), 0, _mobWeights - 5f);
@@ -194,7 +194,7 @@ public sealed partial class MobUtility : Node2D, IUtility
         // Star
         _mobSpawnPaths[4].Curve = BuildCurve("star", 400f);
         _mobSpawnPaths[4].Position = _playerRef.GlobalPosition - new Vector2(200f, 200f);
-        GD.Print("MobSystem: Built mob spawn paths.");
+        GD.Print("MobUtility: Built mob spawn paths.");
     }
     private Curve2D BuildCurve(string shape, float size)
     {
@@ -236,7 +236,7 @@ public sealed partial class MobUtility : Node2D, IUtility
                 }
                 break;
             default:
-                GD.PrintErr($"MobSystem: BuildCurve called with unknown shape '{shape}'.");
+                GD.PrintErr($"MobUtility: BuildCurve called with unknown shape '{shape}'.");
                 break;
         }
         return curve;
@@ -245,7 +245,7 @@ public sealed partial class MobUtility : Node2D, IUtility
     {
         if (_mobTable == null || _mobTable.Count == 0)
         {
-            GD.PrintErr("MobSystem: BuildMobPool called but mob data lookup is empty.");
+            GD.PrintErr("MobUtility: BuildMobPool called but mob data lookup is empty.");
             return;
         }
         _pooledMobs.Clear();
@@ -261,13 +261,13 @@ public sealed partial class MobUtility : Node2D, IUtility
                 _pooledMobs.Add(mobInstance);
             }
         }
-        GD.Print($"MobSystem: Built mob pool with {_pooledMobs.Count} total mobs.");
+        GD.Print($"MobUtility: Built mob pool with {_pooledMobs.Count} total mobs.");
     }
     private void BuildMobTable()
     {
         if (_levelRef == null || _levelRef.Data == null)
         {
-            GD.PrintErr("MobSystem: BuildMobTable called but LevelInstance or LevelInstance.Data is null.");
+            GD.PrintErr("MobUtility: BuildMobTable called but LevelInstance or LevelInstance.Data is null.");
             return;
         }
         LevelData levelData = _levelRef.Data as LevelData;
@@ -285,7 +285,7 @@ public sealed partial class MobUtility : Node2D, IUtility
             _mobWeights += spawnWeight;
         }
         _mobTable.Sort((a, b) => b.weight.CompareTo(a.weight));
-        GD.Print($"MobSystem: Built mob table with {_mobTable.Count} possible mobs for level");
+        GD.Print($"MobUtility: Built mob table with {_mobTable.Count} possible mobs for level");
     }
     private float CalculateSpawnWeight(MobData mobData)
     {

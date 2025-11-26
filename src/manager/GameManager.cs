@@ -74,18 +74,18 @@ public partial class GameManager : Node2D
         }
         // Start loading systems and scenes
         CurrentLevelData = _levelService.CurrentLevel;
-        _eventService.Publish<LoadingProgress>(new LoadingProgress(0));
+        //_eventService.Publish<LoadingProgress>(new LoadingProgress(0));
         var levelload = ResourceLoader.Load<PackedScene>(Templates.LevelTemplate.ResourcePath);
         var chestLoad = ResourceLoader.Load<PackedScene>(Templates.ChestTemplate.ResourcePath);
         var mobLoad = ResourceLoader.Load<PackedScene>(Templates.MobTemplate.ResourcePath);
         var heroLoad = ResourceLoader.Load<PackedScene>(Templates.HeroTemplate.ResourcePath);
-        _eventService.Publish<LoadingProgress>(new LoadingProgress(50));
+        //_eventService.Publish<LoadingProgress>(new LoadingProgress(50));
         // Instantiate level entity
         _levelInstance = levelload.Instantiate<LevelEntity>();
         _levelInstance.Inject(CurrentLevelData);
         AddChild(_levelInstance);
         _levelInstance.AddToGroup("level");
-        _eventService.Publish<LoadingProgress>(new LoadingProgress(70));
+        //_eventService.Publish<LoadingProgress>(new LoadingProgress(70));
         // Initialize and add core systems
         CurrentClockUtility = new(_eventService);
         CurrentChestUtility = new(chestLoad, _audioService, _eventService);
@@ -93,7 +93,7 @@ public partial class GameManager : Node2D
         CurrentMobUtility = new(mobLoad, _audioService, _eventService);
         CurrentPlayerUtility = new(heroLoad, _audioService, _eventService, _heroService);
         CurrentXPUtility = new(_audioService, _eventService);
-        _eventService.Publish<LoadingProgress>(new LoadingProgress(90));
+        //_eventService.Publish<LoadingProgress>(new LoadingProgress(90));
         // Add systems to level entity
         _levelInstance.AddChild(CurrentClockUtility);
         _levelInstance.AddChild(CurrentChestUtility);
@@ -101,7 +101,7 @@ public partial class GameManager : Node2D
         _levelInstance.AddChild(CurrentMobUtility);
         _levelInstance.AddChild(CurrentPlayerUtility);
         _levelInstance.AddChild(CurrentXPUtility);
-        _eventService.Publish<LoadingProgress>(new LoadingProgress(100));
+        //_eventService.Publish<LoadingProgress>(new LoadingProgress(100));
         // Initialize systems
         _eventService.Publish<InitEvent>();
         IsLevelLoaded = true;
