@@ -95,17 +95,18 @@ public partial class GameManager : Node2D
         CurrentXPUtility = new(_audioService, _eventService);
         //_eventService.Publish<LoadingProgress>(new LoadingProgress(90));
         // Add systems to level entity
+        _levelInstance.AddChild(CurrentPlayerUtility);
+        _levelInstance.AddChild(CurrentMapUtility);
+        // Map and player must be added before mobs and chests, since those reference the player and map itself.
         _levelInstance.AddChild(CurrentClockUtility);
         _levelInstance.AddChild(CurrentChestUtility);
-        _levelInstance.AddChild(CurrentMapUtility);
         _levelInstance.AddChild(CurrentMobUtility);
-        _levelInstance.AddChild(CurrentPlayerUtility);
         _levelInstance.AddChild(CurrentXPUtility);
         //_eventService.Publish<LoadingProgress>(new LoadingProgress(100));
         // Initialize systems
-        _eventService.Publish<InitEvent>();
         IsLevelLoaded = true;
         GD.PrintRich("[color=#00ff88]GameManager: Level loaded and systems initialized.[/color]");
+        _eventService.Publish<InitEvent>();
     }
     /// <summary>
     /// Toggles the paused state of the game. When paused, it stops processing for the player and mob systems.

@@ -15,7 +15,6 @@ public partial class LevelEntity : Node2D, IEntity
 	public override void _Ready()
 	{
 		NullCheck();
-		AddToGroup("levels");
 	}
 	public void Inject(IData data)
 	{

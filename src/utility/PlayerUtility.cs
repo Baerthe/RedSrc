@@ -135,7 +135,6 @@ public sealed partial class PlayerUtility : Node2D, IUtility
         LoadPlayer(ServiceProvider.HeroService().CurrentHero);
         _levelRef = GetTree().GetFirstNodeInGroup("level") as LevelEntity;
         _playerRef.Show();
-
         IsInitialized = true;
     }
     /// <summary>
