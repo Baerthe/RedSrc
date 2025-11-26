@@ -8,5 +8,6 @@ using Godot;
 public sealed partial class HeroIndex : Resource
 {
     [ExportCategory("Hero Data")]
+    [Export] public HeroData DebugHero { get; private set; }
     [Export] public HeroData[] AllHeroes { get; private set; }
 }

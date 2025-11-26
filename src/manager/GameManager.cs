@@ -20,7 +20,7 @@ public partial class GameManager : Node2D
     public LevelData CurrentLevelData { get; private set; }
     public Camera2D Camera { get; private set; }
     public EntityIndex Templates { get; private set; }
-    public LevelIndex Levels { get; private set; }
+    public (LevelData, HeroData) DebugInfo { get; private set; }
     public bool IsPlaying { get; private set; } = false;
     public bool IsLevelLoaded { get; private set; } = false;
     private LevelEntity _levelInstance;
@@ -153,7 +153,7 @@ public partial class GameManager : Node2D
     private void OnIndexEvent(IEvent eventData)
     {
         Templates = ((IndexEvent)eventData).Templates;
-        Levels = ((IndexEvent)eventData).Levels;
+        DebugInfo = (((IndexEvent)eventData).Levels.DebugLevel, ((IndexEvent)eventData).Heroes.DebugHero);
         GD.PrintRich("[color=#00ff88]GameManager: Indices set.[/color]");
     }
     private void OnPulseTimeout(IEvent eventData)
@@ -172,7 +172,8 @@ public partial class GameManager : Node2D
     private void OnDebugModeEvent()
     {
         _isDebugMode = true;
-        ServiceProvider.LevelService().LoadLevel(Levels.DebugLevel);
+        ServiceProvider.LevelService().LoadLevel(DebugInfo.Item1);
+        ServiceProvider.HeroService().LoadHero(DebugInfo.Item2);
         GD.PrintRich("[color=#000][bgcolor=#ff0000]Debug Level Loading.[/bgcolor][/color]");
         LoadLevel();
     }

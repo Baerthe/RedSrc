@@ -1,8 +1,10 @@
-[gd_resource type="Resource" script_class="HeroIndex" load_steps=2 format=3 uid="uid://1ddfje3y85jr"]
+[gd_resource type="Resource" script_class="HeroIndex" load_steps=3 format=3 uid="uid://1ddfje3y85jr"]
 
-[ext_resource type="Script" uid="uid://danqqxuynk8wa" path="res://scripts/entities/indices/HeroIndex.cs" id="1_7dica"]
+[ext_resource type="Script" uid="uid://danqqxuynk8wa" path="res://src/data/index/HeroIndex.cs" id="1_7dica"]
+[ext_resource type="Resource" uid="uid://25jndqkrgp0s" path="res://data/heros/TestHero.tres" id="1_8hd38"]
 
 [resource]
 script = ExtResource("1_7dica")
-AllHeroes = null
+DebugHero = ExtResource("1_8hd38")
+AllHeroes = Array[Object]([])
 metadata/_custom_type_script = "uid://danqqxuynk8wa"

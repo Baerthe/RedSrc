@@ -20,6 +20,12 @@ public partial class HeroEntity : CharacterBody2D, IEntity
 	public PlayerDirection CurrentDirection { get; set; }
 	public override void _Ready()
 	{
+		CurrentHealth = Data.Stats.MaxHealth;
+		Sprite.SpriteFrames = Data.Assets.Sprite;
+		Sprite.Modulate = Data.Assets.TintColor;
+		CollisionShape2D shape = new CollisionShape2D();
+		shape.Shape = Data.Assets.CollisionShape;
+		Hitbox.AddChild(shape);
 		NullCheck();
 		AddToGroup("players");
 	}
@@ -31,12 +37,6 @@ public partial class HeroEntity : CharacterBody2D, IEntity
 			return;
 		}
 		Data = (HeroData)data ?? throw new ArgumentNullException(nameof(data));
-		CurrentHealth = Data.Stats.MaxHealth;
-		Sprite.SpriteFrames = Data.Assets.Sprite;
-		Sprite.Modulate = Data.Assets.TintColor;
-		CollisionShape2D shape = new CollisionShape2D();
-		shape.Shape = Data.Assets.CollisionShape;
-		Hitbox.AddChild(shape);
 	}
 	public void NullCheck()
 	{

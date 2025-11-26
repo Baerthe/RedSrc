@@ -216,10 +216,10 @@ public sealed partial class PlayerUtility : Node2D, IUtility
         }
         _playerRef = _heroTemplate.Instantiate<HeroEntity>();
         _playerRef.Inject(hero);
-        _playerRef.Position = _levelRef.Map.PlayerSpawn.Position;
-        _playerRef.CurrentHealth = hero.Stats.MaxHealth;
         _playerRef.Hide();
         AddChild(_playerRef);
+        _playerRef.Position = _levelRef.Map.PlayerSpawn.Position;
+        _playerRef.CurrentHealth = hero.Stats.MaxHealth;
         GD.Print($"PlayerUtility: Loaded player '{hero.Info.Named}'.");
     }
 }

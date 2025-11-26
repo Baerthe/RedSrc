@@ -1,84 +1,62 @@
-[gd_resource type="Resource" load_steps=10 format=3 uid="uid://25jndqkrgp0s"]
+[gd_resource type="Resource" script_class="HeroData" load_steps=16 format=3 uid="uid://25jndqkrgp0s"]
 
+[ext_resource type="Shader" uid="uid://dn34fl3er8kew" path="res://data/shaders/mobs/BasicMobMovement.gdshader" id="1_7vekp"]
 [ext_resource type="Script" uid="uid://dl1wpxpvydia7" path="res://src/data/HeroData.cs" id="1_nuk0s"]
+[ext_resource type="Script" uid="uid://4ark4f4sx322" path="res://src/data/common/AssetData.cs" id="3_275ul"]
 [ext_resource type="Texture2D" uid="uid://bkx1g0uyxnc5i" path="res://asset/tilesheet/colored.png" id="3_tjqfq"]
+[ext_resource type="Script" uid="uid://cynr22fsdb7x6" path="res://src/data/common/InfoData.cs" id="4_usbx7"]
+[ext_resource type="Script" uid="uid://b5ikx3e3oes1n" path="res://src/data/common/Metadata.cs" id="5_h0qgf"]
+[ext_resource type="Script" uid="uid://crbtthspvxx8s" path="res://src/data/common/StatsData.cs" id="6_foyr2"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_usbx7"]
-atlas = ExtResource("3_tjqfq")
-region = Rect2(408, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_h0qgf"]
-atlas = ExtResource("3_tjqfq")
-region = Rect2(442, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_foyr2"]
-atlas = ExtResource("3_tjqfq")
-region = Rect2(425, 0, 16, 16)
+[sub_resource type="CircleShape2D" id="CircleShape2D_7vekp"]
+radius = 16.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bbn67"]
 atlas = ExtResource("3_tjqfq")
-region = Rect2(459, 0, 16, 16)
+region = Rect2(408, 102, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rmmbi"]
-atlas = ExtResource("3_tjqfq")
-region = Rect2(476, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_y3s3e"]
-atlas = ExtResource("3_tjqfq")
-region = Rect2(510, 0, 16, 16)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_aj33q"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_rmmbi"]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_usbx7")
-}],
-"loop": true,
-"name": &"Death",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_h0qgf")
-}],
-"loop": true,
-"name": &"Down",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_foyr2")
-}],
-"loop": true,
-"name": &"Idle",
-"speed": 5.0
-}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bbn67")
 }],
 "loop": true,
-"name": &"Left",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rmmbi")
-}],
-"loop": true,
-"name": &"Right",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_y3s3e")
-}],
-"loop": true,
-"name": &"Up",
+"name": &"idle",
 "speed": 5.0
 }]
 
+[sub_resource type="Resource" id="Resource_y3s3e"]
+script = ExtResource("3_275ul")
+Sprite = SubResource("SpriteFrames_rmmbi")
+CollisionShape = SubResource("CircleShape2D_7vekp")
+metadata/_custom_type_script = "uid://4ark4f4sx322"
+
+[sub_resource type="Resource" id="Resource_aj33q"]
+script = ExtResource("4_usbx7")
+Named = "Testy"
+Description = "The legendary Testy, the most debugged..."
+Lore = "He survived the great war of the testing."
+metadata/_custom_type_script = "uid://cynr22fsdb7x6"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8vgul"]
+atlas = ExtResource("3_tjqfq")
+region = Rect2(408, 119, 16, 16)
+
+[sub_resource type="Resource" id="Resource_ymptl"]
+script = ExtResource("5_h0qgf")
+Icon = SubResource("AtlasTexture_8vgul")
+Unlocked = true
+metadata/_custom_type_script = "uid://b5ikx3e3oes1n"
+
+[sub_resource type="Resource" id="Resource_8626v"]
+script = ExtResource("6_foyr2")
+metadata/_custom_type_script = "uid://crbtthspvxx8s"
+
 [resource]
 script = ExtResource("1_nuk0s")
-Sprite = SubResource("SpriteFrames_aj33q")
+Info = SubResource("Resource_aj33q")
+MetaData = SubResource("Resource_ymptl")
+Stats = SubResource("Resource_8626v")
+Assets = SubResource("Resource_y3s3e")
 metadata/_custom_type_script = "uid://dl1wpxpvydia7"

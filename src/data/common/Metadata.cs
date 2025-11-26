@@ -7,7 +7,7 @@ using Godot;
 [GlobalClass]
 public sealed partial class Metadata : Resource
 {
-    [Export] public Texture2D Icon { get; private set; }
+    [Export] public AtlasTexture Icon { get; private set; }
     [Export] public RarityType Rarity { get; private set; } = RarityType.Common;
     [Export] public bool Unlocked { get; private set; } = false;
     public void Unlock() => Unlocked = true;
