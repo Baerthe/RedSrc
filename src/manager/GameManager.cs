@@ -11,6 +11,7 @@ using Utility;
 [GlobalClass]
 public partial class GameManager : Node2D
 {
+    public static GameManager Instance { get; private set; }
     public ClockUtility CurrentClockUtility { get; private set; }
     public ChestUtility CurrentChestUtility { get; private set; }
     public MapUtility CurrentMapUtility { get; private set; }
@@ -32,6 +33,32 @@ public partial class GameManager : Node2D
     // Debug
     private bool _isDebugMode = false;
     // Godot Methods
+    public override void _Ready()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            GD.PrintRich("[color=#00ff88]GameManager: Instance Selected.[/color]");
+        }
+        else
+        {
+            GD.PrintErr("Multiple instances of GameManager detected! There should only be one instance of GameManager in the scene tree.");
+            QueueFree();
+        }
+    }
+    public override void _ExitTree()
+    {
+        _eventService.Unsubscribe<IndexEvent>(OnIndexEvent);
+        _eventService.Unsubscribe<PulseTimeout>(OnPulseTimeout);
+        _eventService.Unsubscribe<SlowPulseTimeout>(OnSlowPulseTimeout);
+        _eventService.Unsubscribe<DebugModeEvent>(OnDebugModeEvent);
+    }
+    public override void _Process(double delta)
+    {
+        if (!IsLevelLoaded) return;
+        if (!IsPlaying) return;
+    }
+    // GameManager Methods
     public void Initialize()
     {
         GD.PrintRich("[color=#00ff88]GameManager: Initializing services...[/color]");
@@ -47,19 +74,6 @@ public partial class GameManager : Node2D
         Camera = GetParent().GetNode<Camera2D>("MainCamera");
         GD.PrintRich("[color=#00ff88]GameManager: Services initialized.[/color]");
     }
-    public override void _ExitTree()
-    {
-        _eventService.Unsubscribe<IndexEvent>(OnIndexEvent);
-        _eventService.Unsubscribe<PulseTimeout>(OnPulseTimeout);
-        _eventService.Unsubscribe<SlowPulseTimeout>(OnSlowPulseTimeout);
-        _eventService.Unsubscribe<DebugModeEvent>(OnDebugModeEvent);
-    }
-    public override void _Process(double delta)
-    {
-        if (!IsLevelLoaded) return;
-        if (!IsPlaying) return;
-    }
-    // GameManager Methods
     /// <summary>
     /// Prepares the level by initializing and adding the core systems to the provided level node.
     /// </summary>
