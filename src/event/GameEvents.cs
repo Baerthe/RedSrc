@@ -1,5 +1,6 @@
 namespace Event;
 
+using Godot;
 using Interface;
 /// Game Events
 public sealed class InitEvent : IEvent;
@@ -31,7 +32,8 @@ public sealed class PlayerGainedXP : IEvent
     public uint Amount
     {
         get => _amount;
-        set {
+        set
+        {
             if (value < 0)
                 _amount = 0;
             _amount = value;
@@ -39,4 +41,9 @@ public sealed class PlayerGainedXP : IEvent
     }
     private uint _amount;
     public PlayerGainedXP(uint amount) => Amount = amount;
+}
+public sealed class PlayerForceMove : IEvent
+{
+    public Vector2 TargetPosition { get; private set; }
+    public PlayerForceMove(Vector2 targetPosition) => TargetPosition = targetPosition;
 }

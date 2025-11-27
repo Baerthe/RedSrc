@@ -5,7 +5,6 @@ using Entity;
 using Event;
 using Godot;
 using Interface;
-using Service;
 using System;
 using Utility;
 [GlobalClass]

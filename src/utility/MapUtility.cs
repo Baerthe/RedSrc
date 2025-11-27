@@ -51,7 +51,8 @@ public sealed partial class MapUtility : Node2D, IUtility
     public void OnInit()
 	{
 		if (IsInitialized) return;
-        _levelRef = GetTree().GetFirstNodeInGroup("level") as LevelEntity;
+		_levelRef = GetTree().GetFirstNodeInGroup("level") as LevelEntity;
+		_eventService.Publish<PlayerForceMove>(new PlayerForceMove(_levelRef.Map.PlayerSpawn.GlobalPosition));
         _playerRef = GetTree().GetFirstNodeInGroup("player") as HeroEntity;
 		LoadTiles();
 		IsInitialized = true;
@@ -65,7 +66,7 @@ public sealed partial class MapUtility : Node2D, IUtility
 	{
 		if (_foregroundLayer == null || _backgroundLayer == null)
 		{
-			GD.PrintErr("Setting Map Layers...");
+			GD.PrintRich("Setting Map Layers...");
 			_foregroundLayer = _levelRef.Map.ForegroundLayer;
 			_backgroundLayer = _levelRef.Map.BackgroundLayer;
 			if (_foregroundLayer == null || _backgroundLayer == null)
@@ -83,6 +84,8 @@ public sealed partial class MapUtility : Node2D, IUtility
 			_width,
 			_height
 		);
+		GD.Print($"World Rect initialized at {_worldRect.Position} with size {_worldRect.Size}");
+		// Create duplicates for surrounding chunks
 		for (int x = -1; x < 2; x++)
 		{
 			for (int y = -1; y < 2; y++)
@@ -90,8 +93,8 @@ public sealed partial class MapUtility : Node2D, IUtility
 				if (x == 0 && y == 0) continue;
 				var backgroundDuplicate = _backgroundLayer.Duplicate() as TileMapLayer;
 				var foregroundDuplicate = _foregroundLayer.Duplicate() as TileMapLayer;
-				backgroundDuplicate.Position += new Vector2(x * _width, y * _height);
-				foregroundDuplicate.Position += new Vector2(x * _width, y * _height);
+				backgroundDuplicate.Position = new Vector2(x * _width, y * _height);
+				foregroundDuplicate.Position = new Vector2(x * _width, y * _height);
 				if (backgroundDuplicate == null || foregroundDuplicate == null)
 				{
 					GD.PrintErr("Failed to duplicate TileMapLayer.");
@@ -101,16 +104,10 @@ public sealed partial class MapUtility : Node2D, IUtility
 				_chunks.Add(chunkName, (backgroundDuplicate, foregroundDuplicate));
 				GD.Print($"Added chunk {chunkName} at position {backgroundDuplicate.Position}");
 				GD.Print($"Added chunk {chunkName} at position {foregroundDuplicate.Position}");
-				backgroundDuplicate.Visible = false;
-				foregroundDuplicate.Visible = false;
 				backgroundDuplicate.Name = $"Background_{chunkName}";
 				foregroundDuplicate.Name = $"Foreground_{chunkName}";
-				backgroundDuplicate.ZIndex = -999;
-				foregroundDuplicate.ZIndex = -998;
-				AddChild(backgroundDuplicate);
-				AddChild(foregroundDuplicate);
-				backgroundDuplicate.Visible = true;
-				foregroundDuplicate.Visible = true;
+				_levelRef.Map.AddChild(backgroundDuplicate);
+				_levelRef.Map.AddChild(foregroundDuplicate);
 			}
 		}
 	}

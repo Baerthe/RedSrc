@@ -11,7 +11,7 @@ using Interface;
 public partial class LevelEntity : Node2D, IEntity
 {
 	public LevelMap Map { get; private set; }
-	public IData Data { get; set; }
+	public LevelData Data { get; set; }
 	public override void _Ready()
 	{
 		NullCheck();
@@ -23,9 +23,8 @@ public partial class LevelEntity : Node2D, IEntity
 			GD.PrintErr($"LevelEntity {Name} already initialized with data!");
 			return;
 		}
-		Data = data ?? throw new ArgumentNullException(nameof(data));
-		var mapScene = ResourceLoader.Load<PackedScene>((Data as LevelData)?.Map.ResourcePath) ?? throw new InvalidOperationException("LevelData does not contain a valid Map scene!");
-		Map = mapScene.Instantiate<LevelMap>();
+		Data = (data as LevelData) ?? throw new ArgumentNullException(nameof(data));
+		Map = ResourceLoader.Load<PackedScene>(Data?.Map.ResourcePath).Instantiate<LevelMap>() ?? throw new InvalidOperationException("LevelData does not contain a valid Map scene!");
 		AddChild(Map);
 	}
 	public void NullCheck() { } // No components to check currently

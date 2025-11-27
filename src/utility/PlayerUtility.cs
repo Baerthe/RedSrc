@@ -13,7 +13,6 @@ public sealed partial class PlayerUtility : Node2D, IUtility
 {
     public bool IsInitialized { get; private set; } = false;
     private HeroEntity _playerRef;
-    private LevelEntity _levelRef;
     private List<ItemEntity> _items = new();
     private List<WeaponEntity> _weapons = new();
     private PackedScene _heroTemplate;
@@ -32,6 +31,7 @@ public sealed partial class PlayerUtility : Node2D, IUtility
     public override void _Ready()
     {
         _eventService.Subscribe<InitEvent>(OnInit);
+        _eventService.Subscribe<PlayerForceMove>(OnForceMove);
         GD.Print("PlayerUtility Ready.");
     }
     public override void _Process(double delta)
@@ -133,7 +133,6 @@ public sealed partial class PlayerUtility : Node2D, IUtility
         }
         GD.Print("PlayerUtility initialized.");
         LoadPlayer(ServiceProvider.HeroService().CurrentHero);
-        _levelRef = GetTree().GetFirstNodeInGroup("level") as LevelEntity;
         _playerRef.Show();
         IsInitialized = true;
     }
@@ -218,8 +217,22 @@ public sealed partial class PlayerUtility : Node2D, IUtility
         _playerRef.Inject(hero);
         _playerRef.Hide();
         AddChild(_playerRef);
-        _playerRef.Position = _levelRef.Map.PlayerSpawn.Position;
         _playerRef.CurrentHealth = hero.Stats.MaxHealth;
         GD.Print($"PlayerUtility: Loaded player '{hero.Info.Named}'.");
+    }
+    private void OnForceMove(IEvent data)
+    {
+        if (data is not PlayerForceMove moveData)
+        {
+            GD.PrintErr("PlayerUtility: OnForceMove received invalid data type.");
+            return;
+        }
+        if (!IsInitialized)
+        {
+            GD.PrintErr("PlayerUtility: OnForceMove called before initialization.");
+            return;
+        }
+        _playerRef.GlobalPosition = moveData.TargetPosition;
+        GD.Print($"PlayerUtility: Forced move to {moveData.TargetPosition}.");
     }
 }
