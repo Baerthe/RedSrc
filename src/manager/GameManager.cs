@@ -110,7 +110,7 @@ public partial class GameManager : Node2D
         _levelInstance.AddChild(CurrentPlayerUtility);
         _levelInstance.AddChild(CurrentMapUtility);
         // Map and player must be added before mobs and chests, since those reference the player and map itself.
-        // _levelInstance.AddChild(CurrentClockUtility);
+        _levelInstance.AddChild(CurrentClockUtility);
         // _levelInstance.AddChild(CurrentChestUtility);
         // _levelInstance.AddChild(CurrentMobUtility);
         // _levelInstance.AddChild(CurrentXPUtility);
@@ -169,14 +169,14 @@ public partial class GameManager : Node2D
         DebugInfo = (((IndexEvent)eventData).Levels.DebugLevel, ((IndexEvent)eventData).Heroes.DebugHero);
         GD.PrintRich("[color=#00ff88]GameManager: Indices set.[/color]");
     }
-    private void OnPulseTimeout(IEvent eventData)
+    private void OnPulseTimeout()
     {
         if (!IsLevelLoaded) return;
         if (GetTree().Paused) return;
-        CurrentMapUtility.Update();
+        CurrentMapUtility.HasPlayerCrossedBorder(CurrentPlayerUtility.Player);
         CurrentMobUtility.Update();
     }
-    private void OnSlowPulseTimeout(IEvent eventData)
+    private void OnSlowPulseTimeout()
     {
         if (!IsLevelLoaded) return;
         if (GetTree().Paused) return;

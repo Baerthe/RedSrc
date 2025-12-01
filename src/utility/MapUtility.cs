@@ -4,6 +4,7 @@ using Entity;
 using Event;
 using Godot;
 using Interface;
+using Manager;
 using System.Collections.Generic;
 /// <summary>
 /// A system for handling tiling of scene map elements.
@@ -12,7 +13,6 @@ public sealed partial class MapUtility : Node2D, IUtility
 {
 	public bool IsInitialized { get; private set; } = false;
 	private LevelEntity _levelRef;
-	private HeroEntity _playerRef;
 	private TileMapLayer _foregroundLayer;
 	private TileMapLayer _backgroundLayer;
 	private Rect2 _usedRect;
@@ -51,16 +51,11 @@ public sealed partial class MapUtility : Node2D, IUtility
     public void OnInit()
 	{
 		if (IsInitialized) return;
-		_levelRef = GetTree().GetFirstNodeInGroup("level") as LevelEntity;
+		_levelRef = (LevelEntity)GetParent();
 		_eventService.Publish<PlayerForceMove>(new PlayerForceMove(_levelRef.Map.PlayerSpawn.GlobalPosition));
-        _playerRef = GetTree().GetFirstNodeInGroup("player") as HeroEntity;
 		LoadTiles();
 		IsInitialized = true;
 	}
-	public void Update()
-    {
-		HasPlayerCrossedBorder();
-    }
 	public Rect2 GetWorldRect() => _worldRect;
 	public void LoadTiles()
 	{
@@ -111,10 +106,12 @@ public sealed partial class MapUtility : Node2D, IUtility
 			}
 		}
 	}
-	private void HasPlayerCrossedBorder()
+	public void HasPlayerCrossedBorder(Node2D playerRef)
 	{
-		if (_playerRef == null || _worldRect.HasPoint(_playerRef.Position)) return;
-		Direction direction = GetBorderDirection(_playerRef.Position);
+		GD.Print("MapUtility: Checking if player has crossed world border...");
+		if (playerRef == null || _worldRect.HasPoint(playerRef.GlobalPosition)) return;
+		GD.Print("Player has crossed world border.");
+		Direction direction = GetBorderDirection(playerRef.GlobalPosition);
 		if (direction == Direction.OutOfBounds) return;
 		MoveLayers(direction);
 	}
