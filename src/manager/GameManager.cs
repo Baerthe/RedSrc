@@ -21,7 +21,6 @@ public partial class GameManager : Node2D
     public Camera2D Camera { get; private set; }
     public EntityIndex Templates { get; private set; }
     public (LevelData, HeroData) DebugInfo { get; private set; }
-    public bool IsPlaying { get; private set; } = false;
     public bool IsLevelLoaded { get; private set; } = false;
     private LevelEntity _levelInstance;
     private IAudioService _audioService;
@@ -55,8 +54,7 @@ public partial class GameManager : Node2D
     public override void _Process(double delta)
     {
         if (!IsLevelLoaded) return;
-        if (!IsPlaying) return;
-        Camera.GlobalPosition = CurrentPlayerUtility.PlayerPosition;
+        Camera.GlobalPosition = CurrentPlayerUtility.Player.GlobalPosition;
     }
     // GameManager Methods
     public void Initialize()
@@ -71,7 +69,7 @@ public partial class GameManager : Node2D
         _eventService.Subscribe<PulseTimeout>(OnPulseTimeout);
         _eventService.Subscribe<SlowPulseTimeout>(OnSlowPulseTimeout);
         _eventService.Subscribe<DebugModeEvent>(OnDebugModeEvent);
-        Camera = GetParent().GetNode<Camera2D>("MainCamera");
+        Camera = Main.Instance.MainCamera;
         GD.PrintRich("[color=#00ff88]GameManager: Services initialized.[/color]");
     }
     /// <summary>
@@ -112,10 +110,10 @@ public partial class GameManager : Node2D
         _levelInstance.AddChild(CurrentPlayerUtility);
         _levelInstance.AddChild(CurrentMapUtility);
         // Map and player must be added before mobs and chests, since those reference the player and map itself.
-        _levelInstance.AddChild(CurrentClockUtility);
-        _levelInstance.AddChild(CurrentChestUtility);
-        _levelInstance.AddChild(CurrentMobUtility);
-        _levelInstance.AddChild(CurrentXPUtility);
+        // _levelInstance.AddChild(CurrentClockUtility);
+        // _levelInstance.AddChild(CurrentChestUtility);
+        // _levelInstance.AddChild(CurrentMobUtility);
+        // _levelInstance.AddChild(CurrentXPUtility);
         //_eventService.Publish<LoadingProgress>(new LoadingProgress(100));
         // Initialize systems
         IsLevelLoaded = true;
@@ -127,8 +125,8 @@ public partial class GameManager : Node2D
     /// </summary>
     public void TogglePause()
     {
-        IsPlaying = !IsPlaying;
-        if (!IsPlaying)
+        GetTree().Paused = !GetTree().Paused;
+        if (GetTree().Paused == false)
         {
             GetTree().Paused = true;
             CurrentClockUtility.PauseTimers();
@@ -149,6 +147,7 @@ public partial class GameManager : Node2D
             GD.PrintErr("No level loaded in GameManager to unload");
             return;
         }
+        Camera.GlobalPosition = new Vector2(0, 0);
         CurrentClockUtility.QueueFree();
         CurrentClockUtility = null;
         CurrentChestUtility.QueueFree();
@@ -173,14 +172,14 @@ public partial class GameManager : Node2D
     private void OnPulseTimeout(IEvent eventData)
     {
         if (!IsLevelLoaded) return;
-        if (!IsPlaying) return;
+        if (GetTree().Paused) return;
         CurrentMapUtility.Update();
         CurrentMobUtility.Update();
     }
     private void OnSlowPulseTimeout(IEvent eventData)
     {
         if (!IsLevelLoaded) return;
-        if (!IsPlaying) return;
+        if (GetTree().Paused) return;
         CurrentXPUtility.Update();
     }
     private void OnDebugModeEvent()

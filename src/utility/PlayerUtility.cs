@@ -12,8 +12,7 @@ using System.Collections.Generic;
 public sealed partial class PlayerUtility : Node2D, IUtility
 {
     public bool IsInitialized { get; private set; } = false;
-    public Vector2 PlayerPosition = Vector2.Zero;
-    private HeroEntity _playerRef;
+    public HeroEntity Player { get; private set; }
     private List<ItemEntity> _items = new();
     private List<WeaponEntity> _weapons = new();
     private PackedScene _heroTemplate;
@@ -38,41 +37,40 @@ public sealed partial class PlayerUtility : Node2D, IUtility
     public override void _Process(double delta)
     {
         if (!IsInitialized) return;
-        if (_playerRef == null) return;
-        if (_playerRef.CurrentHealth <= 0)
+        if (Player == null) return;
+        if (Player.CurrentHealth <= 0)
         {
             Defeat();
             return;
         }
-        switch (_playerRef.CurrentDirection)
+        switch (Player.CurrentDirection)
         {
             case PlayerDirection.Up:
-                _playerRef.Sprite.Animation = "Up";
+                Player.Sprite.Animation = "Up";
                 break;
             case PlayerDirection.Down:
-                _playerRef.Sprite.Animation = "Down";
+                Player.Sprite.Animation = "Down";
                 break;
             case PlayerDirection.Diagonal:
-                _playerRef.Sprite.Animation = "Right";
+                Player.Sprite.Animation = "Right";
                 break;
             case PlayerDirection.Left:
-                _playerRef.Sprite.FlipH = true;
-                _playerRef.Sprite.Animation = "Right";
+                Player.Sprite.FlipH = true;
+                Player.Sprite.Animation = "Right";
                 break;
             case PlayerDirection.Right:
-                _playerRef.Sprite.FlipH = false;
-                _playerRef.Sprite.Animation = "Right";
+                Player.Sprite.FlipH = false;
+                Player.Sprite.Animation = "Right";
                 break;
             default:
-                _playerRef.Sprite.Animation = "Idle";
+                Player.Sprite.Animation = "Idle";
                 break;
         }
-        PlayerPosition = _playerRef.GlobalPosition;
     }
     public override void _PhysicsProcess(double delta)
     {
         if (!IsInitialized) return;
-        if (_playerRef == null) return;
+        if (Player == null) return;
         // Are we trying to interact with something?
         if (Input.IsActionJustPressed("interact"))
         {
@@ -87,41 +85,41 @@ public sealed partial class PlayerUtility : Node2D, IUtility
         if (Input.IsActionPressed("move_up"))
         {
             velocity.Y -= 1;
-            _playerRef.CurrentDirection = PlayerDirection.Up;
+            Player.CurrentDirection = PlayerDirection.Up;
         }
         if (Input.IsActionPressed("move_down"))
         {
             velocity.Y += 1;
-            _playerRef.CurrentDirection = PlayerDirection.Down;
+            Player.CurrentDirection = PlayerDirection.Down;
         }
         if (Input.IsActionPressed("move_left"))
         {
             velocity.X -= 1;
-            _playerRef.CurrentDirection = PlayerDirection.Left;
+            Player.CurrentDirection = PlayerDirection.Left;
         }
         if (Input.IsActionPressed("move_right"))
         {
             velocity.X += 1;
-            _playerRef.CurrentDirection = PlayerDirection.Right;
+            Player.CurrentDirection = PlayerDirection.Right;
         }
         if (velocity.Y != 0 && velocity.X != 0)
-            _playerRef.CurrentDirection = PlayerDirection.Diagonal;
+            Player.CurrentDirection = PlayerDirection.Diagonal;
         if (velocity.Length() > 0)
         {
-            velocity = velocity.Normalized() * _playerRef.Data.Stats.Speed;
-            _playerRef.Sprite.Play();
+            velocity = velocity.Normalized() * Player.Data.Stats.Speed;
+            Player.Sprite.Play();
         }
         else
-            _playerRef.Sprite.Stop();
+            Player.Sprite.Stop();
         Position += velocity * (float)delta;
-        _playerRef.Sprite.FlipV = false; // Make sure we never flip vertically
-        _playerRef.Sprite.FlipH = velocity.X < 0;
-        _playerRef.MoveAndSlide();
+        Player.Sprite.FlipV = false; // Make sure we never flip vertically
+        Player.Sprite.FlipH = velocity.X < 0;
+        Player.MoveAndSlide();
     }
     public override void _ExitTree()
     {
         _eventService.Unsubscribe<InitEvent>(OnInit);
-        _playerRef.QueueFree();
+        Player.QueueFree();
         _items.Clear();
         _weapons.Clear();
         IsInitialized = false;
@@ -135,7 +133,7 @@ public sealed partial class PlayerUtility : Node2D, IUtility
         }
         GD.Print("PlayerUtility initialized.");
         LoadPlayer(ServiceProvider.HeroService().CurrentHero);
-        _playerRef.Show();
+        Player.Show();
         IsInitialized = true;
     }
     /// <summary>
@@ -167,7 +165,7 @@ public sealed partial class PlayerUtility : Node2D, IUtility
         GD.Print("PlayerUtility: Defeat sequence triggered.");
         _eventService.Publish<PlayerDefeat>();
         IsInitialized = false;
-        _playerRef.Hide();
+        Player.Hide();
         _items.Clear();
         _weapons.Clear();
     }
@@ -178,8 +176,8 @@ public sealed partial class PlayerUtility : Node2D, IUtility
     {
         IInteractable entity = null;
         var ray = new RayCast2D();
-        ray.GlobalPosition = _playerRef.GlobalPosition;
-        ray.TargetPosition = _playerRef.CurrentDirection switch
+        ray.GlobalPosition = Player.GlobalPosition;
+        ray.TargetPosition = Player.CurrentDirection switch
         {
             PlayerDirection.Up => new Vector2(0, -8),
             PlayerDirection.Down => new Vector2(0, 8),
@@ -190,7 +188,7 @@ public sealed partial class PlayerUtility : Node2D, IUtility
         };
         ray.Enabled = true;
         ray.CollisionMask = 2; // Interactable layer ?? TODO: make sure.
-        _playerRef.AddChild(ray);
+        Player.AddChild(ray);
         ray.ForceRaycastUpdate();
         if (ray.IsColliding())
         {
@@ -200,7 +198,7 @@ public sealed partial class PlayerUtility : Node2D, IUtility
                 entity = interactable;
             }
         }
-        _playerRef.RemoveChild(ray);
+        Player.RemoveChild(ray);
         ray.QueueFree();
         return entity;
     }
@@ -211,14 +209,14 @@ public sealed partial class PlayerUtility : Node2D, IUtility
             GD.PrintErr("PlayerUtility: LoadPlayer called with null hero data.");
             return;
         }
-        if (_playerRef != null)
+        if (Player != null)
         {
-            _playerRef.QueueFree();
+            Player.QueueFree();
         }
-        _playerRef = _heroTemplate.Instantiate<HeroEntity>();
-        AddChild(_playerRef);
-        _playerRef.Inject(hero);
-        _playerRef.CurrentHealth = hero.Stats.MaxHealth;
+        Player = _heroTemplate.Instantiate<HeroEntity>();
+        AddChild(Player);
+        Player.Inject(hero);
+        Player.CurrentHealth = hero.Stats.MaxHealth;
         GD.Print($"PlayerUtility: Loaded player '{hero.Info.Named}'.");
     }
     private void OnForceMove(IEvent data)
@@ -233,7 +231,7 @@ public sealed partial class PlayerUtility : Node2D, IUtility
             GD.PrintErr("PlayerUtility: OnForceMove called before initialization.");
             return;
         }
-        _playerRef.GlobalPosition = moveData.TargetPosition;
+        Player.GlobalPosition = moveData.TargetPosition;
         GD.Print($"PlayerUtility: Forced move to {moveData.TargetPosition}.");
     }
 }

@@ -25,8 +25,7 @@ Weapons = ExtResource("6_0tkjb")
 [node name="MainCamera" type="Camera2D" parent="."]
 top_level = true
 texture_filter = 1
-position = Vector2(960, 540)
-zoom = Vector2(4, 4)
+position = Vector2(-1, 1)
 
 [node name="GameManager" type="Node2D" parent="."]
 script = ExtResource("3_3qypx")

@@ -10,6 +10,9 @@ using System.Collections.Generic;
 /// </summary>
 public partial class Main : Node2D
 {
+	// Instance
+	public static Main Instance { get; private set; }
+	// Nodes
 	[ExportGroup("Main Nodes")]
 	[Export] public bool IsDebugMode { get; private set; } = false;
 	[ExportSubgroup("Core")]
@@ -34,6 +37,7 @@ public partial class Main : Node2D
 	// Engine Callbacks
 	public override void _Ready()
 	{
+		Instance = this;
 		NullCheck();
 		GD.PrintRich("[color=#000][bgcolor=#00ff00]Main node ready. Initializing game...[/bgcolor][/color]");
 		_eventService = ServiceProvider.EventService();
