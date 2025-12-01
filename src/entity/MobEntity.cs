@@ -40,7 +40,7 @@ public partial class MobEntity : RigidBody2D, IEntity
         Sprite.SpriteFrames = Data.Assets.Sprite;
         Sprite.Modulate = Data.Assets.TintColor;
         CollisionShape2D shape = new CollisionShape2D();
-        shape.Shape = Data.Assets.CollisionShape;
+        shape.Shape = Data.Assets.HurtBoxShape;
         Hitbox.AddChild(shape);
     }
     public void NullCheck()

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="HeroData" load_steps=16 format=3 uid="uid://25jndqkrgp0s"]
+[gd_resource type="Resource" script_class="HeroData" load_steps=17 format=3 uid="uid://25jndqkrgp0s"]
 
 [ext_resource type="Shader" uid="uid://dn34fl3er8kew" path="res://data/shaders/mobs/BasicMobMovement.gdshader" id="1_7vekp"]
 [ext_resource type="Script" uid="uid://dl1wpxpvydia7" path="res://src/data/HeroData.cs" id="1_nuk0s"]
@@ -9,6 +9,9 @@
 [ext_resource type="Script" uid="uid://crbtthspvxx8s" path="res://src/data/common/StatsData.cs" id="6_foyr2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7vekp"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_275ul"]
 radius = 16.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bbn67"]
@@ -22,14 +25,47 @@ animations = [{
 "texture": SubResource("AtlasTexture_bbn67")
 }],
 "loop": true,
-"name": &"idle",
+"name": &"Death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bbn67")
+}],
+"loop": true,
+"name": &"Down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bbn67")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bbn67")
+}],
+"loop": true,
+"name": &"Right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bbn67")
+}],
+"loop": true,
+"name": &"Up",
 "speed": 5.0
 }]
 
 [sub_resource type="Resource" id="Resource_y3s3e"]
 script = ExtResource("3_275ul")
 Sprite = SubResource("SpriteFrames_rmmbi")
-CollisionShape = SubResource("CircleShape2D_7vekp")
+HurtBoxShape = SubResource("CircleShape2D_275ul")
+HitBoxShape = SubResource("CircleShape2D_7vekp")
 metadata/_custom_type_script = "uid://4ark4f4sx322"
 
 [sub_resource type="Resource" id="Resource_aj33q"]

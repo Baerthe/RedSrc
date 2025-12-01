@@ -1,6 +1,7 @@
 namespace Event;
 
 using Data;
+using Godot;
 using Interface;
 /// <summary>
 /// Event class containing all game indices for easy access to pass to game systems.
@@ -19,5 +20,15 @@ public sealed class IndexEvent : IEvent
         Items = items;
         Levels = levels;
         Weapons = weapons;
+    }
+}
+public sealed class CameraEvent : IEvent
+{
+    public bool IsFollowingPlayer { get; private set; }
+    public Camera2D Camera { get; private set; }
+    public CameraEvent(bool isFollowingPlayer, Camera2D camera)
+    {
+        IsFollowingPlayer = isFollowingPlayer;
+        Camera = camera;
     }
 }

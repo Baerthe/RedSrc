@@ -12,6 +12,7 @@ using System.Collections.Generic;
 public sealed partial class PlayerUtility : Node2D, IUtility
 {
     public bool IsInitialized { get; private set; } = false;
+    public Vector2 PlayerPosition = Vector2.Zero;
     private HeroEntity _playerRef;
     private List<ItemEntity> _items = new();
     private List<WeaponEntity> _weapons = new();
@@ -66,6 +67,7 @@ public sealed partial class PlayerUtility : Node2D, IUtility
                 _playerRef.Sprite.Animation = "Idle";
                 break;
         }
+        PlayerPosition = _playerRef.GlobalPosition;
     }
     public override void _PhysicsProcess(double delta)
     {
@@ -214,9 +216,8 @@ public sealed partial class PlayerUtility : Node2D, IUtility
             _playerRef.QueueFree();
         }
         _playerRef = _heroTemplate.Instantiate<HeroEntity>();
-        _playerRef.Inject(hero);
-        _playerRef.Hide();
         AddChild(_playerRef);
+        _playerRef.Inject(hero);
         _playerRef.CurrentHealth = hero.Stats.MaxHealth;
         GD.Print($"PlayerUtility: Loaded player '{hero.Info.Named}'.");
     }

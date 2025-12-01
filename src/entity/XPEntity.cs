@@ -24,7 +24,7 @@ public sealed partial class XPEntity : Area2D, IEntity
         Data = (XPdata)data;
         XPSprite.SpriteFrames = Data.Assets.Sprite;
         CollisionShape2D shape = new CollisionShape2D();
-        shape.Shape = Data.Assets.CollisionShape;
+        shape.Shape = Data.Assets.HurtBoxShape;
         XPCollision.AddChild(shape);
     }
     public void NullCheck(){}

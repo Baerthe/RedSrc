@@ -10,23 +10,20 @@ using Interface;
 [GlobalClass]
 public partial class HeroEntity : CharacterBody2D, IEntity
 {
-	[ExportCategory("Stats")]
-	[ExportGroup("Components")]
-	[Export] public CollisionObject2D Hitbox { get; private set; }
-	[Export] public CollisionObject2D PickupHitbox { get; private set; }
-	[Export] public AnimatedSprite2D Sprite { get; private set; }
+	public AnimatedSprite2D Sprite { get; private set; }
+	public CollisionShape2D HurtBox { get; private set; }
+	public CollisionShape2D HitBox { get; private set; }
 	public HeroData Data { get; private set; }
 	public uint CurrentHealth { get; set; }
 	public PlayerDirection CurrentDirection { get; set; }
 	public override void _Ready()
 	{
-		CurrentHealth = Data.Stats.MaxHealth;
-		Sprite.SpriteFrames = Data.Assets.Sprite;
-		Sprite.Modulate = Data.Assets.TintColor;
-		CollisionShape2D shape = new CollisionShape2D();
-		shape.Shape = Data.Assets.CollisionShape;
-		Hitbox.AddChild(shape);
-		NullCheck();
+		Sprite = new AnimatedSprite2D();
+		HurtBox = new CollisionShape2D();
+		HitBox = new CollisionShape2D();
+		AddChild(Sprite);
+		AddChild(HurtBox);
+		AddChild(HitBox);
 		AddToGroup("players");
 	}
 	public void Inject(IData data)
@@ -37,11 +34,18 @@ public partial class HeroEntity : CharacterBody2D, IEntity
 			return;
 		}
 		Data = (HeroData)data ?? throw new ArgumentNullException(nameof(data));
+		CurrentHealth = Data.Stats.MaxHealth;
+		Sprite.SpriteFrames = Data.Assets.Sprite;
+		Sprite.Modulate = Data.Assets.TintColor;
+		HurtBox.Shape = Data.Assets.HurtBoxShape;
+		HitBox.Shape = Data.Assets.HitBoxShape;
+		NullCheck();
 	}
 	public void NullCheck()
 	{
 		byte failure = 0;
-		if (Hitbox == null) { GD.PrintErr($"ERROR: {this.Name} does not have Hitbox set!"); failure++; }
+		if (HitBox == null) { GD.PrintErr($"ERROR: {this.Name} does not have HitBox set!"); failure++; }
+		if (HurtBox == null) { GD.PrintErr($"ERROR: {this.Name} does not have HurtBox set!"); failure++; }
 		if (Sprite == null) { GD.PrintErr($"ERROR: {this.Name} does not have Sprite set!"); failure++; }
 		if (failure > 0) throw new InvalidOperationException($"{this.Name} has failed null checking with {failure} missing components!");
 	}

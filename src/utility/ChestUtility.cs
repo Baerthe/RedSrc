@@ -40,12 +40,12 @@ public sealed partial class ChestUtility : Node2D, IUtility
     public void OnInit()
     {
         if (IsInitialized) return;
-        _levelRef = GetTree().GetFirstNodeInGroup("level") as LevelEntity;
-        _playerRef = GetTree().GetFirstNodeInGroup("player") as HeroEntity;
-        _chestPath = CreatePath();
-        _chestSpawner = new PathFollow2D();
-        _chestPath.AddChild(_chestSpawner);
-        _playerRef.AddChild(_chestPath);
+        // _levelRef = GetTree().GetFirstNodeInGroup("level") as LevelEntity;
+        // _playerRef = GetTree().GetFirstNodeInGroup("player") as HeroEntity;
+        // _chestPath = CreatePath();
+        // _chestSpawner = new PathFollow2D();
+        // _chestPath.AddChild(_chestSpawner);
+        // _playerRef.AddChild(_chestPath);
         IsInitialized = true;
     }
     /// <summary>

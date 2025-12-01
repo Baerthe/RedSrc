@@ -56,6 +56,7 @@ public partial class GameManager : Node2D
     {
         if (!IsLevelLoaded) return;
         if (!IsPlaying) return;
+        Camera.GlobalPosition = CurrentPlayerUtility.PlayerPosition;
     }
     // GameManager Methods
     public void Initialize()
