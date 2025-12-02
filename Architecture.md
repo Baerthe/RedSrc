@@ -1,5 +1,5 @@
 # About This Project
-The concept behind this project is to create a base level project for use in more than one top-down 2D Godot-made game.
+The concept behind this project is to create a base level project for use in more than one top-down 2D Godot-made game. It leans more heavily on the "C# as the engine" philosophy, using Godot as the backend and supporting framework. The idea is to create a solid architecture that can be used as a foundation for multiple games, with the ability to easily add new features, assets, and mechanics.
 
 The primary among these is a hybrid game that combines elements of extraction shooters and the survivors genre (not survival or survival horror). It is not intended to be a full survival game but rather a game where players must extract from dangerous situations while managing limited resources and making strategic decisions to ensure their survival, all while being besieged by hostile entities. Though this project is open source and (currently) uses open assets, the end goal is to create a commercial game. At some point during the development process, key parts of this project will be split off into a survivors Godot template (without extraction elements) that can be used by other developers to create their own survivors games.
 
@@ -10,10 +10,10 @@ RedSrc is a 2D game. Scripts are organized into namespaces and (matching) folder
 
 This document outlines a tiered architecture:
 Interfaces are contained, when relevant, in the base folder of each namespace under /interface/.
-Folders and classes are named non-plural for clarity, all folders are snake_case, all classes are PascalCase.
+Folders and classes are named non-plural for clarity, all folders are snake_case, all classes are PascalCase and named after their namespace and role as a suffix (e.g. MainCore, PhysiscsDataComponent, MobEntityData).
 
-- Level 0:
-Namespace: Core
+- ## Level 0:
+- Namespace: Core
     The core infrastructure holding everything together. All of the Core scripts are singleton nodes attached to (or are) MainCore.
     - MainCore; The root node of the scene tree, handles initialization and global orchestration.
         - CameraCore; Manages the main camera and its behavior.
@@ -25,8 +25,8 @@ Namespace: Core
         - ServiceCore; Manages all services in the game
             - ServiceContainer; A container for all services, preventing the need for direct references between services.
 
-- Level 1:
-Namespace: Service
+- ## Level 1:
+- Namespace: Service
     The essential services that provide core functionality to the game. These are singletones contained within the ServiceContainer attached to ServiceCore, they are not nodes. These are Dependency Injected into other nodes that need them, specifically Systems that control Entities.
     - AudioService: Manages all audio playback and settings.
     - EntityService: Manages the lifecycle of all entities in the game. Factory methods for creating entities.
@@ -36,8 +36,8 @@ Namespace: Service
     - SettingsService: Manages game settings and preferences.
     - TemplateService: Manages entity templates and their data.
 
-- Level 2:
-Namespace: Data
+- ## Level 2:
+- Namespace: Data
     Data structures and definitions used throughout the game. These are *all* plain C# classes used to define resources, they are not nodes. The idea is that the data resources will be highly reusable and modular. "Recipe Cards"
     - ICommon: Base interface
         - Implementations for specific data types shared between specific entities. These are "pure data" componenets
@@ -45,28 +45,40 @@ Namespace: Data
             - InfoCommon: Basic information shared by all entities (e.g., name, description).
             - AssetCommon: Asset references shared by all entities (e.g., sprites, sounds).
     - IComponentData: Data interface for various components.
-        - Implementations for specific component types (e.g., HealthComponent, MovementComponent). These are data injected into relevant component nodes to define their behavior.
+        - Implementations for specific component types (e.g., HealthDataComponent, PhysicsDataComponent). These are data injected into relevant component nodes to define their behavior.
         /component/; A folder containing all component data classes.
     - IEntityData: Data interface for entities. Holds an array of IComponentData to define what components an entity has and contains some common data (All have InfoCommon and AssetCommon). The interface basic metadata like an icon and unique ID.
-        - Implementations for specific entity types (e.g., MobData, ItemData). These are data injected into entity nodes to define their overall structure and behavior.
+        - Implementations for specific entity types (e.g., MobEntityData, ItemEntityData). These are data injected into entity nodes to define their overall structure and behavior.
         /entity/; A folder containing all entity data classes.
     - SaveData: Structures for saving and loading game state.
     - LevelData: Structures defining level layouts and properties.
 
-- Level 3:
-Namespace: Component
-    Modular components that can be attached to entities to define their behavior and characteristics. These are nodes that are attached to Entity nodes. They receive data from IEntityData implementations to define what the entity has; they're injected with IComponentData implementations.
-    These are nodes inside of a scene that is instanced into the Entity node at runtime based on the IEntityData the Entity was created with.
-    Entities queue and call ``Inject(IComponentData data)`` on each of their components to set themsleves up based on the data provided.
+- ## Level 3:
+- Namespace: Component
+    Modular components that can be attached to entities to define their behavior and characteristics. These are nodes that are attached to Entity nodes. Components are not just generic Nodes; they are specialized, "stylized" Godot nodes.
+    Entities queue and call ``Inject(IComponentData data)`` on each of their components to set themsleves up based on the data provided. Though inject accepts a base interface, each component implementation only accepts its matching data type; e.g., HealthComponent only accepts HealthComponentData (so it has to be cast inside inject).
+    There is a one-to-one mapping between IComponentData implementations and Component implementations; this is because Components are just containers for ComponentData but are inherited from relevant nodes.
     - IComponent: Base interface for all components.
-        - Implementations for specific component types (e.g., HealthComponent, MovementComponent).
+        - Implementations for specific component types (e.g., HealthComponent, PhysicsComponent).
             - HealthComponent: Manages health and damage for an entity.
-            - MovementComponent: Handles movement logic for an entity.
+            - PhysicsComponent: Handles movement logic for an entity.
+                Components can have child nodes as required by Godot; e.g., PhysicsComponent is a CharacterBody2D that has a CollisionShape2D child node. This is why they are scenes added to nodes, not just scripts.
             - InventoryComponent: Manages an entity's inventory.
             - AIComponent: Controls AI behavior for NPCs.
 
-- Level 4:
-Namespace: Entity
+    - Godot Group:
+        Components, when added to an entity, are also added to relevant Godot groups based on their type. This allows Systems to easily find and operate on entities with specific components by querying these groups, iterating over them to perform their logic.
+        Thus for each component type, there is a matching Godot group name. These are named non-plural for clarity as single names.
+            - HealthComponent -> "Health"
+            - PhysicsComponent -> "Physics"
+            - InventoryComponent -> "Inventory"
+            - AIComponent -> "AI"
+
+    Inter-Component Communication:
+        Components do not communicate with each other directly, they instead hold a reference to their parent and Systems act on them. For example, PhysicsComponent moves it's parent GameEntity after MoveAndSlide(). This keeps components decoupled and focused on their specific responsibilities.
+
+- ## Level 4:
+- Namespace: Entity
     The entities that populate the game world. These are nodes that represent game objects, they are composed of multiple components to define their behavior and characteristics, look and feel. These are generic templates that can be instantiated with specific data at runtime.
     They are controlled by Systems that act on their components; so they do not have much logic themselves.
     Calls ``Inject(IEntityData data)`` to set themselves up based on the data provided. They are built by EntityService factory methods.
@@ -74,14 +86,31 @@ Namespace: Entity
     - GameEntity: The main entity node that repersents all objects that could appear in the game world.
     - MenuEntity: A specialized entity for menu items and UI elements.
 
-- Level 5:
-Namespace: Manager
+    - Godot Group:
+        Entities, when created, are also added to relevant Godot groups based on their type. This allows Systems to easily find and operate on specific types of entities by querying these groups, iterating over them to perform their logic.
+        Thus for each entity type, there is a matching Godot group name. These are named non-plural for clarity as single names.
+            - GameEntity -> "Game"
+            - MenuEntity -> "Menu"
+
+        Example: The "Goblin" Entity Scene Tree
+            The scene tree for a "Goblin" entity that has been built would look like this:
+            Goblin (GameEntity.tscn, root is a Node2D with GameEntity.cs)
+                GameEntity is injected with Goblin.tres, a built MobData resource containing an array of component data resources.
+            Physics (PhysicsComponent.tscn, root is a CharacterBody2D with PhysicsComponent.cs)
+                CollisionShape2D (A child of the physics body, as required by Godot)
+            Render (RenderComponent.tscn, root is a Sprite2D with RenderComponent.cs)
+            Hitbox (HitboxComponent.tscn, root is an Area2D with HitboxComponent.cs)
+                CollisionShape2D (A child of the area, as required by Godot)
+            AI (AIComponent.tscn, root is a Node2D with AIComponent.cs, since it has no direct engine representation)
+
+- ## Level 5:
+- Namespace: Manager
     Managers are the two main root-node Scenes that control the game; the GameManager and MenuManager. These are handled by StateCore to switch between them based on the current game state.
     - GameManager: The main scene for gameplay. Contains the game world, player entity; it is the root node that controls relevant Game Systems.
     - MenuManager: The main scene for menus and UI. Contains menu entities; it is the root node that controls relevant Menu Systems.
 
-- Level 6:
-Namespace: System
+- ## Level 6:
+- Namespace: System
     Systems are nodes that control and manage entities within the game. They operate on entities and their components to implement game mechanics and logic. These are children of either GameManager or MenuManager depending on their purpose.
     To contain all the logic for a specific domain of behavior. Systems are the "verbs" that act upon the "nouns" (entities/components).
     - ISystem: Base interface for all systems. It contains methods for initialization, updating, and handling events; all of which are called by their parent Manager.
