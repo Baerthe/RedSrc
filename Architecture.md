@@ -19,18 +19,22 @@ Folders and classes are named non-plural for clarity, all folders are snake_case
         - CameraCore; Manages the main camera and its behavior.
         - EventCore; A global event bus for decoupled communication. (We do not use Godot signals for this purpose; signals are slower and less flexible.)
             - IEvent; The base interface for all events.
-            - /events/; A folder containing all event classes.
+            - /events/; A folder containing all event classes (grouped in files by category, due to the short nature of these classes they share a file).
         - StateCore; Manages what gamestate we are in and how to change them. It also stores references to globally relevant game data like what the current loaded level is, unlocked content, etc.
             - StateEnum; An enumeration of all possible game states.
-        - ContextCore; Manages the lifecycle of persistent `Services`. On startup, it registers all core services with the `Registry`. Allows access to services throughout the engine through methods that access the `Registry`. Also managers registration, deregistration, and access to `Systems` through the `Registry`.
-            - Registry; A static singleton class that acts as a central registry for all global `Services` and `Systems`. Other parts of the engine can access singletons from this registry without needing direct references.
+        - ContextCore; Manages the lifecycle of persistent `Services` and temporary `Systems` used by Managers. On startup, it registers all core services with the `Registry`. Allows access to services throughout the engine through methods that access the `Registry`. The only static class in the architecture.
+            - Registry; A singleton class that acts as a central registry for all global `Services`. Other parts of the engine can access singletons from this registry without needing direct references. (It contains no logic itself, just storage and retrieval methods)
+                - Methods to register, unregister, and retrieve services by type; Systems can also be registered here for access by Services.
+            - Using ContextCore, services get dependency-injected into the managers and passed to be injected into Systems. Components and their Entity parents' do not touch ContextCore or Registry directly, as they are not logic driven.
+                - Since Godot does not support constructor injection for Nodes, dependency injection is handled manually by passing references during initialization (e.g., in `_Ready` methods or manual initialization methods).
 
 - ## Layer 1: Primary Services
 - Namespace: Service
     - The essential services that provide core functionality to the game. These are plain C# classes (non-Nodes) that are instantiated by `ContextCore` and registered with the `Registry`, making them globally accessible and persistent.
     - AudioService: Manages all audio playback and settings.
-    - EntityService: Manages the lifecycle of all entities in the game. It uses the `Registry` to get references to the currently active `Systems` to perform component registration.
+    - EntityService: Manages the lifecycle of all entities in the game, including creation, destruction, and pooling.
     - InputService: Handles player input and maps it to game actions.
+    - IndexService: Manages indexing and lookup of game entities and data.
     - SaveService: Manages saving and loading game data.
     - SceneService: Manages scene transitions and loading.
     - SettingsService: Manages game settings and preferences.
@@ -43,8 +47,13 @@ Folders and classes are named non-plural for clarity, all folders are snake_case
         /common/; A folder containing all common data classes.
             - InfoCommon: Basic information shared by all entities (e.g., name, description). This can be exported on a component to link to it.
             - AssetCommon: Asset references shared by all entities (e.g., sprites, sounds).
+            - IDCommon: Unique identifiers for entities.
+    - CraftData: Structures defining crafting recipes and requirements.
+    - EffectData: Definitions for various effects (e.g., status effects, buffs).
     - SaveData: Structures for saving and loading game state.
     - LevelData: Structures defining level layouts and properties.
+    - ItemData: Definitions for items, including properties and behaviors.
+    - IndexData: Structures for indexing and lookup of game data. We use these to register scenes and data assets for easy retrieval by other systems.
 
 - ## Layer 2 (as well): Behavior Components
 - Namespace: Component
@@ -57,6 +66,8 @@ Folders and classes are named non-plural for clarity, all folders are snake_case
             - PhysicsComponent: A data container for an entity's movement properties. Exports properties like `Speed`. It does **not** contain movement logic itself.
                 Components can have child nodes as required by Godot; e.g., PhysicsComponent is a CharacterBody2D that has a CollisionShape2D child node. This is why they are scenes added to nodes, not just scripts.
             - InventoryComponent: Manages an entity's inventory.
+            - RenderComponent: Manages an entity's visual representation.
+            - InteractionComponent: Manages interaction logic for an entity.
             - AIComponent: Can be used to store AI state and simple steering data.
 
     - Component Self-Validation:
@@ -72,9 +83,11 @@ Folders and classes are named non-plural for clarity, all folders are snake_case
 - Namespace: Entity
     - The entities that populate the game world. Entities are defined as pre-configured Godot Scenes (`.tscn` files).
     These scenes act as templates or "recipes". They are instantiated at runtime by the `EntityService`, often from an object pool for performance. This approach leverages Godot's highly optimized scene instantiation system.
+    - Entities are composed of multiple `Components`, each defining a specific aspect of the entity's behavior or characteristics. By mixing and matching components, a wide variety of entity types can be created without needing to write new code for each one.
+    - Using scene inheritance, common structures can be enforced while still allowing for flexibility and variation among specific entity types. This means building data-driven entities inside of the inspector, rather than coding them directly as resources or classes.
     - IEntity: Base interface for all entities.
-    - GameEntity: The main entity node that repersents all objects that could appear in the game world. It can also serve as a simple data bus for its components.
-    - MenuEntity: A specialized entity for menu items and UI elements.
+        - GameEntity: The main entity node that repersents all objects that could appear in the game world. It can also serve as a simple data bus for its components.
+        - MenuEntity: A specialized entity for menu items and UI elements.
 
     - Scene Inheritance for Structure and Variation:
         To enforce a common structure (e.g., all mobs must have health and physics), a "BaseMob.tscn" can be created. Specific mobs like a "Goblin" are then created as *inherited scenes* from this base. This guarantees the presence of required components while allowing for additional components and property overrides in the derived scene. This maintains the principle of composition while providing architectural strictness.
@@ -101,24 +114,36 @@ Folders and classes are named non-plural for clarity, all folders are snake_case
 
 - ## Layer 4: Orchestration Managers
 - Namespace: Manager
-    - Managers are the two main root-node Scenes that control the game; the GameManager and MenuManager. These are handled by StateCore to switch between them based on the current game state. When a manager scene is loaded, it is responsible for finding all of its child `Systems` and registering them with the global `Registry`. When the scene is unloaded, it unregisters its systems.
-    - GameManager: The main scene for gameplay. On `_Ready`, it registers all relevant game systems (e.g., `PhysicsSystem`, `AISystem`) with the `Registry`.
-    - MenuManager: The main scene for menus and UI. On `_Ready`, it registers all relevant menu systems (e.g., `UISystem`) with the `Registry`.
+    - Managers are the two main root-node Scenes that control the game; the GameManager and MenuManager. These are handled by StateCore to switch between them based on the current game state.
+    - Managers register/unregister their relevant Systems with the `Registry` on `_Ready` and `_ExitTree`, ensuring that only the active systems are available to components at any given time.
+    - IManager: Base interface for all managers.
+        - GameManager: The main scene for gameplay. On `_Ready`, it holds and controls all relevant systems for the gameplay state.
+        - MenuManager: The main scene for menus and UI. On `_Ready`, it holds and controls all relevant systems for the menu state.
 
 - ## Layer 5: Controlling Logic Systems
 - Namespace: System
     - Systems are nodes that control and manage entities within the game. They are designed to handle the core logic, acting as the "brains" of the operation. They operate by iterating over groups of components, reading their state, and writing back changes.
     - Systems choose *what* an entity should do, and the components then define *how* it gets done.
+    - Systems are controlled by their parent Manager (GameManager or MenuManager). On `_Ready`, the Manager initializes and holds references to all relevant systems for that state. During each frame or on a timer, the Manager calls the `Update` method on each system to perform their logic.
     This logic can be executed on a throttled timer for low-frequency updates (e.g., AI decision-making at 10Hz) or every frame in `_Process` or `_PhysicsProcess` for high-frequency updates (e.g., movement). This centralized approach is critical for performance, as it allows for processing thousands of entities in tight, cache-friendly loops.
     - ISystem: Base interface for all systems. It contains methods for initialization, updating, and handling events; all of which are called by their parent Manager.
         - Implementations for specific system types.
-            - PhysicsSystem: Executes in `_PhysicsProcess`. It iterates through all entities with a `PhysicsComponent`, calculates velocity based on their data (e.g., `Speed`, `Direction`), and calls `move_and_slide`.
             - AISystem: The "brain" for NPCs. On a timer, it scans the environment, chooses targets, and sets the state on an entity's `AIComponent` (e.g., `State = "Attacking"`, `Target = Player`).
             - CombatSystem: Manages combat interactions. On a timer, it might process damage-over-time effects or check for cooldown expirations.
             - CraftSystem: Manages crafting mechanics and recipes.
             - ClockSystem: Manages in-game time and sends out time-related events for other systems to use.
+            - CombatSystem: Manages combat interactions and damage calculations.
+            - DialogueSystem: Manages NPC dialogues and interactions.
             - InventorySystem: Manages inventory interactions and item usage.
             - InteractionSystem: Handles interactions between entities and the game world.
+            - LootSystem: Manages loot drops and item spawning.
             - MapSystem: Manages the active game map, potentially spawning entities based on player location.
+            - SpawnSystem: Manages entity spawning and despawning based on game logic.
+            - PhysicsSystem: Executes in `_PhysicsProcess`. It iterates through all entities with a `PhysicsComponent`, calculates velocity based on their data (e.g., `Speed`, `Direction`), and calls `move_and_slide`. This system handles all movement logic, ensuring consistent physics behavior across entities.
             - UISystem: Manages UI elements and interactions.
             - XPSystem: Manages experience points and leveling mechanics.
+
+- ## Layer 6: Assisting Logic Systems
+- Namespace: Utility
+    - Utility classes provide supporting functionality to the core systems and services. These are plain C# classes that encapsulate common algorithms, calculations, and helper methods used throughout the game. These are stateless non-node objects.
+    - Examples include math utilities, random number generators, data parsers, and other reusable logic that doesn't fit neatly into the other layers.
