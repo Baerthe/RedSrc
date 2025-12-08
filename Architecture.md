@@ -6,25 +6,39 @@ The concept of this is a hybrid game that combines elements of extraction shoote
 
 This project uses a data-driven ECS-inspired model with strict separation of concerns; though does not go as far as to implement a true ECS model. The reasons for why is that the intent is to leverage Godot's features. The idea behind this was to maximize the power of C# in terms of code re-use, modularity, and performance, while still working harmoniously with Godot's scene-based workflow. This architecture also allows for easy expansion of the game mechanics and systems, as new components can be created and attached to entities without modifying existing code; in theory. It is not intended nor desired to be multiplayer in any fashion.
 
-# What exactly is RedGate?
+## What exactly is RedGate?
 RedGate is the commercial game being developed using the RedSrc codebase. It is a Survivor Extraction game where players must navigate dangerous environments, extract valuable resources, and survive against hostile entities that increasingly flood the map. The game combines two distinct modes: a higher-intensity action gameplay segment where players explore a map and engage in combat, ala `Vampire Survivors`, and a downtime 'management' segment where players manage their resources, craft and upgrade equipment, engage in narrative and 'idle' mechanics between these combat deployments. The game emphasizes strategic decision-making, resource management, and survival tactics in a hostile world.
 
-# Design Pillars
+## Design Pillars
 - **Modularity**: The architecture is designed to be modular, allowing for easy addition and removal of features and systems. Each component, system, and service is self-contained, promoting reusability and maintainability.
 - **Data-Driven**: The game logic is driven by data, allowing for easy configuration and tweaking of game mechanics without modifying code. This is achieved through the use of data resources and component-based design.
 - **Performance**: The architecture is optimized for performance, with systems designed to handle large numbers of entities efficiently. By centralizing logic in systems and minimizing per-entity overhead, the game can scale to handle complex scenarios.
 - **Separation of Concerns**: Each layer of the architecture has a specific responsibility, promoting clear separation of concerns. This makes it easier to understand, maintain, and extend the codebase.
 - **Designer-Friendly**: The architecture is designed to be accessible to designers, allowing them to create and configure game content without needing to modify code. This is achieved through the use of Godot's scene system and data resources.
 - **Dual Game Modes**: The architecture supports both gameplay and menu modes, with separate managers and systems for each. This allows for clear separation of game logic and UI logic; something that is important due to the 'downtime' elements of extraction games.
+- **Fantasy OS Metaphor**: The game is designed around the concept of a fantasy operating system, where players interact with a fictional OS interface to manage their resources, craft items, and engage with the game world. This metaphor influences the design of the UI and overall user experience.
+- **Limited Graphics**: The game, and project by extension, is designed to work around a limited color palette (1-bit/2-bit style) layered under a CRT filter; a sort of retro-fantasy aesthetic.
 
-# Technical Overview & Conventions
-- C# services and systems orchestrate nearly everything. Components avoid `_Process` loops; managers schedule deterministic system updates.
-- Registry-based dependency injection (via `ContextCore`) keeps services/systems discoverable without static coupling.
-- Interfaces are contained, when relevant, in the base folder of each namespace under /interface/.
-- Folders and classes are named non-plural for clarity, all folders are snake_case, all classes are PascalCase and named after their namespace and role as a suffix (e.g. MainCore, PhysiscsDataComponent, MobEntityData).
-	- Keep new functionality aligned with the fantasy OS metaphor; no generic 2D action assumptions.
-	- Prefer `Resource` assets for any data designers may touch (nodes, quests, email templates, window skins, extra apps).
-	- Use EventCore topics or Registry lookups instead of direct scene-tree references to maintain modularity.
+## Conceptual Loops
+- **Gameplay Loop**: Players explore the map, engage in combat, collect resources, and extract safely. This loop emphasizes action, strategy, and survival.
+    - Find lootable containers that trigger slot-machine like drops.
+    - Survive waves of enemies that increase in intensity over time.
+    - Reach the extraction point(s) before being overwhelmed.
+    - Extracted resources contribute to player progression, but can be lost if they die before extraction.
+- **Downtime Loop**: Between extractions, players manage resources, craft and upgrade equipment, engage in narrative, and prepare for the next deployment. This acts as meta-progression.
+    - Use extracted resources to craft new items, upgrade gear, and improve abilities.
+    - Engage with NPCs and story elements to unlock new content and missions.
+    - Prepare for the next extraction by strategizing loadouts and resource allocation.
+    - Time passes with each extraction, affecting available resources and challenges.
+    - Construct different workbenches or facilities that unlock new crafting options and gameplay mechanics (idle progression, 'gardening', etc.)
+
+## Inspirations
+- Vampire Survivors and Megabonk (Gameplay Loop, Genre)
+- Arc Raiders (Extraction Concepts, Downtime Loop)
+- Loop Hero (Downtime Loop, Graphics Style)
+- Dwarf Fortress (Data-Driven Design, Complexity from Simplicity)
+- Elder Scrolls 3 and 4: Morrowind and Oblivion (NPC Interaction, World Design, Skills System)
+- World of Fear, Kingsway, Windows 95/98/XP (Fantasy OS Metaphor for UI themeing)
 
 # Layered Architecture Overview
 The architecture of RedSrc is designed around a layered approach that separates different aspects of the game into distinct layers. Each layer has a specific responsibility, and they interact with each other in a controlled manner.
@@ -33,6 +47,15 @@ Scripts are organized into namespaces and (matching) folders based on their func
 This document outlines a tiered architecture:
 Interfaces are contained, when relevant, in the base folder of each namespace under /interface/.
 Folders and classes are named non-plural for clarity, all folders are snake_case, all classes are PascalCase and named after their namespace and role as a suffix (e.g. MainCore, PhysiscsDataComponent, MobEntityData).
+
+## Technical Overview & Conventions
+- C# services and systems orchestrate nearly everything. Components avoid `_Process` loops; managers schedule deterministic system updates.
+- Registry-based dependency injection (via `ContextCore`) keeps services/systems discoverable without static coupling.
+- Interfaces are contained, when relevant, in the base folder of each namespace under /interface/.
+- Folders and classes are named non-plural for clarity, all folders are snake_case, all classes are PascalCase and named after their namespace and role as a suffix (e.g. MainCore, PhysiscsDataComponent, MobEntityData).
+	- Keep new functionality aligned with the fantasy OS metaphor; no generic 2D action assumptions.
+	- Prefer `Resource` assets for any data designers may touch (nodes, quests, email templates, window skins, extra apps).
+	- Use EventCore topics or Registry lookups instead of direct scene-tree references to maintain modularity.
 
 ## Layer 0: Core Infrastructure
 - Namespace: `Core`
@@ -77,6 +100,7 @@ Data structures and definitions used throughout the game. These are primarily pl
 - **EffectData**: Definitions for various effects (e.g., status effects, buffs).
 - **SaveData**: Structures for saving and loading game state.
 - **LevelData**: Structures defining level layouts and properties.
+- **QuestData**: Definitions for quests, objectives, and rewards.
 - **ItemData**: Definitions for items, including properties and behaviors.
 - **IndexData**: Structures for indexing and lookup of game data. We use these to register scenes and data assets for easy retrieval by other systems.
 
@@ -167,7 +191,6 @@ This logic can be executed on a throttled timer for low-frequency updates (e.g.,
 - **FactorySystem**: Responsible for creating and destroying entities. It uses object pooling to optimize performance when spawning and despawning entities frequently.
 - **CombatSystem**: Manages combat interactions. On a timer, it might process damage-over-time effects or check for cooldown expirations.
 - **CraftSystem**: Manages crafting mechanics and recipes.
-- **ClockSystem**: Manages in-game time and sends out time-related events for other systems to use.
 - **CombatSystem**: Manages combat interactions and damage calculations.
 - **DialogueSystem**: Manages NPC dialogues and interactions.
 - **InventorySystem**: Manages inventory interactions and item usage.
