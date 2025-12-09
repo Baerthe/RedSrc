@@ -3,7 +3,6 @@ RedSrc is the working project title for a Survivor Extraction project.
 The project is currently using open assets. The Code is open source using Godot Engine 4.5.1 .net and licensed under AGPL-3.0-only.
 
 ## More Information
-See [Architecture](Architecture.md) for more information on the project structure and design.
 See [License](LICENSE.txt) for more information about the project's license.
 
 # Resource Assets
