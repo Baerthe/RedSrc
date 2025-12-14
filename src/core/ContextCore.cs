@@ -1,3 +1,5 @@
+namespace Core;
+
 using Godot;
 using Interface;
 using Service;
@@ -8,17 +10,17 @@ using Service;
 /// </summary>
 public static class ServiceProvider
 {
-    internal static ServiceContainer ServiceContainer { get; private set; } = new();
+    internal static Registry ServiceRegistry { get; private set; } = new();
     private static bool _isBuilt = false;
     static ServiceProvider()
     {
         BuildServiceContainer();
     }
-    public static IAudioService AudioService() => ServiceContainer.Resolve<IAudioService>();
-    public static IEventService EventService() => ServiceContainer.Resolve<IEventService>();
-    public static IHeroService HeroService() => ServiceContainer.Resolve<IHeroService>();
-    public static IPrefService PrefService() => ServiceContainer.Resolve<IPrefService>();
-    public static ILevelService LevelService() => ServiceContainer.Resolve<ILevelService>();
+    public static IAudioService AudioService() => ServiceRegistry.Resolve<IAudioService>();
+    public static IEventService EventService() => ServiceRegistry.Resolve<IEventService>();
+    public static IHeroService HeroService() => ServiceRegistry.Resolve<IHeroService>();
+    public static IPrefService PrefService() => ServiceRegistry.Resolve<IPrefService>();
+    public static ILevelService LevelService() => ServiceRegistry.Resolve<ILevelService>();
     /// <summary>
     /// Builds the service container with all service singletons.
     /// </summary>
@@ -30,11 +32,11 @@ public static class ServiceProvider
         if (_isBuilt)
             return;
         GD.PrintRich("[color=#00ff00]Registering Services to ServiceContainer...[/color]");
-        ServiceContainer.Register<IAudioService, AudioService>();
-        ServiceContainer.Register<IEventService, EventService>();
-        ServiceContainer.Register<IHeroService, HeroService>();
-        ServiceContainer.Register<IPrefService, PrefService>();
-        ServiceContainer.Register<ILevelService, LevelService>();
+        ServiceRegistry.Register<IAudioService, AudioService>();
+        ServiceRegistry.Register<IEventService, EventService>();
+        ServiceRegistry.Register<IHeroService, HeroService>();
+        ServiceRegistry.Register<IPrefService, PrefService>();
+        ServiceRegistry.Register<ILevelService, LevelService>();
         GD.PrintRich("[color=#00ff00]Services Registered.[/color]");
         _isBuilt = true;
     }

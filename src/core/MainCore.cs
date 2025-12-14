@@ -1,3 +1,5 @@
+namespace Core;
+
 using Data;
 using Event;
 using Interface;
@@ -8,10 +10,10 @@ using System.Collections.Generic;
 /// <summary>
 /// The main class that handles orchestration and dependency management of the game.
 /// </summary>
-public partial class Main : Node2D
+public partial class MainCore : Node2D
 {
 	// Instance
-	public static Main Instance { get; private set; }
+	public static MainCore Instance { get; private set; }
 	// Nodes
 	[ExportGroup("Main Nodes")]
 	[Export] public bool IsDebugMode { get; private set; } = false;
@@ -58,12 +60,12 @@ public partial class Main : Node2D
 		if (IsDebugMode)
 		{
 			_eventService.Publish<DebugModeEvent>();
-			_eventService.Publish<StateEvent>(new StateEvent(State.Playing));
+			//_eventService.Publish<StateEvent>(new StateEvent(State.Playing));
 			GD.PrintRich("[color=#000][bgcolor=#ff0000]Debug Mode Enabled.[/bgcolor][/color]");
 		}
 		else
 		{
-			_eventService.Publish<StateEvent>(new StateEvent(State.Menu));
+			//_eventService.Publish<StateEvent>(new StateEvent(State.Menu));
 		}
 	}
 	public override void _Process(double delta)
