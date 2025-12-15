@@ -8,12 +8,14 @@ using Service;
 /// In usage, call ServiceProvider.[ServiceName]Service() to get the singleton instance of the service; it can be helpful to register the service instance to a local readonly variable for easier access.
 /// Example: private readonly IAudioService _audioService = ServiceProvider.AudioService();
 /// </summary>
-public static class ServiceProvider
+public sealed partial class ContextCore : Node2D
 {
+    public static ContextCore Instance { get; private set; }
     internal static Registry ServiceRegistry { get; private set; } = new();
     private static bool _isBuilt = false;
-    static ServiceProvider()
+    public override void _Ready()
     {
+        Instance = this;
         BuildServiceContainer();
     }
     public static IAudioService AudioService() => ServiceRegistry.Resolve<IAudioService>();

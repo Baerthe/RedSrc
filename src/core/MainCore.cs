@@ -10,7 +10,7 @@ using System.Collections.Generic;
 /// <summary>
 /// The main class that handles orchestration and dependency management of the game.
 /// </summary>
-public partial class MainCore : Node2D
+public sealed partial class MainCore : Node2D
 {
 	// Instance
 	public static MainCore Instance { get; private set; }
@@ -18,7 +18,9 @@ public partial class MainCore : Node2D
 	[ExportGroup("Main Nodes")]
 	[Export] public bool IsDebugMode { get; private set; } = false;
 	[ExportSubgroup("Core")]
-	[Export] public Camera2D MainCamera { get; private set; }
+	[Export] public CameraCore CameraCore { get; private set; }
+	[Export] public EventCore EventCore { get; private set; }
+	[ExportGroup("Managers")]
 	[Export] public GameManager GameManager { get; private set; }
 	//	[Export] public MenuManager MenuManager { get; private set; }
 	[Export] public UiManager UiManager { get; private set; }
@@ -77,10 +79,11 @@ public partial class MainCore : Node2D
 	/// <exception cref="InvalidOperationException"></exception>
 	private void NullCheck()
 	{
-		if (UiManager == null) throw new InvalidOperationException("ERROR 201: HUD node not set in Main. Game cannot load.");
-		if (MainCamera == null) throw new InvalidOperationException("ERROR 202: Camera node not set in Main. Game cannot load.");
-		//if (MenuManager == null) throw new InvalidOperationException("ERROR 203: Menu node not set in Main. Game cannot load.");
-		if (GameManager == null) throw new InvalidOperationException("ERROR 204: Game node not set in Main. Game cannot load.");
+		if (CameraCore == null) throw new InvalidOperationException("ERROR 201: CameraCore not set in Main. Game cannot load.");
+		if (EventCore == null) throw new InvalidOperationException("ERROR 202: EventCore not set in Main. Game cannot load.");
+		if (GameManager == null) throw new InvalidOperationException("ERROR 203: GameManager not set in Main. Game cannot load.");
+		//if (MenuManager == null) throw new InvalidOperationException("ERROR 204: MenuManager not set in Main. Game cannot load.");
+		if (UiManager == null) throw new InvalidOperationException("ERROR 204: UiManager not set in Main. Game cannot load.");
 		GD.Print("We got all of our nodes! Checking Indices...");
 		if (EntityTemplates == null) throw new InvalidOperationException("ERROR 205: EntityIndex not set in Main. Game cannot load.");
 		if (Heroes == null) throw new InvalidOperationException("ERROR 206: HeroIndex not set in Main. Game cannot load.");
