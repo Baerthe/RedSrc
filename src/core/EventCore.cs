@@ -1,20 +1,28 @@
 namespace Core;
 
 using Godot;
+using Event;
 using System;
 using Interface;
 using System.Collections.Generic;
 
 public sealed partial class EventCore : Node2D
 {
-    public static EventCore Instance { get; private set; }
-    [Export] public Heart heart { get; private set; }
+    public Heart heart { get; private set; }
     private Dictionary<Type, List<Action>> _subs = new();
     private Dictionary<Type, List<Action<IEvent>>> _subsData = new();
+    // Timer Default Intervals
+	private const float PulseInterval = 0.05f;        // 20 hrz (~1200 per minute)
+	private const float SlowPulseInterval = 0.2f;     // 5 hrz (~300 per minute)
+	private const float MobSpawnInterval = 5f;       // 0.2 hrz (~12 per minute)
+	private const float ChestSpawnInterval = 10f;     // 0.1 hrz (~6 per minute)
+	private const float GameInterval = 60f;          // 0.016 hrz (~1 per minute)
+	private const float StartingInterval = 3f;       // OneShot (~3 seconds)
     public override void _Ready()
     {
-        Instance = this;
         GD.PrintRich("[color=#000][bgcolor=#00ff00]EventCore ready.[/bgcolor][/color]");
+        AddChild(heart = new Heart());
+        BuildTimers();
     }
     public void UnsubscribeAll()
     {
@@ -117,5 +125,14 @@ public sealed partial class EventCore : Node2D
                 ((Action)handler)();
             }
         }
+    }
+    private void BuildTimers()
+    {
+        AddChild(heart.BuildTimer<PulseTimeout>("PulseTimer", PulseInterval, false, false));
+        AddChild(heart.BuildTimer<SlowPulseTimeout>("SlowPulseTimer", SlowPulseInterval, false, false));
+        AddChild(heart.BuildTimer<MobSpawnTimeout>("MobSpawnTimer", MobSpawnInterval, false, false));
+        AddChild(heart.BuildTimer<ChestSpawnTimeout>("ChestSpawnTimer", ChestSpawnInterval, false, false));
+        AddChild(heart.BuildTimer<GameTimeout>("GameTimer", GameInterval, false, false));
+        AddChild(heart.BuildTimer<StartingTimeout>("StartingTimer", StartingInterval, true, false));
     }
 }
