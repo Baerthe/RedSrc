@@ -128,11 +128,11 @@ public sealed partial class EventCore : Node2D
     }
     private void BuildTimers()
     {
-        AddChild(heart.BuildTimer<PulseTimeout>("PulseTimer", PulseInterval, false, false));
-        AddChild(heart.BuildTimer<SlowPulseTimeout>("SlowPulseTimer", SlowPulseInterval, false, false));
-        AddChild(heart.BuildTimer<MobSpawnTimeout>("MobSpawnTimer", MobSpawnInterval, false, false));
-        AddChild(heart.BuildTimer<ChestSpawnTimeout>("ChestSpawnTimer", ChestSpawnInterval, false, false));
-        AddChild(heart.BuildTimer<GameTimeout>("GameTimer", GameInterval, false, false));
-        AddChild(heart.BuildTimer<StartingTimeout>("StartingTimer", StartingInterval, true, false));
+        heart.BuildTimer<PulseTimeout>("PulseTimer", PulseInterval, false, false);
+        heart.BuildTimer<SlowPulseTimeout>("SlowPulseTimer", SlowPulseInterval, false, false);
+        heart.BuildTimer<MobSpawnTimeout>("MobSpawnTimer", MobSpawnInterval, false, false);
+        heart.BuildTimer<ChestSpawnTimeout>("ChestSpawnTimer", ChestSpawnInterval, false, false);
+        heart.BuildTimer<GameTimeout>("GameTimer", GameInterval, false, false);
+        heart.BuildTimer<StartingTimeout>("StartingTimer", StartingInterval, true, false);
     }
 }
