@@ -5,7 +5,9 @@ using Event;
 using System;
 using Interface;
 using System.Collections.Generic;
-
+/// <summary>
+/// Handles the event system, including subscription and publication of events.
+/// </summary>
 public sealed partial class EventCore : Node2D
 {
     public Heart heart { get; private set; }

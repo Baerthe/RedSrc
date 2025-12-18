@@ -19,7 +19,9 @@ public sealed partial class MainCore : Node2D
 	[Export] public bool IsDebugMode { get; private set; } = false;
 	[ExportSubgroup("Core")]
 	[Export] public CameraCore CameraCore { get; private set; }
+	[Export] public ContextCore ContextCore { get; private set; }
 	[Export] public EventCore EventCore { get; private set; }
+	[Export] public ServiceCore ServiceCore { get; private set; }
 	[ExportGroup("Managers")]
 	[Export] public GameManager GameManager { get; private set; }
 	//	[Export] public MenuManager MenuManager { get; private set; }
@@ -31,11 +33,7 @@ public sealed partial class MainCore : Node2D
 	[Export] public LevelIndex Levels { get; private set; }
 	[Export] public WeaponIndex Weapons { get; private set; }
 	// State
-	public State CurrentState { get; private set; } = State.Menu;
-	private Dictionary<State, Action> _stateActions;
-	// Services
-	private IEventService _eventService;
-	private ILevelService _levelService;
+
 	// Flags
 	private bool _isGameStarted = false;
 	// Engine Callbacks
@@ -44,17 +42,11 @@ public sealed partial class MainCore : Node2D
 		Instance = this;
 		NullCheck();
 		GD.PrintRich("[color=#000][bgcolor=#00ff00]Main node ready. Initializing game...[/bgcolor][/color]");
-		_eventService = ServiceProvider.EventService();
-		_levelService = ServiceProvider.LevelService();
-		_stateActions = new Dictionary<State, Action>
-		{
-			{ State.Menu, CallMenuState },
-			{ State.LevelSelect, CallLevelSelectState },
-			{ State.Paused, CallPausedState },
-			{ State.Playing, CallPlayingState },
-			{ State.GameOver, CallGameOverState }
-		};
+		// TODO: Move states to StateCore
+
 		_eventService.Subscribe<StateEvent>(OnStateRequest);
+		// TODO: Move initialization to ContextCore
+		// TODO: Move manager state to StateCore
 		GameManager.Initialize();
 		// Start Game
 		GD.PrintRich("[color=#000][bgcolor=#00ff00]Game Initialized.[/bgcolor][/color]");
@@ -92,47 +84,4 @@ public sealed partial class MainCore : Node2D
 		if (Weapons == null) throw new InvalidOperationException("ERROR 209: WeaponIndex not set in Main. Game cannot load.");
 		GD.Print("We got all of our indices! NullCheck Complete");
 	}
-	private void OnStateRequest(IEvent eventData)
-	{
-		var stateData = (StateEvent)eventData;
-		if (stateData.RequestedState == CurrentState) return;
-		Action action = _stateActions.ContainsKey(stateData.RequestedState) ? _stateActions[stateData.RequestedState] : null;
-		CurrentState = stateData.RequestedState;
-		if (action != null) action();
-	}
-	private void CallMenuState()
-	{
-		//MenuManager.Show();
-		UiManager.Hide();
-		if (CurrentState == State.GameOver || _isGameStarted)
-		{
-			GameManager.UnloadLevel();
-			_isGameStarted = false;
-		}
-	}
-	private void CallLevelSelectState()
-	{
-		// Level Select State Logic Here
-	}
-	private void CallPausedState()
-	{
-		// Paused State Logic Here
-	}
-	private void CallPlayingState()
-	{
-		//MenuManager.Hide();
-		UiManager.Show();
-		if (!_isGameStarted)
-		{
-			_isGameStarted = true;
-		}
-	}
-	private void CallGameOverState()
-	{
-		//
-	}
 }
-public enum State : byte
-	{
-		Menu, LevelSelect, Paused, Playing, GameOver
-	}
