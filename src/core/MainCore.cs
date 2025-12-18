@@ -42,25 +42,22 @@ public sealed partial class MainCore : Node2D
 		Instance = this;
 		NullCheck();
 		GD.PrintRich("[color=#000][bgcolor=#00ff00]Main node ready. Initializing game...[/bgcolor][/color]");
-		// TODO: Move states to StateCore
-
-		_eventService.Subscribe<StateEvent>(OnStateRequest);
 		// TODO: Move initialization to ContextCore
 		// TODO: Move manager state to StateCore
-		GameManager.Initialize();
-		// Start Game
-		GD.PrintRich("[color=#000][bgcolor=#00ff00]Game Initialized.[/bgcolor][/color]");
-		_eventService.Publish<IndexEvent>(new IndexEvent(Heroes, EntityTemplates, Items, Levels, Weapons));
-		if (IsDebugMode)
-		{
-			_eventService.Publish<DebugModeEvent>();
-			//_eventService.Publish<StateEvent>(new StateEvent(State.Playing));
-			GD.PrintRich("[color=#000][bgcolor=#ff0000]Debug Mode Enabled.[/bgcolor][/color]");
-		}
-		else
-		{
-			//_eventService.Publish<StateEvent>(new StateEvent(State.Menu));
-		}
+		// GameManager.Initialize();
+		// // Start Game
+		// GD.PrintRich("[color=#000][bgcolor=#00ff00]Game Initialized.[/bgcolor][/color]");
+		// _eventService.Publish<IndexEvent>(new IndexEvent(Heroes, EntityTemplates, Items, Levels, Weapons));
+		// if (IsDebugMode)
+		// {
+		// 	_eventService.Publish<DebugModeEvent>();
+		// 	//_eventService.Publish<StateEvent>(new StateEvent(State.Playing));
+		// 	GD.PrintRich("[color=#000][bgcolor=#ff0000]Debug Mode Enabled.[/bgcolor][/color]");
+		// }
+		// else
+		// {
+		// 	//_eventService.Publish<StateEvent>(new StateEvent(State.Menu));
+		// }
 	}
 	public override void _Process(double delta)
 	{
