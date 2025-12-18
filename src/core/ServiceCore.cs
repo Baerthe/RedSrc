@@ -33,6 +33,7 @@ public sealed partial class ServiceCore : Node2D
         ServiceRegistry.Register<IHeroService, HeroService>();
         ServiceRegistry.Register<IPrefService, PrefService>();
         ServiceRegistry.Register<ILevelService, LevelService>();
+        ServiceRegistry.Register<IStateService, StateService>();
         GD.PrintRich("[color=#00ff00]Services Registered.[/color]");
         _isBuilt = true;
     }

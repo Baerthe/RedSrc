@@ -1,7 +1,7 @@
 namespace Event;
 
 using Interface;
-/// Non-data events for Clock System.
+/// Non-data events for heartbeats and timeouts
 public sealed class PulseTimeout : IEvent;
 public sealed class SlowPulseTimeout : IEvent;
 public sealed class MobSpawnTimeout : IEvent;
