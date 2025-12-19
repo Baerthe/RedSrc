@@ -1,6 +1,6 @@
 namespace Event;
 
-using Service;
+using Core.Service;
 using Interface;
 /// <summary>
 /// Event class that delivers a request to change state.

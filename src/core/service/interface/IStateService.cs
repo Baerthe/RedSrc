@@ -1,6 +1,7 @@
 namespace Interface;
+
 using Godot;
-using Service;
+using Core.Service;
 public interface IStateService : IService
 {
     StateSelection CurrentState { get; }

@@ -1,4 +1,4 @@
-namespace Service;
+namespace Core.Service;
 
 using Data;
 using Interface;

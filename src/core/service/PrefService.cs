@@ -1,4 +1,5 @@
-namespace Service;
+namespace Core.Service;
+
 using Interface;
 using Godot;
 using System;
