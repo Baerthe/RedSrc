@@ -1,7 +1,7 @@
 # RedSrc
-RedSrc is the working project title for a Survivor Extraction project.
+RedSrc is a Survivors-like top-down 2D game template.
 The project is currently using open assets. The Code is open source using Godot Engine 4.5.1 .net and licensed under AGPL-3.0-only.
-
+### This project is heavily a work in progess, not only is it not feature complete but is currently is not operational.
 ## More Information
 See [License](LICENSE.txt) for more information about the project's license.
 
