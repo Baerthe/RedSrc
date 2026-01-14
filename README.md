@@ -1,7 +1,29 @@
 # RedSrc
-RedSrc is a Survivors-like top-down 2D game template.
+RedSrc is a Survivors-like top-down 2D game template, with plans to expand into an 8-bit real-time tactical strategy (RTS) game.
+
 The project is currently using open assets. The Code is open source using Godot Engine 4.5.1 .net and licensed under AGPL-3.0-only.
+
 ### This project is heavily a work in progess, not only is it not feature complete but is currently is not operational.
+
+## RTS Game Development
+
+We are developing a classic RTS game inspired by Command & Conquer and Warcraft 2/3, featuring:
+- **8-bit pixel art aesthetic** using Kenney's 1-bit asset pack
+- **Two playable factions** (Humans and Orcs) with distinct units and buildings
+- **Classic RTS mechanics**: resource gathering, base building, unit production, and tactical combat
+- **AI opponents** with multiple difficulty levels
+- **Campaign mode** with story-driven missions
+
+**📖 [View Complete Design Documentation](docs/design/README.md)**
+
+The design documentation includes:
+- Game design overview and vision
+- Technical architecture and systems
+- Detailed gameplay mechanics
+- Unit and building specifications
+- AI and pathfinding systems
+- UI/UX design specifications
+- Implementation plan and development roadmap
 ## More Information
 See [License](LICENSE.txt) for more information about the project's license.
 
