@@ -1,8 +1,30 @@
 # RedSrc
-RedSrc is a Survivors-like top-down 2D game template.
-The project is currently using open assets. The Code is open source using Godot Engine 4.5.1 .net and licensed under AGPL-3.0-only.
-### This project is heavily a work in progess, not only is it not feature complete but is currently is not operational.
+
+RedSrc is the open-source codebase for a **Survivor Extraction** game built with Godot Engine 4.5.1 (.NET). The commercial implementation is called **RedGate**.
+
+The game combines elements of extraction shooters and the survivors genre (à la Vampire Survivors) where players must extract from dangerous situations while managing resources and fighting waves of hostile entities.
+
+> **⚠️ This project is heavily a work in progress - not only is it not feature complete but is currently not operational.**
+
+## Documentation
+
+📖 **[Design Documentation](docs/design/README.md)** - Comprehensive design documents including:
+- [Architecture](docs/design/architecture.md) - Technical architecture and layered system design
+- [Core Systems](docs/design/core-systems.md) - Infrastructure, services, and game systems
+- [Gameplay](docs/design/gameplay.md) - Game mechanics and player-facing features
+- [Data Structures](docs/design/data-structures.md) - Data resources and entity definitions
+- [UI & Presentation](docs/design/ui-and-presentation.md) - Visual design and Fantasy OS theme
+- [Roadmap](docs/design/roadmap.md) - Development phases and milestones
+
+## Technical Stack
+
+- **Engine**: Godot 4.5.1 (.NET)
+- **Language**: C# (.NET 8.0)
+- **Architecture**: Data-driven ECS-inspired with strict separation of concerns
+- **License**: AGPL-3.0-only
+
 ## More Information
+
 See [License](LICENSE.txt) for more information about the project's license.
 
 # Resource Assets
