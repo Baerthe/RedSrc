@@ -125,10 +125,10 @@ public sealed partial class AssetData : Resource
     [Export] public Texture2D Icon { get; private set; }
     
     [ExportCategory("Audio")]
-    [Export] public AudioStream HitSound { get; set; }
-    [Export] public AudioStream DeathSound { get; set; }
-    [Export] public AudioStream AttackSound { get; set; }
-    [Export] public AudioStream FootstepSound { get; set; }
+    [Export] public AudioStream HitSound { get; private set; }
+    [Export] public AudioStream DeathSound { get; private set; }
+    [Export] public AudioStream AttackSound { get; private set; }
+    [Export] public AudioStream FootstepSound { get; private set; }
     
     [ExportCategory("Collision")]
     [Export] public Shape2D CollisionShape { get; set; }

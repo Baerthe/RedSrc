@@ -107,7 +107,9 @@ public enum GameState : byte
     Town = 2,
     Dungeon = 3,
     Paused = 4,
-    Loading = 5
+    Loading = 5,
+    GameOver = 6,
+    Victory = 7
 }
 ```
 

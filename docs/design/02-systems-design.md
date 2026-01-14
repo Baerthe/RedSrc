@@ -119,13 +119,12 @@ public partial class CombatSystem : Node, ISystem
         target.TakeDamage(damage);
         
         // Check for death
-        if (target is Node2D node)
+        if (target is not Node2D node) return;
+        
+        var health = GetComponent<HealthComponent>(node);
+        if (health?.IsDead == true)
         {
-            var health = GetComponent<HealthComponent>(node);
-            if (health != null && health.IsDead)
-            {
-                ProcessDeath(target as IEntity);
-            }
+            ProcessDeath(target as IEntity);
         }
     }
     
